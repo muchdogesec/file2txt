@@ -1,5 +1,3 @@
-# python3 -m unittest tests/test_1_positive_tests.py
-
 import os
 import shutil
 import subprocess
@@ -27,11 +25,11 @@ class TestFile2Txt(unittest.TestCase):
 
         # Create the output directory
         filename_without_ext = os.path.splitext(os.path.basename(file))[0]
-        output_directory = os.path.join('output', 'positive_tests', filename_without_ext)
+        output_directory = os.path.join('output', 'positive_tests', mode, filename_without_ext)
         os.makedirs(output_directory, exist_ok=True)
 
         # Create a more descriptive output filename
-        output_filename = f"{mode}_{filename_without_ext}_defang-{defang}_extract-{extract_text_from_image}_output"
+        output_filename = f"{mode}_{filename_without_ext}_defang-{defang}_extract-{extract_text_from_image}_output.md"
         output_filepath = os.path.join(output_directory, output_filename)
 
         # Construct the command
@@ -61,11 +59,11 @@ class TestFile2Txt(unittest.TestCase):
 
         # Create the output directory
         filename_without_ext = os.path.splitext(os.path.basename(file))[0]
-        output_directory = os.path.join('output', 'positive_tests', filename_without_ext)
+        output_directory = os.path.join('output', 'positive_tests', mode, filename_without_ext)
         os.makedirs(output_directory, exist_ok=True)
 
         # Create a more descriptive output filename
-        output_filename = f"{mode}_{filename_without_ext}_output"
+        output_filename = f"{mode}_{filename_without_ext}_output.md"
         output_filepath = os.path.join(output_directory, output_filename)
 
         # Construct the command without --defang and --extract_text_from_image

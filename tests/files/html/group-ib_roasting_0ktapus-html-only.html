@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head><script type="text/javascript" src="https://fhp-aws-antibot-back.group-ib.com/d/bt-autoinject.js"></script><script type="text/javascript">window.gib.init({cid:"gib-w-61354c22-16cc-40a8-a871-6901f1a76e24",backUrl:"/api/fl"})</script><style>img.lazy{min-height:1px}</style><link rel="preload" href="https://www.group-ib.com/wp-content/plugins/w3-total-cache/pub/js/lazyload.min.js" as="script">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://website.cdn.group-ib.com/wp-content/themes/gib-theme/assets/js/swiper-bundle.min.js"></script>
+  <!-- <script src="https://website.cdn.group-ib.com/wp-content/themes/gib-theme/assets/js/share.js"></script> -->
+
+  
+  <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO Premium plugin v20.11 (Yoast SEO v20.11) - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Roasting 0ktapus: The phishing campaign going after Okta identity credentials | Group-IB Blog</title>
+	<meta name="description" content="Over 130 organizations have been compromised in a sophisticated attack using simple phishing kits." />
+	<link rel="canonical" href="https://www.group-ib.com/blog/0ktapus/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Roasting 0ktapus: The phishing campaign going after Okta identity credentials" />
+	<meta property="og:description" content="Over 130 organizations have been compromised in a sophisticated attack using simple phishing kits." />
+	<meta property="og:url" content="https://www.group-ib.com/blog/0ktapus/" />
+	<meta property="og:site_name" content="Group-IB" />
+	<meta property="article:modified_time" content="2023-05-18T13:58:16+00:00" />
+	<meta property="og:image" content="https://website.cdn.group-ib.com/wp-content/uploads/facebook-preview.jpg" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta property="og:image:type" content="image/jpeg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://www.group-ib.com/blog/0ktapus/","url":"https://www.group-ib.com/blog/0ktapus/","name":"Roasting 0ktapus: The phishing campaign going after Okta identity credentials | Group-IB Blog","isPartOf":{"@id":"https://www.group-ib.com/#website"},"datePublished":"2022-08-25T09:02:13+00:00","dateModified":"2023-05-18T13:58:16+00:00","description":"Over 130 organizations have been compromised in a sophisticated attack using simple phishing kits.","breadcrumb":{"@id":"https://www.group-ib.com/blog/0ktapus/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.group-ib.com/blog/0ktapus/"]}]},{"@type":"BreadcrumbList","@id":"https://www.group-ib.com/blog/0ktapus/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.group-ib.com/"},{"@type":"ListItem","position":2,"name":"Roasting 0ktapus: The phishing campaign going after Okta identity credentials"}]},{"@type":"WebSite","@id":"https://www.group-ib.com/#website","url":"https://www.group-ib.com/","name":"Group-IB","description":"","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.group-ib.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link rel='stylesheet' id='classic-theme-styles-css' href='https://website.cdn.group-ib.com/wp-includes/css/classic-themes.min.css' type='text/css' media='all' />
+<style id='global-styles-inline-css' type='text/css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;}:where(.is-layout-flex){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='dashicons-css' href='https://website.cdn.group-ib.com/wp-includes/css/dashicons.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='post-views-counter-frontend-css' href='https://www.group-ib.com/wp-content/plugins/post-views-counter/css/frontend.min.css' type='text/css' media='all' />
+<script type='text/javascript' src='https://website.cdn.group-ib.com/wp-includes/js/jquery/jquery.min.js' id='jquery-core-js'></script>
+<style>.pseudo-clearfy-link { color: #008acf; cursor: pointer;}.pseudo-clearfy-link:hover { text-decoration: none;}</style>  <link rel="stylesheet" href="https://website.cdn.group-ib.com/wp-content/themes/gib-theme/assets/css/single-blog-post.css"/>
+</head>
+  <body>
+    <div class="header">
+    <div class="main-nav__report">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="main-nav__report-wrapper col-8 offset-4 col-sm-8 offset-sm-4 col-xs-16 offset-xs-0">
+        <div class="main-nav__report-title">
+          <div class="title-h6 text-center">Report an incident</div>
+        </div>
+        <div class="main-nav__report-content">
+          <p class="body2">Get 24/7 incident response assistance from our global team</p>
+          <div class="main-nav__report-contacts body2">
+            <ul>
+              <li>APAC: <a href="tel:+6531594398" class="body2">+65 3159 4398</a></li>
+              <li>EU & NA: <a href="tel:+31202269090" class="body2">+31 20 226 90 90</a></li>
+              <li>MEA: <a href="tel:+97145681785" class="body2"> +971 4 568 1785</a></li>
+            </ul>
+          </div>
+          <div class="main-nav__report-form">
+            <div class="header-hs-form">
+              <script charset="utf-8" type="text/javascript" src="//js-eu1.hsforms.net/forms/v2.js"></script>
+              <script>
+                hbspt.forms.create({
+                  region: "eu1",
+                  portalId: "25755956",
+                  formId: "044e7558-8073-478a-ad3c-5807dd76840f"
+                });
+              </script>
+            </div>
+          </div>
+        </div>
+        <a class="main-nav__report-close"></a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main-nav__talktosales">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="main-nav__talktosales-wrapper col-8 offset-4 col-sm-8 offset-sm-4 col-xs-16 offset-xs-0">
+        <div class="main-nav__talktosales-content">
+          <div class="title-h5 text-center"><span class="light-blue-gradient">Talk to sales</span></div>
+          <p class="small">Just fill out the form, and our representative will contact you soon.</p>
+          <div class="main-nav__talktosales-form">
+            <div class="header-hs-form">
+              <script charset="utf-8" type="text/javascript" src="//js-eu1.hsforms.net/forms/v2.js"></script>
+              <script>
+                hbspt.forms.create({
+                  region: "eu1",
+                  portalId: "25755956",
+                  formId: "4dbceae1-75ae-423a-9c12-dee8f1ca3345"
+                });
+              </script>
+            </div>
+          </div>
+        </div>
+        <a class="main-nav__talktosales-close"></a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="main-nav" id="main-nav">
+  <div class="container-fluid">
+    <div class="row main-nav__elements">
+      <div class="main-nav__logo">
+        <a href="/"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/main-logo.svg" alt="Cyber Security Services - Group-IB logo" class="main-nav__logo-image lazy" /></a>
+      </div>
+      <div class="main-nav__dropdown--mobile">
+        <ul class="main-nav__menu-list">
+          <li class="main-nav__menu-item main-nav__menu-item--products">
+            <div class="body2">Products<span></span></div>
+            <div class="main-nav__dropdown">
+              <div class="main-nav__submenu">
+                <ul class="main-nav__submenu-list">
+                  <a href="/products/threat-intelligence/">
+                    <li class="main-nav__submenu-item">
+                      <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/themes/gib-theme/assets/images/main-nav/ti.png" alt="Threat Intelligence" class="main-nav__product-logo lazy" />
+                      <p class="main-nav__submenu-itemname">Threat Intelligence</p>
+                    </li>
+                  </a>
+                  <a href="/products/attack-surface-management/">
+                    <li class="main-nav__submenu-item">
+                      <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/themes/gib-theme/assets/images/main-nav/asm.png" alt="Attack Surface Management" class="main-nav__product-logo lazy" />
+                      <p class="main-nav__submenu-itemname">Attack Surface Management</p>
+                    </li>
+                  </a>
+                  <a href="/products/fraud-protection/">
+                    <li class="main-nav__submenu-item">
+                      <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/themes/gib-theme/assets/images/main-nav/fp.png" alt="Fraud Protection" class="main-nav__product-logo lazy" />
+                      <p class="main-nav__submenu-itemname">Fraud Protection</p>
+                    </li>
+                  </a>
+                  <a href="/products/digital-risk-protection/">
+                    <li class="main-nav__submenu-item">
+                      <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/themes/gib-theme/assets/images/main-nav/drp.png" alt="Digital risk protection" class="main-nav__product-logo lazy" />
+                      <p class="main-nav__submenu-itemname">Digital Risk Protection</p>
+                    </li>
+                  </a>
+                  <a href="/products/managed-xdr/">
+                    <li class="main-nav__submenu-item">
+                      <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/themes/gib-theme/assets/images/main-nav/mxdr.png" alt="Managed XDR" class="main-nav__product-logo lazy" />
+                      <p class="main-nav__submenu-itemname">Managed XDR</p>
+                    </li>
+                    <a href="/products/business-email-protection/">
+                      <li class="main-nav__submenu-item">
+                        <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/themes/gib-theme/assets/images/main-nav/bep.png" alt="Business Email Protection" class="main-nav__product-logo lazy" />
+                        <p class="main-nav__submenu-itemname">Business Email Protection</p>
+                      </li>
+                    </a>
+                  </a>
+                </ul>
+              </div>
+              <div class="main-nav__learn-more">
+                <div class="subtitle">
+                  Learn more information about&nbsp;our&nbsp;<a class="link-arrow__text" href="/products/unified-risk-platform/">Unified Risk Platform<span class="link-arrow link-arrow--xs-sm link-arrow--color"></span></a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="main-nav__menu-item main-nav__menu-item--services">
+            <div class="body2">Services<span></span></div>
+            <div class="main-nav__dropdown">
+              <div class="main-nav__submenu-group mobile-horizontal-scroll__list">
+
+                <div class="main-nav__submenu mobile-horizontal-scroll__item">
+                <div class="main-nav__submenu-title subtitle">Digital Forensics <br>& Incident Response</div>
+                  <ul class="main-nav__submenu-list">
+                    <li class="main-nav__submenu-item">
+                      <a href="/services/incident-response/" class="main-nav__submenu-itemname">Incident Response</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="/services/incident-response-retainer/" class="main-nav__submenu-itemname">Incident Response <br>Retainer</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="/services/incident-response-readiness-assessment/" class="main-nav__submenu-itemname">Incident Response <br>Readiness Assessment</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="/compromise-assessment.html" class="main-nav__submenu-itemname">Compromise Assessment</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="/digital-forensics.html" class="main-nav__submenu-itemname">Digital Forensics</a>
+                    </li>
+                    <li class="main-nav__submenu-item"><a href="/ediscovery.html" class="main-nav__submenu-itemname">eDiscovery</a></li>
+                  </ul>
+                </div>
+
+                <div class="main-nav__submenu mobile-horizontal-scroll__item">
+                <div class="main-nav__submenu-title subtitle">Hi-Tech Crime <br>Investigation</div>
+                  <ul class="main-nav__submenu-list">
+                    <li class="main-nav__submenu-item"><a href="/services/cyber-investigation/" class="main-nav__submenu-itemname">Cyber Investigation</a></li>
+                    <li class="main-nav__submenu-item"><a href="/services/investigation-subscription/" class="main-nav__submenu-itemname">Investigation Subscription</a></li>
+                  </ul>
+                </div>
+
+                <div class="main-nav__submenu mobile-horizontal-scroll__item">
+                <div class="main-nav__submenu-title subtitle">Audit <br>& Consulting</div>
+                  <ul class="main-nav__submenu-list">
+                    <li class="main-nav__submenu-item">
+                      <a href="/services/penetration-testing/" class="main-nav__submenu-itemname">Penetration Testing</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="/services/security-assessment/" class="main-nav__submenu-itemname">Security Assessment</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="/compliance-audit.html" class="main-nav__submenu-itemname">Compliance & Consulting</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="/services/red-teaming/" class="main-nav__submenu-itemname">Red Teaming</a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="main-nav__submenu mobile-horizontal-scroll__item">
+                <div class="main-nav__submenu-title subtitle">Education <br>& Training</div>
+                  <ul class="main-nav__submenu-list">
+                    <li class="main-nav__submenu-item"><a href="/cybersecurity-education/technical-training-programs/" class="main-nav__submenu-itemname">Trainings for Technical Specialists</a></li>
+                    <li class="main-nav__submenu-item"><a href="/cybersecurity-education/master-classes/cybersecurity-awareness/" class="main-nav__submenu-itemname">Cybersecurity Awareness Workshop</a></li>
+                    <li class="main-nav__submenu-item"><a href="/cybersecurity-education/master-classes/incident-response-simulation-game/" class="main-nav__submenu-itemname">Incident Response Simulation Game</a></li>
+                    <li class="main-nav__submenu-item"><a href="/cybersecurity-education/" class="main-nav__submenu-itemname">All Training Programs</a></li>
+                  </ul>
+                </div>
+                
+              </div>
+            </div>
+          </li>
+          <li class="main-nav__menu-item main-nav__menu-item--solutions">
+            <div class="body2">Solutions<span></span></div>
+            <div class="main-nav__dropdown">
+              <div class="main-nav__submenu-group">
+                <div class="main-nav__submenu">
+                  <div class="main-nav__submenu-title subtitle">Use Case</div>
+                  <ul class="main-nav__submenu-list">
+                    <li class="main-nav__submenu-item">
+                      <a href="/solutions/ransomware-protection-and-response/" class="main-nav__submenu-itemname">Ransomware Protection and Response</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="/solutions/phishing-and-scam-protection/" class="main-nav__submenu-itemname">Phishing and Scam Protection</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="/solutions/bot-protection/" class="main-nav__submenu-itemname">Bot Protection</a>
+                    </li>
+                    <!-- <li class="main-nav__submenu-item">
+                      <a href="#" class="main-nav__submenu-itemname">Data leak protection</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="#" class="main-nav__submenu-itemname">Preventing VIP impersonations</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="#" class="main-nav__submenu-itemname">Preventing scams</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="#" class="main-nav__submenu-itemname">Preventing piracy</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="#" class="main-nav__submenu-itemname">Anti-phishing</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="#" class="main-nav__submenu-itemname">Counter-feiting</a>
+                    </li> -->
+                  </ul>
+                </div>
+                <!-- <div class="main-nav__submenu">
+                  <div class="main-nav__submenu-title subtitle">Industry</div>
+                  <ul class="main-nav__submenu-list">
+                    <li class="main-nav__submenu-item">
+                      <a href="#" class="main-nav__submenu-itemname">Finance</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="#" class="main-nav__submenu-itemname">Telecom</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="#" class="main-nav__submenu-itemname">Manufacturing</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="#" class="main-nav__submenu-itemname">Retail</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="#" class="main-nav__submenu-itemname">Healthcare</a>
+                    </li>
+                    <li class="main-nav__submenu-item">
+                      <a href="#" class="main-nav__submenu-itemname">Blockchain</a>
+                    </li>
+                  </ul>
+                </div> -->
+              </div>
+            </div>
+          </li>
+          <li class="main-nav__menu-item main-nav__menu-item--subscription-plans">
+            <a href="/subscriptions/managed-xdr/">
+              <div class="body2">Subscription Plans<span></span></div>
+            </a>
+          </li>
+          <li class="main-nav__menu-item main-nav__menu-item--resources">
+            <div class="body2">Resources<span></span></div>
+            <div class="main-nav__dropdown">
+              <div class="main-nav__submenu">
+                <ul class="main-nav__submenu-list">
+                  <li class="main-nav__submenu-item"><a href="/resources/research-hub/" class="main-nav__submenu-itemname">Research Hub</a></li>
+                  <li class="main-nav__submenu-item"><a href="/resources/knowledge-hub/" class="main-nav__submenu-itemname">Knowledge Hub</a></li>
+                  <li class="main-nav__submenu-item"><a href="/certificates.html" class="main-nav__submenu-itemname">Certificates</a></li>
+                  <li class="main-nav__submenu-item"><a href="/resources/webinars/" class="main-nav__submenu-itemname">Webinars</a></li>
+                  <!-- <li class="main-nav__submenu-item"><a href="#" class="main-nav__submenu-itemname">Case studies</a></li> -->
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="main-nav__menu-item main-nav__menu-item--resources main-nav__menu-item--tools">
+            <div class="body2">Free Tools<span></span></div>
+            <div class="main-nav__dropdown">
+              <div class="main-nav__submenu">
+                <ul class="main-nav__submenu-list">
+                  <li class="main-nav__submenu-item"><a href="https://trebuchet.gibthf.com/?tab=email" class="main-nav__submenu-itemname" target="_blank">Email Security Assessment</a></li>
+                  <li class="main-nav__submenu-item"><a href="https://trebuchet.gibthf.com/?tab=network" class="main-nav__submenu-itemname" target="_blank">Network Protection Assessment</a></li>
+                  <li class="main-nav__submenu-item"><a href="https://github.com/Group-IB/cloud_sherlock" class="main-nav__submenu-itemname" target="_blank">Cloud Recon Tool</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="main-nav__menu-item main-nav__menu-item--blog">
+            <a href="/blog/">
+              <div class="body2">Blog<span></span></div>
+            </a>
+          </li>
+          <li class="main-nav__menu-item main-nav__menu-item--company">
+            <div class="body2">Company<span></span></div>
+            <div class="main-nav__dropdown">
+              <div class="main-nav__submenu">
+                <ul class="main-nav__submenu-list">
+                  <li class="main-nav__submenu-item"><a href="/about-us/" class="main-nav__submenu-itemname">About Group-IB</a></li>
+                  <li class="main-nav__submenu-item"><a href="/services/cert/" class="main-nav__submenu-itemname">CERT-GIB</a></li>
+                  <li class="main-nav__submenu-item"><a href="/leadership.html" class="main-nav__submenu-itemname">Team</a></li>
+                  <li class="main-nav__submenu-item"><a href="/partnership.html" class="main-nav__submenu-itemname">Partners</a></li>
+                  <li class="main-nav__submenu-item"><a href="/mssp-and-mdr-partner-program/" class="main-nav__submenu-itemname">MSSP and MDR Partner Program</a></li>
+                  <li class="main-nav__submenu-item"><a href="/careers.html" class="main-nav__submenu-itemname">Careers</a></li>
+                  <li class="main-nav__submenu-item"><a href="/careers/internship.html" class="main-nav__submenu-itemname">Internship</a></li>
+                  <!-- <li class="main-nav__submenu-item"><a href="#" class="main-nav__submenu-itemname">Recognition</a></li> -->
+                  <li class="main-nav__submenu-item"><a href="/media-center/" class="main-nav__submenu-itemname">Media Center</a></li>
+                  <!-- <li class="main-nav__submenu-item"><a href="#" class="main-nav__submenu-itemname">Events</a></li> -->
+                  <li class="main-nav__submenu-item"><a href="/contacts/" class="main-nav__submenu-itemname">Contact</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <ul class="main-nav__actions">
+          <li class="main-nav__action main-nav__action--blog">
+            <a href="/subscriptions/managed-xdr/">
+              <div class="body2">Subscription Plans</div>
+              <span class="link-arrow link-arrow--xs-sm link-arrow--color main-nav__action--arrow"></span>
+            </a>
+          </li>
+          <li class="main-nav__action main-nav__action--blog">
+            <a href="/blog/">
+              <div class="body2">Blog</div>
+              <span class="link-arrow link-arrow--xs-sm link-arrow--color main-nav__action--arrow"></span>
+            </a>
+          </li>
+          <li class="main-nav__action main-nav__report-opener main-nav__under-search">
+            <a>
+              <div class="body2">Report an incident</div>
+              <span class="link-arrow link-arrow--xs-sm link-arrow--color main-nav__action--arrow"></span>
+            </a>
+          </li>
+          <!-- main-nav__talktosales-opener -->
+          <li class="main-nav__action main-nav__under-search">
+            <a href="/talk-to-sales/">
+              <div class="body2">Talk to sales</div>
+              <span class="link-arrow link-arrow--xs-sm link-arrow--color main-nav__action--arrow"></span>
+            </a>
+          </li>
+          <li class="main-nav__action main-nav__search-opener"><a class="main-nav__under-search">Search</a></li>
+          <div class="main-nav__search">
+            <input type="text" placeholder="Search" />
+            <div class="main-nav__search-close"></div>
+          </div>
+          <li class="main-nav__action">
+            <a href="https://sso.group-ib.com/" target="_blank" class="button main-nav__sign-in button--outline button--sm">
+              <span class="effect slide-up" data-effect="Sign in">Sign in</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="main-nav__mobile-toggles">
+        <a class="main-nav__mobile-search"></a>
+        <a class="main-nav__mobile-menu"></a>
+      </div>
+    </div>
+  </div>
+</div>    </div>
+<div class="theme-container">
+  <div class="container-fluid blog-post mt-xs-48 mt-sm-64">
+    <div class="row">
+      <div class="c-md-1 blog-post__toggles">
+        <div class="share-widget share-widget-desktop">
+          <div class="share-widget__wrapper">
+            <div class="share-widget__cross share-toggle"></div>
+            <div class="share-widget__title title-h5">Share this article</div><p class="share-widget__text caption">Found it interesting? Don't hesitate to share it to wow your friends or colleagues</p><div class="ya-share2" data-bare data-lang="ru" data-services="twitter,linkedin,telegram"></div> 
+            <div class="share-url">
+              <input type="text" id="share-url"/>
+              <div class="share-url__copy"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="post-info__toggle share-toggle"><img class="lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/share-black.svg" alt=""></div>
+        <div class="post-info__toggle theme-toggle"><img class="theme-toggle--sun lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/wb_sunny-black.svg" alt=""><img class="theme-toggle--moon lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/moon.svg" alt=""></div>
+      </div>
+      <div class="c-16 c-md-9">
+        <div class="header--blog-post">
+          <div class="header__wrapper">
+            <div class="header__post-info post-info">
+              <div class="post-info__backlink"><a href="/blog/" class="subtitle2">← Blog</a><div class="post-info__toggles"><div class="share-widget share-widget-mobile"><div class="share-widget__wrapper"><div class="share-widget__cross share-toggle"></div><div class="share-widget__title title-h5">Share this article</div><p class="share-widget__text caption">Found it interesting? Don't hesitate to share it to wow your friends or colleagues</p><div class="ya-share2" data-bare data-lang="ru" data-services="twitter,linkedin,telegram"></div><div class="share-url"><input type="text" id="share-url-mobile"/><div class="share-url__copy"></div></div></div></div><div class="post-info__toggle  share-toggle"><img class="lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/share-black.svg" alt=""></div><div class="post-info__toggle theme-toggle"><img class="theme-toggle--sun lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/wb_sunny-black.svg" alt=""><img class="theme-toggle--moon lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/moon.svg" alt=""></div></div></div><div class="post-info__authors two-authors mt-xs-32 mt-sm-48 mb-xs-48 mb-sm-64"><div class="author"><div class="author__wrapper"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20200%20200'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/mirkasymov-1.png" alt="Rustam Mirkasymov" class="author__image lazy"><div class="author__about"><div class="author__name title-h6">Rustam Mirkasymov</div><div class="body2">Head of cyber threat research, Group-IB (Europe)</div></div></div></div><div class="author"><div class="author__wrapper"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20200%20200'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/martinez.png" alt="Roberto Martinez" class="author__image lazy"><div class="author__about"><div class="author__name title-h6">Roberto Martinez</div><div class="body2">Sr. Threat Intelligence Analyst, Group-IB (Europe)</div></div></div></div></div><h1 class="header__title title-h2 mb-24 mt-md-48 mt-lg-64 mt-xl-64">Roasting 0ktapus: The phishing campaign going after Okta identity credentials</h1><p class="header__text mb-xs-48 mb-64 mb-lg-96 mb-xl-96">Over 130 organizations have been compromised in a sophisticated attack using simple phishing kits</p><div class="post-info__date mb-24 mb-lg-32 mb-xl-48"><div class="body2">August 25, 2022 · <span id="reading-time"></span> min to read · Threat Intelligence</div></div><div class="post-info__image mb-24 mb-lg-32 mb-xl-48"><img class="lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201734%20868'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/img-1440-29-min.jpg" alt=""></div><div class="post-info__tags"><div class="post-info__tag body2">0ktapus</div><div class="post-info__tag body2">Phishing</div><div class="post-info__tag body2">Threat Intelligence</div></div>            </div>
+          </div>
+        </div>
+        <div class="blog-post-content" id="blog-post-content">
+          <div class="blog-post-content__section--text"><p>Multi-factor authentication (MFA) is often implemented as a form of enterprise identity security to protect organizations against credential theft , dictionary attacks, and brute force techniques. But what if MFA is intercepted by a fraudster? In the cyber arena, where there is a continuous arms race with offensive and defensive strategies trying to outcompete each other, techniques that overcome MFA have existed for some time. In this blog, we share the techniques that utilize surprisingly simple tools that were used to overcome enterprise identity access management (IAM) and conduct supply chain attacks.</p>
+<h2>Introduction</h2>
+<p>For many years, cybercriminals have used social engineering and phishing attacks to trick unsuspected victims into providing their credentials. These credentials have been used to provide cybercriminals with access to a wide range of company resources for a number of <a href="/resources/research-hub/htct-2021-uninvited-guests/" target="_blank" rel="noopener">well-documented</a> purposes. To remain ahead of threat actors, and in its mission to fight all types of cybercrime, Group-IB helps organizations protect their digital assets and identify the miscreants targeting them by investigating phishing attacks.</p>
+<p>On July 26, 2022, Group-IB intelligence analysts received a request from a client of our Threat Intelligence solution asking for additional information on a recent phishing attack that they had experienced. The investigation started after the client provided domain names and IP addresses used in the attack.</p>
+<p>Using a combination of <a href="/products/threat-intelligence/" target="_blank" rel="noopener"><strong>Group-IB Threat Intelligence</strong></a>, and in-house and public tools we were able to obtain a list of domains that had been attacked. Our client was only one of several well-known organizations that were targeted in a massive phishing campaign codenamed <strong>0ktapus</strong> by Group-IB researchers. The initial objective of the attackers was clear: obtain Okta identity credentials and two-factor authentication (2FA) codes from users of the targeted organizations. With this information in hand, the attackers could gain unauthorized access to any enterprise resources the victims have access to.</p>
+<p>This case is of interest because despite using low-skill methods it was able to compromise a large number of well-known organizations. Furthermore, once the attackers compromised an organization they were quickly able to pivot and launch subsequent supply chain attacks, indicating that the attack was planned carefully in advance.</p>
+<p>Group-IB decided to make its research on <strong>0ktapus</strong> publicly available when <a href="https://support.signal.org/hc/en-us/articles/4850133017242" target="_blank" rel="noopener">Signal reported</a> <strong>1,900</strong> of their user’s accounts were probably hacked. We hope this blog will provide a better understanding of what happened and will give useful recommendations on how to prevent your organization from becoming a victim.</p>
+<h2>Attack scheme overview</h2>
+<p>Based on the request from our client, and from public reports made by <a href="https://www.twilio.com/blog/august-2022-social-engineering-attack" target="_blank" rel="noopener">Twilio</a> and <a href="https://blog.cloudflare.com/2022-07-sms-phishing-attacks/" target="_blank" rel="noopener">Cloudflare</a>, the attacks were well designed and executed. The attackers targeted employees of companies that are customers of IAM leader Okta. These employees received text messages containing links to phishing sites that mimicked the Okta authentication page of their organization. Examples of observed phishing SMS messages can be found in the two public reports mentioned above.</p>
+<p><strong><img decoding="async" class="alignnone wp-image-20324 size-full lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%202520%201471'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/blog_5.webp" alt="victim journey during 0ktapus phishing attacks" width="2520" height="1471" /></strong></p>
+<h2>Deep dive into the attack</h2>
+<h3>Phishing sites</h3>
+<p>In total, the Group-IB Threat Intelligence team detected <strong>169</strong> unique domains involved in the <strong>0ktapus</strong> campaign. When analyzing these phishing sites, Group-IB analysts pay attention to all resources being used. On many occasions, there are images, fonts or scripts that are unique enough that they can be used to find other sites using the same phishing kit. In this case, we found an image that is legitimately used by sites leveraging Okta authentication, being used by the phishing kit.</p>
+<p>If we correlate the hash value of this image with the keyword “_nuxt” (which is a folder name utilized by the frontend of the phishing kit), we can obtain a unique list of related domains. These domains were all used by the attackers to target organizations in multiple industries, located mostly in the United States and Canada. Based on the fact that many of these organizations use Okta’s Identity and Access Management services to secure access to enterprise resources, we named this campaign <strong>0ktapus</strong>.</p>
+<p>At this time, it became very clear that the threat actors’ immediate intentions were to gain access to the corporate services of the organizations.</p>
+<div id="attachment_20335" style="width: 967px" class="wp-caption alignnone"><img aria-describedby="caption-attachment-20335" decoding="async" class="wp-image-20335 size-full lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20957%20119'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/photo_2022-08-22_13-.webp" alt="Web resource found in all of the sites emulating Okta" width="957" height="119" /><p id="caption-attachment-20335" class="wp-caption-text">Figure 1: Web resource found in all of the sites emulating Okta authentication pages involved in the phishing campaigns</p></div>
+<div id="attachment_20325" style="width: 1290px" class="wp-caption alignnone"><img aria-describedby="caption-attachment-20325" decoding="async" class="wp-image-20325 size-full lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201280%20745'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/photo_2022-08-22_13-1.webp" alt="Sample of phishing sites" width="1280" height="745" /><p id="caption-attachment-20325" class="wp-caption-text">Figure 2: Sample of phishing sites found that emulate Okta authentication pages</p></div>
+<p>Interestingly, the domains being registered for the attacks used keywords like sso, vpn, okta, mfa, and help. Although, those are commonly used keywords, on occasions other keywords are used, or no keywords at all. As part of best practices, we also started tracking those keywords. However, often we only need to discover one domain to find the others.</p>
+<p>From the victim’s point of view, the phishing site looks quite convincing as it is very similar to the authentication page they are used to seeing. Victims are prompted for their username and password, and once provided a second page is shown asking for their 2FA code. Once the code has been handed to the phishers, the browser is forced to download a legitimate copy of the remote administration tool AnyDesk. It is still unknown the true purpose of pushing AnyDesk.exe to the victim’s asset, especially when the phishing link was sent via SMS to a mobile phone. Thus we decided the attacker didn’t configure the phishing kit properly in order to target mobile devices. That may indicate that the attacker is inexperienced.</p>
+<div id="attachment_20336" style="width: 1290px" class="wp-caption alignnone"><img aria-describedby="caption-attachment-20336" decoding="async" class="size-full wp-image-20336 lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201280%20720'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/photo_2022-08-22_13-1-1.webp" alt="Example of a phishing site" width="1280" height="720" /><p id="caption-attachment-20336" class="wp-caption-text">Figure 3: Example of a phishing site emulating the Okta authentication page of a target organization</p></div>
+<p>The frontend of the phishing sites uses the Nuxt.js framework while the backend uses Django, running on port 8080.</p>
+<div id="attachment_20326" style="width: 1248px" class="wp-caption alignnone"><img aria-describedby="caption-attachment-20326" decoding="async" class="size-full wp-image-20326 lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201238%20436'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/photo_2022-08-22_13-2.webp" alt="Django admin interface" width="1238" height="436" /><p id="caption-attachment-20326" class="wp-caption-text">Figure 4: Django admin interface running on port 8080 that was used in phishing attack that emulated Okta authentication pages</p></div>
+<p>The phishing site is static, meaning attackers cannot interact with victims in real-time like more sophisticated phishing kits do. However, to gain access before the 2FA codes expire, the attackers need to use the compromised data as soon as they get it. Most likely, this means that attackers were continuously monitoring their tools and using the credentials as soon as they received them.</p>
+<h3>Phishing kit analysis</h3>
+<p>With an efficient way to find new phishing sites, the next step was to locate a copy of the phishing kit being used. For this, we used <strong>Virustotal.</strong> It is well known that even cyber criminals use the popular antivirus scan service. A search for the hash of the image we were using to track phishing domains resulted in many false positives and one true positive. It appears that the miscreants had shared the kit among themselves using the file hosting service Pomf.cat and one of them scanned the link with Virustotal to make sure there was no malware in it.</p>
+<p>With a copy of the phishing kit in our possession, we were ready to start digging and get a better understanding of the threat our client was facing.</p>
+<div id="attachment_20337" style="width: 1316px" class="wp-caption alignnone"><img aria-describedby="caption-attachment-20337" decoding="async" class="size-full wp-image-20337 lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201306%20380'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/unnamed_2.webp" alt="Phishing kit structure" width="1306" height="380" /><p id="caption-attachment-20337" class="wp-caption-text">Figure 5: Phishing kit structure, that emulated Okta authentication pages, used by the attacker in their campaigns</p></div>
+<div id="attachment_20327" style="width: 1208px" class="wp-caption alignnone"><img aria-describedby="caption-attachment-20327" decoding="async" class="size-full wp-image-20327 lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201198%20518'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/photo_2022-08-22_13-3.webp" alt="Phishing kit structure" width="1198" height="518" /><p id="caption-attachment-20327" class="wp-caption-text">Figure 6: Phishing kit structure, that emulated Okta authentication pages, used by the attacker in their campaigns</p></div>
+<p>Nowadays, many phishing actors prefer to use kits that deliver the compromised data obtained from victims to a <strong>Telegram</strong> channel controlled by them. Therefore, we were not too surprised to see that this kit was not any different. Hiding at the end of the file containing the settings for Django, were a few lines dedicated to the configuration of the Telegram bot and the channel used by the kit to drop compromised data.</p>
+<div id="attachment_20328" style="width: 1278px" class="wp-caption alignnone"><img aria-describedby="caption-attachment-20328" decoding="async" class="size-full wp-image-20328 lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201268%20662'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/photo_2022-08-22_13-4.webp" alt="Function to send compromised data to Telegram" width="1268" height="662" /><p id="caption-attachment-20328" class="wp-caption-text">Figure 7: Function to send compromised data to Telegram used by the attackers to send credentials to themselves from the emulated Okta authentication pages in their phishing campaigns</p></div>
+<h3>Analysis of compromised data</h3>
+<p>Group-IB utilized patented technologies implemented in Threat Intelligence service to uncover the information obtained from all 0ktapus campaigns launched since March 2022. The analysis of compromised credentials sheds light on targets and helps us understand the attacks’ potential impact.</p>
+</div><div class="blog-post-content__section"><div class="table"><div class="table__wrapper"><table width="100%" data-table-width="85%;15%">
+<thead>
+<tr>
+<th width="85%">Breakdown of compromised victims</th>
+<th width="85%"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="85%">Compromised user credentials</td>
+<td style="text-align: center;" width="15%">9931</td>
+</tr>
+<tr>
+<td width="85%">Compromised user credentials with email</td>
+<td style="text-align: center;" width="15%">3120</td>
+</tr>
+<tr>
+<td width="85%">Compromised user credentials without email</td>
+<td style="text-align: center;" width="15%">6811</td>
+</tr>
+<tr>
+<td width="85%">Compromised MFA codes</td>
+<td style="text-align: center;" width="15%">5441</td>
+</tr>
+<tr>
+<td width="85%">Unique email domains that compromised users belonged to</td>
+<td style="text-align: center;" width="15%">136</td>
+</tr>
+</tbody>
+</table>
+</div></div></div><div class="blog-post-content__section--text"><p><strong><img decoding="async" class="alignnone wp-image-20322 size-full lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201680%20980'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/0ktapus_2_1.webp" alt="industry breakdown of the organizations targeted during 0ktapus phishing" width="1680" height="980" /></strong></p>
+<p><strong><img decoding="async" class="alignnone wp-image-20323 size-full lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201680%20980'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/0ktapus_4_1.webp" alt="geolocation of 0ktapus phishing attacks" width="1680" height="980" /></strong></p>
+<p>The analysis shows that most targeted companies are located in the USA. That list also includes companies that are headquartered in other countries but have US-based employees that were targeted.</p>
+<p>Unfortunately, we didn’t manage to identify all targeted companies, because ⅔ of the data didn’t contain a corporate email, but only usernames and 2FA codes. In those cases, we could only identify the region of residence of the victims.</p>
+<p><strong><img decoding="async" class="alignnone size-full wp-image-20321 lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201680%20980'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/0ktapus_1.webp" alt="geolocation of users" width="1680" height="980" /></strong></p>
+<p>Most companies in the victims’ list are providing IT, software development, and cloud services. As described in Twilio’s blog, the attackers try to obtain credentials in order to access private data, corporate emails and internal documents.</p>
+<p>Seeing financial companies in the compromised list gives us the idea that the attackers were also trying to steal money. Furthermore, some of the targeted companies provide access to crypto assets and markets, whereas others develop investment tools.</p>
+<p>Based on recent news about <a href="https://support.signal.org/hc/en-us/articles/4850133017242" target="_blank" rel="noopener">hacked Signal accounts</a>, we can assume the fraudsters may try to get access to private conversations and data. That information can be used as business intelligence and reselled to the victim&#8217;s competitors or could be used to ransom a victim.</p>
+<p>According to published blogs by Twillio and Cloudflare, victims received SMS with phishing links. It is still unknown how fraudsters prepared their target list and how they obtained the phone numbers. But, according to the compromised data we analyzed, the actors started their attacks targeting mobile operators and telecommunications companies. Chances are, some phone numbers may have been obtained from those initial attacks.</p>
+<h3>Supply chain attacks</h3>
+<p>Recent disclosures reveal that the initial compromises were just part of the attack. In many cases the attacker targeted mailing lists or customer-facing systems in order to launch supply chain attacks:</p>
+<ul>
+<li>Marketing firm <a href="https://www.bleepingcomputer.com/news/security/email-marketing-firm-hacked-to-steal-crypto-focused-mailing-lists/" target="_blank" rel="noopener">Klaviyo</a> was breached and personal information connected to cryptocurrency-related accounts, reportedly including names, addresses, emails, and phone numbers, was stolen. This information could be used in order to steal cryptocurrency.</li>
+<li>Email platform <a href="https://mailchimp.com/en-gb/august-2022-security-incident/" target="_blank" rel="noopener">Mailchimp</a> was breached to gain access to data from crypto-related companies and disrupt operations. Mailchimp was used by technology firm <a href="https://www.digitalocean.com/blog/digitalocean-response-to-mailchimp-security-incident" target="_blank" rel="noopener">DigitalOcean</a> to send confirmation emails, password resets, email-based alerts. By initiating and redirecting password resets the customers of DigitalOcean could have been compromised.</li>
+<li>Phone number verification provider <a href="https://www.twilio.com/blog/august-2022-social-engineering-attack" target="_blank" rel="noopener">Twilio</a> was breached, which allowed the attacker to attempt to re-register <a href="https://support.signal.org/hc/en-us/articles/4850133017242-Twilio-Incident-What-Signal-Users-Need-to-Know-" target="_blank" rel="noopener">Signal</a> accounts to new mobile devices.</li>
+</ul>
+<p>While it is possible that the threat actor may have been lucky in their attacks it is far more likely that they carefully crafted their attacks in order to launch the sophisticated supply chain attacks outlined above. It is not yet clear if the attacks were planned end-to-end in advance or whether opportunistic actions were taken at each stage. Regardless, it is clear that the attack has been incredibly successful and the full scale of the attack may not be known for some time.</p>
+<h3>Subject X</h3>
+<p>Using Telegram features, it is possible to get some information about the channel used by the phishing kit to collect compromised data, such as its name and the users administering it.</p>
+<div id="attachment_20329" style="width: 724px" class="wp-caption alignnone"><img aria-describedby="caption-attachment-20329" decoding="async" class="size-full wp-image-20329 lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20714%20214'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/photo_2022-08-22_13-5.webp" alt="Telegram channel used as drop for credentials" width="714" height="214" /><p id="caption-attachment-20329" class="wp-caption-text">Figure 8: Telegram channel used as drop for credentials by the attackers in their phishing campaigns emulating Okta authentication pages</p></div>
+<div id="attachment_20330" style="width: 786px" class="wp-caption alignnone"><img aria-describedby="caption-attachment-20330" decoding="async" class="size-full wp-image-20330 lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20776%201166'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/photo_2022-08-22_13-6.webp" alt="Administrators of the Telegram channel “Okta”" width="776" height="1166" /><p id="caption-attachment-20330" class="wp-caption-text">Figure 9: Administrators of the Telegram channel “Okta” used by attackers in their phishing campaigns that emulated Okta authentication pages</p></div>
+<p>Unfortunately, there was no useful information on the first Telegram account, but luck was on our side with the second one. For now, we will call the creator of the “Okta” channel, Subject X, allegedly a 22-year-old software developer.</p>
+<div id="attachment_20331" style="width: 380px" class="wp-caption alignnone"><img aria-describedby="caption-attachment-20331" decoding="async" class="size-full wp-image-20331 lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20370%20516'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/photo_2022-08-22_13-7.webp" alt="Subject X’s Telegram account" width="370" height="516" /><p id="caption-attachment-20331" class="wp-caption-text">Figure 10: Subject X’s Telegram account</p></div>
+<p>Using <a href="/products/threat-intelligence/" target="_blank" rel="noopener">Group-IB Threat Intelligence</a> to monitor Telegram channels used by cybercriminals, we were able to identify a few channels where Subject X was active at some point. One of the posts made by Subject X in 2019 led us to his Twitter account. The same tool also gave us the name and last name the administrator of the channel was using, before adopting the name “X”.</p>
+<div id="attachment_20332" style="width: 369px" class="wp-caption alignnone"><img aria-describedby="caption-attachment-20332" decoding="async" class="size-full wp-image-20332 lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20359%20340'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/photo_2022-08-22_13-8.webp" alt="Telegram post showing the Twitter account of Subject X" width="359" height="340" /><p id="caption-attachment-20332" class="wp-caption-text">Figure 11: Telegram post showing the Twitter account of Subject X</p></div>
+<div id="attachment_20333" style="width: 609px" class="wp-caption alignnone"><img aria-describedby="caption-attachment-20333" decoding="async" class="size-full wp-image-20333 lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20599%20427'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/photo_2022-08-22_13-9.webp" alt="Subject X’s Twitter account" width="599" height="427" /><p id="caption-attachment-20333" class="wp-caption-text">Figure 12: Subject X’s Twitter account</p></div>
+<p>Looking up the Twitter handle on Google gives back a GitHub account containing the same username and profile picture. This account also suggests the location of Subject X is North Carolina, United States.</p>
+<div id="attachment_20334" style="width: 832px" class="wp-caption alignnone"><img aria-describedby="caption-attachment-20334" decoding="async" class="size-full wp-image-20334 lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20822%201086'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/photo_2022-08-22_13-10.webp" alt="Subject X’s GitHub account" width="822" height="1086" /><p id="caption-attachment-20334" class="wp-caption-text">Figure 13: Subject X’s GitHub account</p></div>
+<p><strong> </strong></p>
+<p>From here, we went down the rabbit hole of Internet clues that led us to the alleged identity of Subject X.</p>
+<h2>Recommendations to avoid becoming a victim</h2>
+<p>Maintaining a secure organization requires ongoing vigilance. Security measures such as MFA can appear secure but it is clear that attackers can overcome them with relatively simple tools. Using Group-IB Threat Intelligence helps maintain a strong security posture by equipping security teams and tools with the latest insight into attackers.</p>
+<p>Group-IB recommends the following to mitigate similar attacks:</p>
+<ul class="checks">
+<li>End users should always check, carefully, the URL of the site where you are entering your credentials. This is especially important for users with privileged accounts.</li>
+<li>Treat all URLs that were received from unknown sources as suspicious. If in doubt, forward them to your security team for analysis.</li>
+<li>Implement a FIDO2-compliant security key from a vendor like YubiKey for multi-factor authentication, like Cloudflare suggests</li>
+<li>If you think your credentials might have been compromised, immediately change your password, sign off from all active sessions, and report the incident to your manager and security team.</li>
+</ul>
+<p>In line with Group-IB&#8217;s mission of fighting cybercrime, we will continue to explore the methods, tools, and tactics used by these phishing actors. We will also continue to inform and warn targeted organizations worldwide. We always strive to ensure that organizations under attack are notified as quickly as possible to help reduce potential damage. We also consider it our responsibility to share our findings with the cybersecurity community and encourage researchers to study advanced threats, share data, and use our technologies to combat cybercrime — together.</p>
+<p>If you are interested in what we do and would like to become an expert in the same field, you can take our Digital Forensics, Incident Response, and Threat Intelligence training courses. We also welcome applications to join the Group-IB team. Please check our <a href="https://www.group-ib.com/careers.html" target="_blank" rel="noopener">vacancies</a> on the website.</p>
+</div><div class="blog-post-content__section"><div class="promo-block"><h2 class="title-h3 mb-xs-16 mb-sm-16 mb-24">Try Group-IB Threat Intelligence now!</h2><p>Optimize strategic, operational and tactical decision-making with best-in-class cyber threat analytics</p><div class="buttons-wrapper mt-md-48 mt-sm-32 mt-xs-24"><a href="https://www.group-ib.com/products/threat-intelligence/" target="_blank" class="button button--filled button--md"><span class="effect slide-up" data-effect="Test Drive Group-IB Threat Intelligence">Test Drive Group-IB Threat Intelligence</span></a></div></div></div><div class="blog-post-content__section--text"><h3>IOCs</h3>
+</div><div class="blog-post-content__section"><div class="table"><div class="table__wrapper"><table width="100%" data-table-width="50%;50%">
+<thead>
+<tr>
+<th width="50%">IP</th>
+<th width="50%">C&amp;C domains</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="50%">45[.]76[.]80[.]199</td>
+<td width="50%">twiiio-sso[.]com, box-okta[.]org, kucoin-pin[.]com, boxokta[.]com, kucoin-sso[.]com</td>
+</tr>
+<tr>
+<td width="50%">66[.]42[.]107[.]233</td>
+<td width="50%">slack-mailchimp[.]com</td>
+</tr>
+<tr>
+<td width="50%">45[.]32[.]66[.]165</td>
+<td width="50%">microsoft-sso[.]net, sendgrid-okta[.]org, mlcrosoft[.]info, mlcrosoft[.]cloud</td>
+</tr>
+<tr>
+<td width="50%">45[.]76[.]238[.]53</td>
+<td width="50%">ouryahoo-okta[.]org, ouryahooinc-okta[.]com</td>
+</tr>
+<tr>
+<td width="50%">155[.]138[.]240[.]251</td>
+<td width="50%">sykes-sso[.]com, internai-customer[.]io, ouryahoo-okta[.]com, ouryahoo-okta[.]net, techmahindra-sso[.]com</td>
+</tr>
+<tr>
+<td width="50%">149[.]28[.]37[.]137</td>
+<td width="50%">qualfon-sso[.]com, twiiio[.]net, twiiio[.]org, teleperformanceusa-sso[.]com, tmo-sso[.]net, okta-sso[.]net</td>
+</tr>
+<tr>
+<td width="50%">149[.]248[.]1[.]50</td>
+<td width="50%">att-mfa[.]com, att-rsa[.]com</td>
+</tr>
+<tr>
+<td width="50%">108[.]61[.]119[.]20</td>
+<td width="50%">mcsupport-okta[.]com, mailgun-okta[.]com, sprint-idg[.]net</td>
+</tr>
+<tr>
+<td width="50%">149[.]28[.]212[.]53</td>
+<td width="50%">tmobie[.]net</td>
+</tr>
+<tr>
+<td width="50%">140[.]82[.]63[.]209</td>
+<td width="50%">kucoinpin[.]com, kucoinpin[.]net, twiiio-okta[.]net</td>
+</tr>
+<tr>
+<td width="50%">144[.]202[.]82[.]47</td>
+<td width="50%">kucoin-pin[.]net, kucoin-sso[.]net</td>
+</tr>
+<tr>
+<td width="50%">45[.]63[.]39[.]116</td>
+<td width="50%">telus-sso[.]com</td>
+</tr>
+<tr>
+<td width="50%">149[.]248[.]62[.]54</td>
+<td width="50%">rogers-rci[.]net, rogers-ssp[.]com, iqor-duo[.]net, iqor-portal[.]com, cgslnc-okta[.]com, conexusonline[.]com, klaviyo-sso[.]com</td>
+</tr>
+<tr>
+<td width="50%">66[.]42[.]91[.]138</td>
+<td width="50%">arise-okta[.]com</td>
+</tr>
+<tr>
+<td width="50%">216[.]128[.]141[.]52</td>
+<td width="50%">rogers-rci[.]com, verizon-sso[.]net, taskus-sso[.]com</td>
+</tr>
+<tr>
+<td width="50%">45[.]63[.]39[.]151</td>
+<td width="50%">medailia-okta[.]com, quaifone[.]com, quaifon[.]com, t-moblle[.]org, iqor-sso[.]com, rogers-sso[.]net, tmo-sso[.]com</td>
+</tr>
+<tr>
+<td width="50%">143[.]244[.]178[.]172</td>
+<td width="50%">teleperformance-help[.]com</td>
+</tr>
+<tr>
+<td width="50%">66[.]42[.]90[.]140</td>
+<td width="50%">twilio-sso[.]com, rogers-help[.]net, twilio-help[.]com, tmoblle[.]co, t-moblie[.]help, twlilo[.]net</td>
+</tr>
+<tr>
+<td width="50%">165[.]227[.]57[.]16</td>
+<td width="50%">twilio-sso[.]com, att-sso[.]net</td>
+</tr>
+<tr>
+<td width="50%">147[.]182[.]201[.]149</td>
+<td width="50%">coin-base-okta[.]com, rogers-sso[.]com, concentrlx[.]com, concentrix-sso[.]com</td>
+</tr>
+<tr>
+<td width="50%">146[.]190[.]42[.]89</td>
+<td width="50%">teleperformance-sso[.]com, transcom-help[.]com, atento-help[.]com, sykes-help[.]com, sitel-sso[.]com, mailchimp-help[.]com, sinch-sso[.]com</td>
+</tr>
+<tr>
+<td width="50%">146[.]190[.]44[.]66</td>
+<td width="50%">transcom-sso[.]com, hubspot-sso[.]com, mailchimp-sso[.]com, maiichlmp[.]com</td>
+</tr>
+<tr>
+<td width="50%">167[.]99[.]221[.]10</td>
+<td width="50%">att-sso[.]com, sitel-help[.]com, bandwidth-okta[.]com</td>
+</tr>
+<tr>
+<td width="50%">147[.]182[.]132[.]52</td>
+<td width="50%">cloudflare-okta[.]com</td>
+</tr>
+<tr>
+<td width="50%">167[.]172[.]141[.]4</td>
+<td width="50%">twilio-okta[.]com, iqor-helpdesk[.]com, ttec-help[.]com</td>
+</tr>
+<tr>
+<td width="50%">67[.]205[.]146[.]165</td>
+<td width="50%">vzw-corp[.]net, iqor-help[.]net, metropcs-edge[.]net</td>
+</tr>
+<tr>
+<td width="50%">143[.]198[.]164[.]89</td>
+<td width="50%">iqor-tmobile[.]com, iqor-help[.]com</td>
+</tr>
+<tr>
+<td width="50%">45[.]63[.]79[.]150</td>
+<td width="50%">sykes-vpn[.]com, startek-vpn[.]com, t-moblie-okta[.]com, att-uid[.]co, at-uid[.]com, att-ctx[.]com, att-uid[.]co, activecampaign-okta[.]com</td>
+</tr>
+<tr>
+<td width="50%">144[.]202[.]117[.]57</td>
+<td width="50%">vzwcorp[.]co</td>
+</tr>
+<tr>
+<td width="50%">138[.]197[.]7[.]153</td>
+<td width="50%">tmoblle[.]org, t-mobiie[.]co</td>
+</tr>
+<tr>
+<td width="50%">144[.]202[.]17[.]28</td>
+<td width="50%">att-id[.]net, att-uid[.]net</td>
+</tr>
+<tr>
+<td width="50%">45[.]76[.]171[.]233</td>
+<td width="50%">uid-att[.]com, att-uid[.]com, intercom-vpn[.]com, sutherlandglobal-vpn[.]com, sitel-vpn[.]net</td>
+</tr>
+<tr>
+<td width="50%">95[.]179[.]238[.]3</td>
+<td width="50%">t-mobilers[.]com</td>
+</tr>
+<tr>
+<td width="50%">137[.]184[.]55[.]52</td>
+<td width="50%">tmoble[.]net, tp-update[.]com</td>
+</tr>
+<tr>
+<td width="50%">159[.]223[.]160[.]128</td>
+<td width="50%">tmoblle[.]net</td>
+</tr>
+<tr>
+<td width="50%">69[.]55[.]49[.]252</td>
+<td width="50%">teleperformance-usa[.]net, mytpusa[.]net</td>
+</tr>
+<tr>
+<td width="50%">143[.]198[.]156[.]234</td>
+<td width="50%">tmobiler[.]net, t-mobile-okta[.]net, t-moblier[.]org, teleperformance-usa[.]net</td>
+</tr>
+<tr>
+<td width="50%">159[.]89[.]93[.]54</td>
+<td width="50%">att-opus[.]net, opus-att[.]com</td>
+</tr>
+<tr>
+<td width="50%">161[.]35[.]119[.]80</td>
+<td width="50%">t-mobile-okta[.]org, mytpusa[.]com, twit-vpn[.]com, epicgames-vpn[.]com</td>
+</tr>
+<tr>
+<td width="50%">67[.]205[.]151[.]76</td>
+<td width="50%">att-citrix[.]net, tpusa-citrix[.]com, att-citrix[.]com</td>
+</tr>
+<tr>
+<td width="50%">138[.]68[.]27[.]0</td>
+<td width="50%">okta-hubspot[.]com, mailchimp-okta[.]com, twitter-okta[.]com, infosys-vpn[.]com, ttec-vpn[.]com, taskus-vpn[.]com</td>
+</tr>
+<tr>
+<td width="50%">104[.]248[.]234[.]27</td>
+<td width="50%">tp-usa[.]net, tmoblie[.]net</td>
+</tr>
+<tr>
+<td width="50%">67[.]205[.]154[.]21</td>
+<td width="50%">t-mobiie[.]org, t-mobiie[.]net</td>
+</tr>
+<tr>
+<td width="50%">64[.]227[.]23[.]72</td>
+<td width="50%">t-mobiie[.]net, okta-oath[.]com</td>
+</tr>
+<tr>
+<td width="50%">159[.]89[.]159[.]7</td>
+<td width="50%">okta-tmobiie[.]net, t-mobile-okta[.]com, t-mobile-okta[.]us</td>
+</tr>
+<tr>
+<td width="50%">66[.]175[.]217[.]141</td>
+<td width="50%">okta-tmo[.]org, okta-tmobile[.]org</td>
+</tr>
+<tr>
+<td width="50%">172[.]105[.]98[.]36</td>
+<td width="50%">tmo-okta[.]com, okta.tmobiie[.]net, okta-drop[.]com</td>
+</tr>
+<tr>
+<td width="50%">138[.]197[.]194[.]87</td>
+<td width="50%">loginxarth[.]tv</td>
+</tr>
+<tr>
+<td width="50%">138[.]68[.]26[.]2</td>
+<td width="50%">binance-okta[.]com, snap-okta[.]net, snap-okta[.]com, epicgames-okta[.]com, evernote-onelogin[.]com, riotgames-vpn[.]net, okta-riotgames[.]com, one-login[.]co, cb-okta[.]com, cb-okta[.]net</td>
+</tr>
+<tr>
+<td width="50%">149[.]28[.]110[.]16</td>
+<td width="50%">tmobile-okta[.]com, tmobile-okta[.]net</td>
+</tr>
+<tr>
+<td width="50%">157[.]245[.]246[.]85</td>
+<td width="50%">riotgames-okta[.]com, tmobile-okta[.]com, riotgames-vpn[.]com, customer-internal[.]com</td>
+</tr>
+<tr>
+<td width="50%">147[.]182[.]218[.]194</td>
+<td width="50%">alorica-vpn[.]com, concentrixhelp[.]com, att-vmware[.]com</td>
+</tr>
+<tr>
+<td width="50%">104[.]248[.]236[.]115</td>
+<td width="50%">att-vpn[.]org, corp-att[.]net, att-vpn[.]com</td>
+</tr>
+<tr>
+<td width="50%">192[.]241[.]142[.]113</td>
+<td width="50%">att-support[.]org</td>
+</tr>
+<tr>
+<td width="50%">165[.]227[.]79[.]161</td>
+<td width="50%">tmo[.]ac</td>
+</tr>
+<tr>
+<td width="50%">137[.]184[.]136[.]163</td>
+<td width="50%">bestbuy-vpn[.]com, ttecvpn[.]com</td>
+</tr>
+</tbody>
+</table>
+</div></div></div>
+          <div class="share">
+            <div class="mt-96 mt-lg-128 mt-xl-192">
+              <div class="">
+                <div class="share__wrapper text-center">
+
+                <div class="share__title title-h3">Share this article</div><p class="share__text body1">Found it interesting? Don't hesitate to share it to wow your friends or colleagues</p><div class="ya-share2" data-bare data-lang="ru" data-services="twitter,linkedin,telegram"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="c-md-5 m-md-1 blog-post__sidebar sidebar" id="sidebar">
+        <div class="sidebar__authors"><div class="author"><div class="author__wrapper"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20200%20200'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/mirkasymov-1.png" alt="Rustam Mirkasymov" class="author__image lazy"><div class="author__about"><div class="author__name title-h6">Rustam Mirkasymov</div><div class="body2">Head of cyber threat research, Group-IB (Europe)</div></div></div></div><div class="author"><div class="author__wrapper"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20200%20200'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/martinez.png" alt="Roberto Martinez" class="author__image lazy"><div class="author__about"><div class="author__name title-h6">Roberto Martinez</div><div class="body2">Sr. Threat Intelligence Analyst, Group-IB (Europe)</div></div></div></div></div>
+        <div class="sidebar__more-posts more-posts">
+          <div class="more-posts__title title-h5">More posts</div><div class="more-posts__wrapper"><a href="https://www.group-ib.com/blog/cloud-infrastructure-threats/" class="post-card"><img class="lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/cloud-small.webp" alt=""><div class="post-card__content"><div class="post-card__date caption">July 10, 2023</div><div class="post-card__title subtitle2">Clouded Judgment: how mismanaged cloud infrastructure can expose users to cyber risks</div></div></a><a href="https://www.group-ib.com/blog/cryptoslabs-investment-scams/" class="post-card"><img class="lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/cryptoslab2.jpg" alt=""><div class="post-card__content"><div class="post-card__date caption">June 15, 2023</div><div class="post-card__title subtitle2">Busting CryptosLabs: a scam ring targeting French speakers for millions</div></div></a><a href="https://www.group-ib.com/blog/operation-triangulation/" class="post-card"><img class="lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://website.cdn.group-ib.com/wp-content/uploads/blog1-11-1.jpg" alt=""><div class="post-card__content"><div class="post-card__date caption">June 2, 2023</div><div class="post-card__title subtitle2">Operation Triangulation: Mapping the threat</div></div></a></div><a href="/blog/" class="more-posts__load title-h6">View all</a>        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer>
+  <div class="cookie-alert">
+    <div class="cookie-alert__wrapper">
+      <div class="cookie-alert__title title-h4">This site uses cookies</div>
+      <p class="cookie-alert__text small">We use cookies on the website to make your browser experience more personal, convenient and secure. You may block or manage the use of cookies, however, in some cases they’re essential to make this site work properly. Learn more about cookies in Group-IB <a href="/policy.html" class="body2">Privacy And Cookies Policy.</a></p>
+      <div class="buttons-wrapper">
+        <a class="button button--filled button--md accept-cookies" id="">
+          <span class="effect slide-up" data-effect="Accept">Accept</span>
+        </a>
+        <a href="/policy.html" class="button button--default button--md" id="">
+          <span class="effect slide-up" data-effect="Find out more">Find out more</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <script>
+  // COOKIE
+    (function () {
+      'use strict';
+
+      var cookieAlert = document.querySelector('.cookie-alert');
+      var acceptCookies = document.querySelector('.accept-cookies');
+
+      if (!getCookie('acceptCookies')) {
+        cookieAlert.classList.add('show');
+      }
+
+      acceptCookies.addEventListener('click', function () {
+        setCookie('acceptCookies', true, 60);
+        cookieAlert.classList.remove('show');
+      });
+    })();
+
+    function setCookie(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+      var expires = 'expires=' + d.toUTCString();
+      document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
+    }
+
+    function getCookie(cname) {
+      var name = cname + '=';
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return '';
+    }
+  // COOKIE END
+  </script>
+  <div>
+    <div class="row" style="margin: 0">
+      <div class="footer">
+        <div class="footer__section-top">
+        <div class="footer__logo">
+            <a href="/"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/main-logo.svg" alt="Cyber Security Services - Group-IB logo" class="footer__logo-image lazy" /></a>
+            <div class="footer__scrolltotop">
+              <a href="#main-nav" class="scrollto"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/Arrow_Forward_Up.svg" class="footer__scrolltotop-image lazy" alt="Scroll to top"/></a>
+            </div>
+          </div>
+          <div class="footer__widget footer__menu">
+            <div class="footer__wrapper">
+              <div class="footer__widget-title title-h6">Products</div>
+              <ul class="footer__menu-list">
+                <li><a href="/products/threat-intelligence/">Threat Intelligence</a></li>
+                <li><a href="/products/fraud-protection/">Fraud Protection</a></li>
+                <li><a href="/products/managed-xdr/">Managed XDR</a></li>
+                <li><a href="/products/attack-surface-management/">Attack Surface Management</a></li>
+                <li><a href="/products/digital-risk-protection/">Digital Risk Protection</a></li>
+                <li><a href="/products/business-email-protection/">Business Email Protection</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer__widget footer__link">
+            <div class="footer__widget-title title-h6">Solutions</div>
+            <ul class="footer__menu-list">
+              <li><a href="/solutions/ransomware-protection-and-response/">Ransomware Protection and Response</a></li>
+              <li><a href="/solutions/phishing-and-scam-protection/">Phishing and Scam Protection</a></li>
+              <li><a href="/solutions/bot-protection/">Bot Protection</a></li>
+            </ul>
+          </div>
+          <div class="footer__widget footer__links">
+            <div class="footer__links-top">
+              <a href="/services.html" class="footer__widget-title title-h6"> Services<span class="link-arrow link-arrow--color link-arrow--xs-sm"></span> </a>
+            </div>
+            <div class="footer__links-bottom">
+              <div class="footer__widget-title title-h6">
+                <a href="#">Pricing<span class="link-arrow link-arrow--color link-arrow--xs-sm"></span></a>
+              </div>
+            </div>
+          </div>
+          <div class="footer__widget footer__menu">
+            <div class="footer__widget-title title-h6">Resources</div>
+            <ul class="footer__menu-list">
+              <li><a href="/resources/research-hub/">Research Hub</a></li>
+              <li><a href="/resources/knowledge-hub/">Knowledge Hub</a></li>
+              <li><a href="/certificates.html">Certificates</a></li>
+              <li><a href="/resources/webinars/">Webinars</a></li>
+              <li><a href="/blog/">Blog</a></li>
+            </ul>
+          </div>
+          <div class="footer__widget footer__menu">
+            <div class="footer__widget-title title-h6">Company</div>
+            <ul class="footer__menu-list">
+              <li><a href="/about-us/">About Group-IB</a></li>
+              <li><a href="/services/cert/">CERT-GIB</a></li>
+              <li><a href="/leadership.html">Team</a></li>
+              <li><a href="/partners.html">Partners</a></li>
+              <li><a href="/mssp-and-mdr-partner-program/">MSSP and MDR Partner Program</a></li>
+              <li><a href="/careers.html">Careers</a></li>
+              <li><a href="/careers/internship.html">Internship</a></li>
+              <li><a href="/media-center/">Media Center</a></li>
+              <li><a href="/contacts/">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer__section-subscribe">
+          <div class="footer__widget footer__subscribe">
+            <div class="footer__widget-title title-h6">Subscribe to stay up to date with the latest cyber threat trends</div>
+              <div class="footer__subscribe-form subscribe-form">
+                <div class="footer-hs-form">
+                  <!--[if lte IE 8]>
+                    <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2-legacy.js"></script>
+                  <![endif]-->
+                  <script charset="utf-8" type="text/javascript" src="//js-eu1.hsforms.net/forms/v2.js"></script>
+                  <script>
+                    hbspt.forms.create({
+                      region: "eu1",
+                      portalId: "25755956",
+                      formId: "55a22738-d5a5-43f9-9c1c-fa4c1a6eb349",
+                    });
+                  </script>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer__section-contact">
+          <div class="footer__widget footer__contacts">
+            <div class="footer__widget-title title-h6">Contact</div>
+            <div class="footer__contacts-wrapper">
+              <div class="footer__contacts-list">
+                <ul>
+                  <li>Asia-Pacific: <a href="tel:+6531594398">+65 3159 4398</a></li>
+                  <li>Europe and North America: <a href="tel:+31202269090">+31 20 226 90 90</a></li>
+                  <li>Middle East and Africa: <a href="tel:+97145681785"> +971 4 568 1785</a></li>
+                </ul>
+              </div>
+              <div class="footer__contact-links">
+                <a href="mailto:info@group-ib.com" class="footer__email">info@group-ib.com</a>
+                <div class="footer__socials">
+                  <ul>
+                    <li>
+                      <a href="https://twitter.com/GroupIB" rel="nofollow">
+                        <div class="footer__socials-icon icon--twitter"><img class="lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/twitter-icon.svg" alt="GroupIB twitter link" /></div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.linkedin.com/organization/1382013/" rel="nofollow">
+                        <div class="footer__socials-icon icon--linkedin"><img class="lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/linkedin-icon.svg" alt="GroupIB linkedin link"/></div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://instagram.com/groupibhq/" rel="nofollow">
+                        <div class="footer__socials-icon icon--instagram"><img class="lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/instagram-icon.svg" alt="GroupIB instagram link"/></div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.facebook.com/groupibHQ" rel="nofollow">
+                        <div class="footer__socials-icon icon--facebook"><img class="lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/facebook-icon.svg" alt="GroupIB facebook link"/></div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://t.me/Group_IB" rel="nofollow">
+                        <div class="footer__socials-icon icon--telegram"><img class="lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/telegram-icon.svg" alt="GroupIB telegram link"/></div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://medium.com/@groupibgib" rel="nofollow">
+                        <div class="footer__socials-icon icon--medium"><img class="lazy" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="/wp-content/themes/gib-theme/assets/images/medium-icon.svg" alt="GroupIB medium link"/></div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer__section-bottom">
+          <div class="footer__widget footer__about">
+            <div class="footer__copyright">
+              <p class="small">© 2003 – 2023 Group-IB is a global leader in the fight against cybercrime, protecting customers around the world by preventing breaches, eliminating fraud and protecting brands.</p>
+            </div>
+            <div class="footer__bottom-nav">
+              <ul>
+                <li><a href="/term-of-use.html">Terms</a></li>
+                <li><a href="/policy.html">Privacy</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="https://website.cdn.group-ib.com/wp-content/themes/gib-theme/assets/js/main.js" defer></script><script src="https://website.cdn.group-ib.com/wp-content/themes/gib-theme/assets/libs/fancybox/fancybox.umd.js"></script>
+
+<script>var pseudo_links = document.querySelectorAll(".pseudo-clearfy-link");for (var i=0;i<pseudo_links.length;i++ ) { pseudo_links[i].addEventListener("click", function(e){   window.open( e.target.getAttribute("data-uri") ); }); }</script><script type='text/javascript' id='post-views-counter-frontend-js-before'>
+var pvcArgsFrontend = {"mode":"js","postID":20313,"requestURL":"https:\/\/www.group-ib.com\/wp-admin\/admin-ajax.php","nonce":"c980f46815"};
+</script>
+<script type='text/javascript' src='https://www.group-ib.com/wp-content/plugins/post-views-counter/js/frontend.min.js' id='post-views-counter-frontend-js'></script>
+<script>!function(){var t=!1;try{var e=Object.defineProperty({},"passive",{get:function(){t=!0}});window.addEventListener("test",null,e)}catch(t){}return t}()||function(i){var o=!0,s=!1;EventTarget.prototype.addEventListener=function(t,e,n){var r="object"==typeof n,a=r?n.capture:n;n=r?n:{},"touchstart"!=t&&"scroll"!=t&&"wheel"!=t||(n.passive=void 0!==n.passive?n.passive:o),n.capture=void 0!==a?a:s,i.call(this,t,e,n)}}(EventTarget.prototype.addEventListener);</script>
+<!-- Analytics -->
+
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25755956.js"></script>
+<!-- End of HubSpot Embed Code -->
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-PW7265');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PW7265" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-25492706-2"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-25492706-2');
+</script>
+<script type="text/javascript">
+_linkedin_partner_id = "4443393";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script>
+-->
+<script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://website.cdn.group-ib.com/wp-content/themes/gib-theme/assets/js/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<!--
+<noscript>
+<img class="lazy" height="1" width="1" style="display:none;" alt="" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" data-src="https://px.ads.linkedin.com/collect/?pid=4443393&fmt=gif" />
+</noscript>
+-->
+<script>window.w3tc_lazyload=1,window.lazyLoadOptions={elements_selector:".lazy",callback_loaded:function(t){var e;try{e=new CustomEvent("w3tc_lazyload_loaded",{detail:{e:t}})}catch(a){(e=document.createEvent("CustomEvent")).initCustomEvent("w3tc_lazyload_loaded",!1,!1,{e:t})}window.dispatchEvent(e)}}</script><script async src="https://www.group-ib.com/wp-content/plugins/w3-total-cache/pub/js/lazyload.min.js"></script></body>
+</html>
+<script>
+  function readingTime() {
+    const text = document.getElementById("blog-post-content").innerText;
+    const wpm = 225;
+    const words = text.trim().split(/\s+/).length;
+    const time = Math.ceil(words / wpm);
+    document.getElementById("reading-time").innerText = time;
+  }
+  readingTime();
+</script>
+
+<script>
+  /*
+  window.onload = function () {
+    if (window.location.href.indexOf("group-ib.com") != -1) {
+      
+    }
+  }
+  */
+  // const list = document.querySelector('.ya-share2__list');
+  // const list2 = document.querySelector('.share-widget-mobile .ya-share2__list');
+  // const list3 = document.querySelector('.share-widget-desktop .ya-share2__list');
+  // const list4 = document.querySelector('.share-footer .ya-share2__list');
+
+  // const yaShareLists = document.querySelectorAll('.ya-share2__list');
+  // if(yaShareLists.length > 0) {
+  //   for(let index = 0; index < yaShareLists.length; index++) {
+  //     const yaShareList = yaShareLists[index];
+  //     const shareFB = document.createElement('li');
+  //     shareFB.className = 'ya-share2__item ya-share2__item_service_facebook';
+  //     shareFB.id = 'shareFacebook';
+  //     shareFB.innerHTML = '<a class="ya-share2__link"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span></a>';
+  //     yaShareList.append(shareFB); 
+  //   }
+  // }
+
+  // list.append(shareFB);
+  // list2.append(shareFB);
+  // list3.append(shareFB);
+  // list4.append(shareFB);
+
+  window.onload = function () {
+    
+    const yaShareLists = document.querySelectorAll('.ya-share2__list');
+    if(yaShareLists.length > 0) {
+      for(let index = 0; index < yaShareLists.length; index++) {
+        const yaShareList = yaShareLists[index];
+        const shareFB = document.createElement('li');
+        shareFB.className = 'ya-share2__item ya-share2__item_service_facebook';
+        shareFB.id = 'shareFacebook';
+        shareFB.innerHTML = '<a class="ya-share2__link"><span class="ya-share2__badge"><span class="ya-share2__icon"></span></span></a>';
+        yaShareList.append(shareFB); 
+      }
+    }
+
+    document.getElementById('shareFacebook').onclick = function () {
+      FB.ui(
+        {
+          display: 'popup',
+          method: 'share',
+          href: 'https://www.group-ib.com/blog/0ktapus/',
+      }, function(response){});
+    };
+    
+  };
+</script>
+
+<script>
+  document.getElementById("share-url").value = window.location.href;
+  document.getElementById("share-url-mobile").value = window.location.href;
+  jQuery('.share-url__copy').click(function () {
+    jQuery('.share-url__copy').addClass('success');
+    navigator.clipboard.writeText(window.location.href);
+    setTimeout(() => {
+    jQuery('.share-url__copy').removeClass('success');
+    }, 1500);
+  });
+</script>
+
+<script>
+  var carousel123 = new Swiper('.carousel123', {
+    grabCursor: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
+
+  var authorsMoreThan2Swiper = new Swiper('.authors-more-than-2-swiper', {
+    grabCursor: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    breakpoints: {
+      0: {
+        slidesPerView: 'auto',
+        spaceBetween: 16,
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+      },
+      620: {
+        spaceBetween: 24,
+        slidesPerView: 2,
+        slidesPerGroup: 2,
+      },
+    },
+  });
+
+  function positioningSidebar() {
+    let sidebar = document.getElementById('sidebar');
+    let sidebarHeight = sidebar.offsetHeight;
+    let windowHeight = document.documentElement.clientHeight;
+    if (windowHeight < (sidebarHeight + 48)) {
+      let sidebarTop = windowHeight - sidebarHeight;
+      jQuery(sidebar).css('top', sidebarTop + 'px');
+    } else {
+      jQuery(sidebar).css('top', '72px');
+    }
+  }
+  window.addEventListener('resize', positioningSidebar);
+  positioningSidebar();
+
+  if (localStorage.getItem('theme')) {
+    if (localStorage.getItem('theme') == 'dark') {
+      jQuery('body').addClass('theme--dark');
+    }
+    else if (localStorage.getItem('theme') == 'light') {
+      jQuery('body').addClass('theme--white');
+    }
+  } else {
+      localStorage.setItem('theme', 'dark');
+      jQuery('body').addClass('theme--dark');
+  }
+  
+  jQuery('.theme-toggle').click(function () {
+    if (localStorage.getItem('theme') == 'dark') {
+      localStorage.setItem('theme', 'light');
+    } else {
+      localStorage.setItem('theme', 'dark');
+    }
+    jQuery('body').toggleClass('no-transition');
+    jQuery('body').toggleClass('theme--dark');
+    jQuery('body').toggleClass('theme--white');
+    setTimeout(() => {
+      jQuery('body').toggleClass('no-transition');
+    }, 250);
+  });
+  jQuery('.share-toggle').click(function () {
+    jQuery('.share-toggle').toggleClass('active');
+    jQuery('.share-widget').toggleClass('show');
+  });
+</script>
+
+
+
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.boldgrid.com/w3-total-cache/
+
+Object Caching 23/292 objects using disk
+Page Caching using disk: enhanced 
+Content Delivery Network via Amazon Web Services: CloudFront: website.cdn.group-ib.com
+Lazy Loading
+Minified using disk
+Database Caching using disk
+Fragment Caching 1/1 fragments using disk
+
+Fragment Cache debug info:
+Caching:            enabled
+Total calls:        1
+Cache hits:         1
+Cache misses:       0
+Total time:         0.0001
+W3TC Fragment Cache info:
+    # |     Status      |     Source      | Data size (b) | Query time (s) |          Group| Accessible| Transient ID
+    1 |     cached      |   persistent    |          9391 |         0.0001 |        nogroup|       site| global_styles_gib-theme
+
+
+Served from: www.group-ib.com @ 2023-07-26 16:42:06 by W3 Total Cache
+-->

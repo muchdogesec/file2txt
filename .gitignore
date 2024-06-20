@@ -1,0 +1,8 @@
+
+.DS_Store
+keys/
+.env/
+logs/
+__pycache__/
+file2txt-venv
+output

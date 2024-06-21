@@ -68,6 +68,7 @@ if __name__ == "__main__":
     logging.basicConfig(filename=log_file, encoding='utf-8', level=logging.DEBUG, format=FORMAT)
     handler.setFormatter(logging.Formatter(FORMAT))
     logging.root.addHandler(handler)
+    logging.info("writing logs to %s", log_file.absolute())
 
     args = parse_arguments()
 

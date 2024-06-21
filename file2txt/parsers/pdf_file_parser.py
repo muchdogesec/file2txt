@@ -1,15 +1,11 @@
-from io import BytesIO
 import logging
 import os
 from pathlib import Path
-import shutil
 import subprocess
-import tempfile
 
 from file2txt.parsers.html_file_parser import HtmlFileParser
 
-from .core import BaseParser, CustomParser
-import time
+from .core import CustomParser
 from bs4 import BeautifulSoup
 
 class PopplerException(Exception):
@@ -36,13 +32,17 @@ class PdfFileParser(HtmlFileParser):
                 # "-c", # output complex document
                 self.file_path,
                 "-s",        # generate single document that includes all pages
-                "-dataurls", # use data URLs instead of external images in HTML
                 outdir/"output",
             ])
             self.file_content = (outdir/"output-html.html").read_bytes()
-            self.prepare_soup()
+            self.prepare_soup(outdir)
         except BaseException as e:
             raise PopplerException(f"failed to run pdftohtml on {self.file_path}") from e
         
-    def prepare_soup(self):
+    def prepare_soup(self, parent_dir: Path):
         self.soup = BeautifulSoup(self.file_content, "lxml")
+        for img in self.soup.find_all("img"):
+            src = img["src"]
+            if "://" in src or src.startswith("/"):
+                continue
+            img["src"] = str((parent_dir.absolute()/src))

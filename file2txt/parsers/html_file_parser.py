@@ -34,13 +34,13 @@ class HtmlFileParser(BaseParser, ABC):
         Extracts and returns text from the HTML document,
         including replacing link tags and inserting image text into HTML.
         """
-        text = self._extract_text_from_html()
+        text = self.extract_text_from_html(self.soup)
         return [text]
 
-    def _extract_text_from_html(self) -> str:
-        self._insert_image_text_into_html()
-        self._replace_link_tags()
-        return markdownify(self.soup.prettify())
+    def extract_text_from_html(self, soup) -> str:
+        # self._insert_image_text_into_html()
+        self._replace_link_tags(soup)
+        return markdownify(soup.prettify())
 
     def _insert_image_text_into_html(self) -> None:
         self._replace_img_tags()
@@ -50,8 +50,8 @@ class HtmlFileParser(BaseParser, ABC):
         div_tag.string = text
         self.soup.append(div_tag)
 
-    def _replace_link_tags(self) -> None:
-        for a_tag in self.soup.find_all('a'):
+    def _replace_link_tags(self, soup) -> None:
+        for a_tag in soup.find_all('a'):
             a_tag.replace_with(a_tag.get_text())
 
     def _wrap(self, to_wrap, wrap_in) -> None:

@@ -40,7 +40,9 @@ class PdfFileParser(HtmlFileParser):
             raise PopplerException(f"failed to run pdftohtml on {self.file_path}") from e
         
     def prepare_soup(self, parent_dir: Path):
-        self.soup = BeautifulSoup(self.file_content, "lxml")
+        self.soup = BeautifulSoup(self.file_content, "html.parser")
+        for title in self.soup.find_all("title"):
+            title.extract()
         for img in self.soup.find_all("img"):
             src = img["src"]
             if "://" in src or src.startswith("/"):

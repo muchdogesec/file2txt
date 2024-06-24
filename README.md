@@ -73,7 +73,8 @@ python3 file2txt.py \
 	--file path/to/file.extension \
 	--output my_document \
 	--defang boolean \
-	--extract_text_from_image boolean
+	--extract_text_from_image boolean \
+  --ai_prettify boolean
 ```
 
 To upload a new file to be processed to text the following flags are used;
@@ -89,7 +90,7 @@ To upload a new file to be processed to text the following flags are used;
   * `powerpoint`
 * `--file` (required, string): path to file to be converted to text. Note, if the filetype and mimetype of the document submitted does not match one of those supported by file2txt (and set for `mode`, an error will be returned.
 * `--output` (optional, string): name of output path/file. Default is `output/{input_filename}.file2txt-{mode}.md`.
-* `--ai_clean_up` (optional, boolean): default is `false`. file2txt will convert your file to markdown locally. Often the output of such conversions are messy (leave lots of whitespace, new lines, etc.). If you want to make the output more readable to a human, setting this argument to true will ask an AI model to clean it up for you. Recommended to use when output will be read by a human.
+* `--ai_prettify` (optional, boolean): default is `false`. file2txt will convert your file to markdown locally. Often the output of such conversions are messy (leave lots of whitespace, new lines, etc.). If you want to make the output more readable to a human, setting this argument to true will ask an AI model to clean it up for you. Recommended to use when output will be read by a human.
 * `--defang` (optional, boolean): if output should be defanged. Default is `true`.
 * `--extract_text_from_image` (optional, boolean): if images should be converted to text using OCR. Default is `true`. You need a valid `key/key.json` key for this to work. This flag MUST be `false` with `csv` mode and MUST be `true` with `image` mode.
 

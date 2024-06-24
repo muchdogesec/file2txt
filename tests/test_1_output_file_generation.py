@@ -29,7 +29,7 @@ class TestFile2Txt(unittest.TestCase):
         os.makedirs(output_directory, exist_ok=True)
 
         # Create a more descriptive output filename
-        output_filename = f"{mode}_{filename_without_ext}_defang-{defang}_extract-{extract_text_from_image}_output.md"
+        output_filename = f"{mode}_{filename_without_ext}_defang-{defang}_extract_image-{extract_text_from_image}_output.md"
         output_filepath = os.path.join(output_directory, output_filename)
 
         # Construct the command

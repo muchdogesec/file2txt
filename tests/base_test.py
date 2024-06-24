@@ -15,6 +15,8 @@ EXTENSION_TO_MIMETYPE = {
     ".pdf": "application/pdf",
     ".xls": "application/vnd.ms-excel",
     ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    ".ppt": "application/vnd.ms-powerpoint",
+    ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
 }
 
 # Modes and their corresponding file groups
@@ -25,7 +27,8 @@ MODES = {
     "html_article": "html",
     "pdf": "pdf",
     "word": "word",
-    "excel": "excel"
+    "excel": "excel",
+    "powerpoint": "powerpoint"
 }
 
 # Grouping files by their types
@@ -34,8 +37,8 @@ TEST_FILES = {
         "csv/csv-test.csv"
     ],
     "word": [
-        "doc/fanged_data_good.doc",
-        "doc/fanged_data_good.docx"
+        "doc/fanged_data.doc",
+        "doc/fanged_data.docx"
     ],
     "html": [
         "html/group-ib_roasting_0ktapus-html-only.html",
@@ -44,10 +47,12 @@ TEST_FILES = {
     ],
     "image": [
         "image/example-1.png",
-        "image/example-2.png",
+        "image/example-2.webp",
         "image/example-3.jpeg",
         "image/example-4.jpg",
-        "image/example-5.webp"
+        "image/test-image-1.png",
+        "image/test-image-2.webp",
+        "image/test-image-3.png"
     ],
     "pdf": [
         "pdf/Bitdefender-Labs-Report-X-creat6958-en-EN.pdf",
@@ -57,6 +62,10 @@ TEST_FILES = {
     "excel": [
         "xls/xls-test.xls",
         "xls/xls-test.xlsx"
+    ],
+    "powerpoint": [
+        "ppt/fanged_data.ppt",
+        "ppt/fanged_data.pptx"
     ]
 }
 

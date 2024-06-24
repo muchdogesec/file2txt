@@ -86,10 +86,12 @@ To upload a new file to be processed to text the following flags are used;
 	* `pdf`
 	* `word`
 	* `excel`
+  * `powerpoint`
 * `--file` (required, string): path to file to be converted to text. Note, if the filetype and mimetype of the document submitted does not match one of those supported by file2txt (and set for `mode`, an error will be returned.
 * `--output` (optional, string): name of output path/file. Default is `output/{input_filename}.file2txt-{mode}.md`.
+* `--ai_clean_up` (optional, boolean): default is `false`. file2txt will convert your file to markdown locally. Often the output of such conversions are messy (leave lots of whitespace, new lines, etc.). If you want to make the output more readable to a human, setting this argument to true will ask an AI model to clean it up for you. Recommended to use when output will be read by a human.
 * `--defang` (optional, boolean): if output should be defanged. Default is `true`.
-* `--extract_text_from_image` (optional, boolean): if images should be converted to text using OCR. Default is `true`. You need a valid `key/key.json` key for this to work. This flag cannot be used with `csv` mode.
+* `--extract_text_from_image` (optional, boolean): if images should be converted to text using OCR. Default is `true`. You need a valid `key/key.json` key for this to work. This flag MUST be `false` with `csv` mode and MUST be `true` with `image` mode.
 
 ## Debugging
 
@@ -110,16 +112,12 @@ The input file type determines how the files should be handled.
   * Output position matched input: n/a
 * Supports paging: FALSE
 
-The text in the image is printed as raw text in the output. It does not maintain the struture (e.g. if table in image, it will not be a table in text output)
-
 ### CSV (mode: `csv`)
 
 * Filetypes supported (mime-type): `csv` (`text/csv`)
 * Embedded images processed using `image` mode: n/a
   * Output position matched input: n/a
 * Supports paging: FALSE
-
-The tabular structure of the CSV is converted into a single markdown table.
 
 ### HTML (mode: `html`)
 
@@ -141,9 +139,7 @@ Such HTML outputs can get very messy (stylesheets, javascript, etc). As such for
 * Supports paging: FALSE
 * HTML encoded content supported: TRUE
 
-Our use-case only calls for the actual article in the HTML to be considered (versus the entirety of a page, e.g. the nav bar)
-
-[To only convert the article in the text the readability-lxml python library is used by file2txt](https://pypi.org/project/readability-lxml/).
+Many of our use-cases call for the actual article in the HTML of a website to be considered (versus the entirety of a page, e.g. the nav bar, the footer, advertisements, etc.). This mode will attempt to remove anything not considered the core content of the page.
 
 ### PDF (mode: `pdf`)
 
@@ -153,8 +149,6 @@ Our use-case only calls for the actual article in the HTML to be considered (ver
 * Supports paging: TRUE
 * HTML encoded content supported: FALSE
 
-Note, to support pagination, the pdf is first broken up into seperate pdf files (one for each page) for processing.
-
 ### Microsoft Word (mode: `word`)
 
 * Filetypes supported (mime-type): `docx` (`application/vnd.openxmlformats-officedocument.wordprocessingml.document`), `doc` (`application/msword`)
@@ -162,10 +156,6 @@ Note, to support pagination, the pdf is first broken up into seperate pdf files 
   * Output position matched input: FALSE
 * Supports paging: TRUE
 * HTML encoded content supported: FALSE
-
-To simplify processing pipeline, all Word documents are first converted to PDF, and then processed as per the PDF pipeline.
-
-Note, script is designed to run on Linux machines (thus no Microsoft only compatible tooling is used).
 
 ### Microsoft Excel (mode: `excel`)
 
@@ -177,7 +167,12 @@ Note, script is designed to run on Linux machines (thus no Microsoft only compat
 
 Any formulas and scripts are ignored.
 
-Note, script is designed to run on Linux machines (thus no Microsoft only compatible tooling is used).
+### Powerpoint (mode: `powerpoint`)
+
+* Filetypes supported (mime-type): `ppt` (`application/vnd.ms-powerpoint`), `.jpeg` (`application/vnd.openxmlformats-officedocument.presentationml.presentation`),
+* Embedded images processed using `image` mode: TRUE
+  * Output position matched input: TRUE
+* Supports paging: TRUE (one page = one slide)
 
 ## A note on HTML encoding (for `html` and `html_article` modes)
 
@@ -369,6 +364,10 @@ http://example.com
 http://example.com
 http://example.something.other.com/this/file.html 
 ```
+
+## A note on image to text
+
+The text in the image is printed as raw text in the output. It does not maintain the structure (e.g. if table in image, it will not be a markdown table in text output).
 
 ## A note on output structure
 

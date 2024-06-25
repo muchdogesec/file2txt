@@ -1,3 +1,4 @@
+from file2txt.openai_processor import BaseCleaner
 from .parsers.core import BaseParser
 from .fanger import Fanger
 from pathlib import Path
@@ -16,12 +17,17 @@ def get_parser_class(input_type: str, filename: str) -> Type[BaseParser]:
 
     return parser_class
 
-def convert_file(filetype: str, file, image_processor_key, process_raw_image_urls=True, defang=True):
+def convert_file(filetype: str, file, image_processor_key, process_raw_image_urls=True, defang=True, md_cleaner: Type[BaseCleaner] = None):
     file = Path(file)
     parser_class = get_parser_class(filetype, file.name)
     parser = parser_class(file, filetype, process_raw_image_urls, image_processor_key)
     texts = parser.extract_text()
+    texts, images = parser.separate_images_from_texts(texts)
+    if md_cleaner:
+        texts = parser.cleanup_with_ai(md_cleaner, texts)
     if defang:
-        fanger = Fanger(texts)
-        return fanger.defang()
-    return texts
+        texts = Fanger(texts).defang()
+    if process_raw_image_urls:
+        for i, image_str in enumerate(images):
+            images[i] = parser.proccess_images_to_text(image_str)
+    return parser.combine_text_and_images(texts, images)

@@ -16,9 +16,7 @@ class HtmlFileParser(BaseParser, ABC):
     Overrides extract_text to extract and return text from the HTML.
     """
 
-    def __init__(self, *args, **kwargs) -> None:
-        self.soup = None
-        super().__init__(*args, **kwargs)
+    soup = None
 
     def load_file(self):
         """
@@ -38,38 +36,11 @@ class HtmlFileParser(BaseParser, ABC):
         return [text]
 
     def extract_text_from_html(self, soup) -> str:
-        # self._insert_image_text_into_html()
-        self._replace_link_tags(soup)
+        self._replace_img_tags(soup)
         return markdownify(soup.prettify())
 
-    def _insert_image_text_into_html(self) -> None:
-        self._replace_img_tags()
 
-    def _insert_text_into_html(self, text):
-        div_tag = self.soup.new_tag("div")
-        div_tag.string = text
-        self.soup.append(div_tag)
-
-    def _replace_link_tags(self, soup) -> None:
-        for a_tag in soup.find_all('a'):
-            a_tag.replace_with(a_tag.get_text())
-
-    def _wrap(self, to_wrap, wrap_in) -> None:
-        contents = to_wrap.replace_with(wrap_in)
-        wrap_in.append(contents)
-
-    def _replace_img_tags(self) -> list[str]:
-        img_tags = self.soup.find_all('img')        
+    def _replace_img_tags(self, soup) -> list[str]:
+        img_tags = soup.find_all('img')        
         for img in img_tags:
-            if src := img.get("src") or img.get('data-src'):
-                logging.info("found image at %s", src[:200])
-                logging.debug("found image at %s", src)
-                text = self.image_processor.tags_to_text([src]) 
-                div_tag = self.soup.new_tag("div")
-                div_tag.string = text
-                img.replace_with(div_tag)
-
-    def _find_links_in_html_text(self) -> list[str]:
-        html_text = self.soup.get_text()
-        links_in_text = self.find_image_links(html_text)
-        return links_in_text
+            img['src'] = img.get("src") or img.get('data-src')

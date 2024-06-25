@@ -2,10 +2,12 @@ import os
 import openpyxl
 import xlrd
 from openpyxl.workbook.workbook import Workbook as OpenpyxlWorkbook
+from openpyxl_image_loader import SheetImageLoader
 from xlrd.book import Book as XlrdBook
 
 from .core import BaseParser, CustomParser
 from .csv_file_parser import CsvFileParser
+from openpyxl.cell.cell import Cell
 
 from xlrd.sheet import Sheet
 
@@ -37,27 +39,22 @@ class ExcelFileParser(CsvFileParser):
         
         result_texts = []
         if isinstance(self.file_content, OpenpyxlWorkbook):
-            for sheet_name in self.file_content.sheetnames:
+            for sheet_id, sheet_name in enumerate(self.file_content.sheetnames):
                 current_sheet = self.file_content[sheet_name]
+                image_loader = SheetImageLoader(current_sheet)
                 # handle text cells
                 processed_rows = []
-                for row in current_sheet.iter_rows(values_only=True):
-                    processed_rows.append([str(cell or '') for cell in row])
+                for row in current_sheet.iter_rows(values_only=False):
+                    cells = []
+                    for cell in row:
+                        if image_loader.image_in(cell.coordinate):
+                            title = f"image{sheet_id+1}-{cell.coordinate.lower()}"
+                            cells.append(self.format_markdown_image(image_loader.get(cell.coordinate), title=title))
+                        else:
+                            cells.append(str(cell.value or ''))
+                    processed_rows.append(cells)
 
                 text = self.process_sheet(processed_rows, sheet_name)
-                
-                # handle images
-                if getattr(current_sheet, "_images", None):
-                    # convert openpyxl Image to BytesIO
-                    image_bytesio = [img.ref for img in current_sheet._images]
-                    # convert BytesIO to PIL Images
-                    images = self.convert_bytesio_to_images(image_bytesio)
-                    img_texts = self.image_processor.images_to_text(images)
-                    text += img_texts
-                    
-                # Call replace_image_links_with_text and add the resulting text to the original text
-                text += self.get_text_from_image_urls(text) 
-                text = self.remove_image_links(text)
                 result_texts.append(text)
 
         elif isinstance(self.file_content, XlrdBook):
@@ -67,16 +64,11 @@ class ExcelFileParser(CsvFileParser):
                 # handle text cells
                 rows = current_sheet.get_rows()
                 processed_rows = []
-                for row in rows:                                                                  
-                    # text += '| ' + ' | '.join(str(cell.value) for cell in row if cell is not None)
-                    # text += ' |\n'
+                for row in rows:
                     processed_rows.append([str(cell.value or '') for cell in row])
+                    print(row)
 
                 text = self.process_sheet(processed_rows, sheet_name)
-                
-                # Call replace_image_links_with_text and add the resulting text to the original text
-                text += self.get_text_from_image_urls(text) 
-                text = self.remove_image_links(text)
                 result_texts.append(text)
         else:
             raise ValueError("Unsupported workbook type.")

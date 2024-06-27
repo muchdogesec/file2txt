@@ -8,6 +8,8 @@ From the root of this code;
 python3 -m unittest tests/test_1_output_file_generation.py
 ```
 
+You will need Open AI and Google Vision in your `.env` file when running this test.
+
 This script generates output files using a combination of file2txt settings.
 
 You need to check the output manually to ensure it matches expectations.

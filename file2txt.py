@@ -55,7 +55,7 @@ def parse_arguments():
         type=str_to_bool
     )
     parser.add_argument(
-        "--clean_with_openai",
+        "--ai_prettify",
         default=False,
         help="(optional, boolean): if output should be cleaned with open ai. Default is false.",
         type=str_to_bool,
@@ -85,7 +85,7 @@ if __name__ == "__main__":
     else:
         output_file = input_file.with_name("{}.file2txt-{}.md".format(input_file.stem, args.mode))
     keyfile = os.path.abspath(os.path.join(os.curdir, 'keys/key.json'))
-    if args.clean_with_openai:
+    if args.ai_prettify:
         md_cleaner = OpenAIMDCleaner()
     try:
         logging.debug("got args: %s", " ".join(map(repr, sys.argv)))

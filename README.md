@@ -128,7 +128,7 @@ Convert document to human friendly markdown, extract text from images, and defan
 ```shell
 python3 file2txt.py \
   --mode pdf \
-  --file tests/pdf/Bitdefender-Labs-Report-X-creat6958-en-EN.pdf \
+  --file tests/pdf/pdf/bitdefender-rdstealer.pdf \
   --output Bitdefender-Labs-Report-X-creat6958-en-EN.md \
   --defang true \
   --extract_text_from_image true \
@@ -140,7 +140,7 @@ To compare, lets remove the AI prettify command;
 ```shell
 python3 file2txt.py \
   --mode pdf \
-  --file tests/pdf/Bitdefender-Labs-Report-X-creat6958-en-EN.pdf \
+  --file tests/pdf/pdf/bitdefender-rdstealer.pdf \
   --output Bitdefender-Labs-Report-X-creat6958-en-EN.md \
   --defang true \
   --extract_text_from_image true \
@@ -152,7 +152,7 @@ And this time with AI pretty, but not extracting text from the detected images;
 ```shell
 python3 file2txt.py \
   --mode pdf \
-  --file tests/pdf/Bitdefender-Labs-Report-X-creat6958-en-EN.pdf \
+  --file tests/pdf/pdf/bitdefender-rdstealer.pdf \
   --output Bitdefender-Labs-Report-X-creat6958-en-EN.md \
   --defang true \
   --extract_text_from_image false \

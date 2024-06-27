@@ -1,9 +1,11 @@
-
-.DS_Store
+# secrets
 keys/
-.env/
+.env
+# dev
+.DS_Store
 logs/
 __pycache__/
 file2txt-venv
 output
-.env
+# tmp msft files
+*~$*

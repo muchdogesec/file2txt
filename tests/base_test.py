@@ -38,9 +38,13 @@ TEST_FILES = {
         "doc/fanged_data.docx"
     ],
     "html": [
-        "html/group-ib_roasting_0ktapus-html-only.html",
-        "html/unit-42_mallox_ransomware-html-only.html",
-        "html/virustotal_malware-trends.html"
+        "html/fanged_data.html"
+    ],
+    "html-real": [
+        "html/bitdefender-fragments-of-cross-platform-backdoor-hint-at-larger-mac-os-attack.html",
+        "html/group-ib-0ktapus.html",
+        "html/unit42-mallox-ransomware.html",
+        "html/virustotal-malware-trends.html"
     ],
     "image": [
         "image/example-1.png",
@@ -52,9 +56,22 @@ TEST_FILES = {
         "image/test-image-3.png"
     ],
     "pdf": [
-        "pdf/Bitdefender-Labs-Report-X-creat6958-en-EN.pdf",
         "pdf/fanged_data_good.pdf",
         "pdf/pdf-example.pdf"
+    ],
+    "pdf-real": [
+        "pdf/bitdefender-rdstealer.pdf",
+        "pdf/canadian-cert-qakbot.pdf",
+        "pdf/crowdstrike-fancy-bear.pdf",
+        "pdf/france-cert-apt31-1.pdf",
+        "pdf/france-cert-apt31-2.pdf",
+        "pdf/group-ib-ransomware-report.pdf",
+        "pdf/kaspersky-sofacy.pdf",
+        "pdf/mandiant-apt1-report.pdf",
+        "pdf/norma-cyber-oil-gas.pdf",
+        "pdf/rpt-apt30.pdf",
+        "pdf/sophoslabs-mykings.pdf",
+        "pdf/thai-cert-threat-actors.pdf"
     ],
     "excel": [
         "xls/xls-test.xls",

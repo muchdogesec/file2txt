@@ -121,6 +121,46 @@ To upload a new file to be processed to text the following flags are used;
 * `--defang` (optional, boolean): if output should be defanged. Default is `true`.
 * `--extract_text_from_image` (optional, boolean): if images should be converted to text using OCR. Default is `true`. You need a valid `key/key.json` key for this to work. This flag MUST be `false` with `csv` mode and MUST be `true` with `image` mode.
 
+### Examples
+
+Convert document to human friendly markdown, extract text from images, and defang the text (the most common use-case for cyber-security);
+
+```shell
+python3 file2txt.py \
+  --mode pdf \
+  --file tests/pdf/Bitdefender-Labs-Report-X-creat6958-en-EN.pdf \
+  --output Bitdefender-Labs-Report-X-creat6958-en-EN.md \
+  --defang true \
+  --extract_text_from_image true \
+  --ai_prettify true
+```
+
+To compare, lets remove the AI prettify command;
+
+```shell
+python3 file2txt.py \
+  --mode pdf \
+  --file tests/pdf/Bitdefender-Labs-Report-X-creat6958-en-EN.pdf \
+  --output Bitdefender-Labs-Report-X-creat6958-en-EN.md \
+  --defang true \
+  --extract_text_from_image true \
+  --ai_prettify false
+```
+
+And this time with AI pretty, but not extracting text from the detected images;
+
+```shell
+python3 file2txt.py \
+  --mode pdf \
+  --file tests/pdf/Bitdefender-Labs-Report-X-creat6958-en-EN.pdf \
+  --output Bitdefender-Labs-Report-X-creat6958-en-EN.md \
+  --defang true \
+  --extract_text_from_image false \
+  --ai_prettify true
+```
+
+For more examples, you can also run our automated test suite. See `tests/README.md` for more.
+
 ## Debugging
 
 If the script is failing, you can examine the log file printed in `logs/` to try and resolve any issues. Each run has its own log, named using execution time (e.g. `file2txt_20231127-205228_846248.log`).

@@ -87,7 +87,6 @@ To upload a new file to be processed to text the following flags are used;
 	* `pdf`
 	* `word`
 	* `excel`
-  * `powerpoint`
 * `--file` (required, string): path to file to be converted to text. Note, if the filetype and mimetype of the document submitted does not match one of those supported by file2txt (and set for `mode`, an error will be returned.
 * `--output` (optional, string): name of output path/file. Default is `output/{input_filename}.file2txt-{mode}.md`.
 * `--ai_prettify` (optional, boolean): default is `false`. file2txt will convert your file to markdown locally. Often the output of such conversions are messy (leave lots of whitespace, new lines, etc.). If you want to make the output more readable to a human, setting this argument to true will ask an AI model to clean it up for you. Recommended to use when output will be read by a human.

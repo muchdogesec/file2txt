@@ -14,9 +14,7 @@ EXTENSION_TO_MIMETYPE = {
     ".webp": "image/webp",
     ".pdf": "application/pdf",
     ".xls": "application/vnd.ms-excel",
-    ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    ".ppt": "application/vnd.ms-powerpoint",
-    ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    ".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 }
 
 # Modes and their corresponding file groups
@@ -27,8 +25,7 @@ MODES = {
     "html_article": "html",
     "pdf": "pdf",
     "word": "word",
-    "excel": "excel",
-    "powerpoint": "powerpoint"
+    "excel": "excel"
 }
 
 # Grouping files by their types
@@ -62,10 +59,6 @@ TEST_FILES = {
     "excel": [
         "xls/xls-test.xls",
         "xls/xls-test.xlsx"
-    ],
-    "powerpoint": [
-        "ppt/fanged_data.ppt",
-        "ppt/fanged_data.pptx"
     ]
 }
 

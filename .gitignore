@@ -6,3 +6,4 @@ logs/
 __pycache__/
 file2txt-venv
 output
+.env

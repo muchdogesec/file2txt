@@ -8,37 +8,15 @@ However, in many cases the file a user wants to process is not usually in struct
 
 These files also commonly contain images with text that are useful to extract too.
 
-file2txt is a Python library takes common file formats and turns them into plain text (a `txt` file) with Markdown styling. file2txt not only consider raw text inside a file input, it also converts any embedded images that contain text in the output.
+file2txt is a Python library takes common file formats and turns them into plain text (a `txt` file) with Markdown styling.
 
-Essentially file2txt is used by us to produce a text output that can be scanned for IoCs (for txt2stix), but could be used for a variety of other use-cases as you see fit.
+In addition to the printed text, file2txt can also extract text from images.
+
+Essentially file2txt is used by us to produce a text output that can be scanned for IoCs and TTPs (by [txt2stix](https://github.com/muchdogesec/txt2stix/)), but could be used for a variety of other use-cases as you see fit.
 
 The general flow of the file2txt is as follows
 
 <iframe width="768" height="432" src="https://miro.com/app/live-embed/uXjVKZXyIxA=/?moveToViewport=-609,-447,3339,1546&embedId=271586839462" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
-
-## Configure
-
-file2txt uses Google's Cloud Vision API.
-
-To use the Cloud Vision API you will need to setup a new project in Google Cloud to access the Google API's.
-
-### 1. Create project and enable API
-
-To do this, login to the [GCP Console](https://console.developers.google.com/).
-
-The project name can be anything you want. It will only be visible to you in the GCP Console.
-
-This app requires the following Google API's to work:
-
-* [Cloud Vision API](https://console.cloud.google.com/marketplace/product/google/vision.googleapis.com)
-
-### 2. Authenticating to the Cloud Vision API
-
-Using a service account to authenticate is the preferred method. To use a service account to authenticate to the Vision API:
-
-[Follow the instructions to create a service account](https://cloud.google.com/iam/docs/service-accounts-create#creating_a_service_account). Select JSON as your key type.
-
-Once complete, your service account key will be automatically downloaded.
 
 ## Install
 
@@ -53,7 +31,33 @@ source file2txt-venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-### Post install required steps
+## Configure
+
+file2txt uses a few external services for its features. If you want to use these features, you must correctly setup a connection to these services as follows;
+
+### Google's Cloud Vision (to extract text from images)
+
+We use Cloud Vision to extract text from any images found in a document. To setup a connection between file2txt and Cloud Vision...
+
+#### 1. Create project and enable API
+
+Login to the [GCP Console](https://console.developers.google.com/).
+
+The project name can be anything you want. It will only be visible to you in the GCP Console.
+
+This app requires the following Google API's to work:
+
+* [Cloud Vision API](https://console.cloud.google.com/marketplace/product/google/vision.googleapis.com)
+
+#### 2. Authenticating to the Cloud Vision API
+
+Using a service account to authenticate is the preferred method. To use a service account to authenticate to the Vision API:
+
+[Follow the instructions to create a service account](https://cloud.google.com/iam/docs/service-accounts-create#creating_a_service_account). Select JSON as your key type.
+
+Once complete, your service account key will be automatically downloaded.
+
+#### 3. Add your key
 
 You now need to create a directory for your Google key;
 
@@ -64,6 +68,30 @@ mkdir keys
 Now copy your `<KEY>.json` file generated earlier, into the `keys` directory you just created.
 
 Finally, rename your `<KEY>.json` to `key.json`.
+
+### OpenAI (for cleaning up markdown)
+
+We use a lot of local Python libraries to convert a file format to markdown (e.g. [Poppler's pdftohtml function](https://manpages.debian.org/testing/poppler-utils/pdftohtml.1.en.html)).
+
+The output of this text can be visually very messy. If you only need a machine readable output from the script, this is fine.
+
+However, if you want a human readable version you will often need to clean up the output of these local libraries. To do this in an automated way, file2txt offers the option to get an AI to do this for you. Currently we use OpenAI.
+
+To setup;
+
+#### 1. Create an API key
+
+In your OpenAI account create an API key
+
+#### 2. Add you API key to the `.env` file
+
+Now copy the `.env` file example:
+
+```shell
+cp .env.example .env
+```
+
+And put your OpenAI key as the value to the variable `OPENAI_API_KEY`.
 
 ## Run
 

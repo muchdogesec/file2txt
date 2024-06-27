@@ -34,7 +34,7 @@ TEST_FILES = {
         "csv/csv-test.csv"
     ],
     "word": [
-        "doc/fanged_data.doc",
+        # "doc/fanged_data.doc", # not supported
         "doc/fanged_data.docx"
     ],
     "html": [

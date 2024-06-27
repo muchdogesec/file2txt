@@ -2,6 +2,7 @@ import argparse
 import datetime
 import json
 import sys
+from file2txt.openai_processor import OpenAIMDCleaner
 from file2txt.parsers.core import BaseParser
 from file2txt import convert_file
 
@@ -53,6 +54,12 @@ def parse_arguments():
         help="(optional, boolean): if output should be defanged. Default is true.",
         type=str_to_bool
     )
+    parser.add_argument(
+        "--clean_with_openai",
+        default=False,
+        help="(optional, boolean): if output should be cleaned with open ai. Default is false.",
+        type=str_to_bool,
+    )
     return parser.parse_args()
 
 if __name__ == "__main__":
@@ -71,19 +78,21 @@ if __name__ == "__main__":
     logging.info("writing logs to %s", log_file.absolute())
 
     args = parse_arguments()
-
+    md_cleaner = None
     input_file = Path(args.file)
     if args.output:
         output_file = Path(args.output)
     else:
         output_file = input_file.with_name("{}.file2txt-{}.md".format(input_file.stem, args.mode))
     keyfile = os.path.abspath(os.path.join(os.curdir, 'keys/key.json'))
+    if args.clean_with_openai:
+        md_cleaner = OpenAIMDCleaner()
     try:
         logging.debug("got args: %s", " ".join(map(repr, sys.argv)))
         logging.debug("got args: %s", json.dumps(sys.argv[1:]))
-        output = convert_file(args.mode, input_file, keyfile, process_raw_image_urls=args.extract_text_from_image, defang=args.defang)
+        output = convert_file(args.mode, input_file, keyfile, process_raw_image_urls=args.extract_text_from_image, defang=args.defang, md_cleaner=md_cleaner)
         logging.info("conversion successful")
-        output_file.write_text("\n".join(output))
+        output_file.write_text(BaseParser.PAGE_SEPARATOR.join(output))
         logging.info(f"wrote output to {output_file}")
     except Exception as e:
         logging.error(f"ran into an exception while parsing: %s.", e)

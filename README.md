@@ -471,4 +471,4 @@ However, it is not always perfect. As a general rule, the cleaner the styling fo
 
 ## License
 
-[Apache 2.0](/LICENSE).
+[AGPLv3](/LICENSE).

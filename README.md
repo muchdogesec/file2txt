@@ -291,7 +291,7 @@ Which as decoded CDATA looks like
 <![CDATA[<img src="https://cms.therecord.media/uploads/2023_0706_Ransomware_Tracker_Most_Prolific_Groups_6a567c11da.jpg">]]>
 ```
 
-## A note on embedded images
+## A note on handling embedded images
 
 In some filetype inputs, file2txt will convert text found in embedded images to text, if enabled by the user.
 
@@ -313,13 +313,16 @@ Once upon a time
 The end
 ```
 
+Due to the way text extraction from images is performed, it means the text identified in an image is outputted into the final markdown with no structure (e.g. if a table can be seen in an image found in a doc, it will not be a markdown table in text output).
+
+
 If extract text from images is set to false, a user will only see the pure markdown image ref in the output, e.g. for the above
 
 ```txt
 ![](image_url.png)
 ```
 
-## A note on paging
+## A note on handling paging
 
 Some input types support paging.
 
@@ -338,7 +341,7 @@ Another page
 [comment]: <> (===END PAGE 2===)
 ```
 
-Note, if the input type does not support paging, page breaks are included, but will only ever show page 1.
+Note, if the input type does not support paging, page breaks are included, but will only ever show page 1 start and end.
 
 ## Defanging
 
@@ -453,10 +456,6 @@ http://example.com
 http://example.com
 http://example.something.other.com/this/file.html 
 ```
-
-## A note on image to text
-
-The text in the image is printed as raw text in the output. It does not maintain the structure (e.g. if table in image, it will not be a markdown table in text output).
 
 ## A note on output structure
 

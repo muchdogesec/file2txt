@@ -162,7 +162,25 @@ python3 file2txt.py \
   --ai_prettify true
 ```
 
-For more examples, you can also run our automated test suite. See `tests/README.md` for more.
+### Tests
+
+For more examples, you can also run our automated scripts to generate files.
+
+```shell
+python3 -m unittest tests/test_1_output_file_generation.py
+```
+
+You will need Open AI and Google Vision in your `.env` file when running this test.
+
+This script generates output files using a combination of file2txt settings.
+
+You need to check the output manually to ensure it matches expectations.
+
+```shell
+python3 -m unittest tests/test_2_negative_tests.py
+```
+
+This will test invalid file input settings. All tests are expected to fail.
 
 ## Debugging
 

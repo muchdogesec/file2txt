@@ -117,10 +117,22 @@ To upload a new file to be processed to text the following flags are used;
 	* `excel`
   * `powerpoint`
 * `--file` (required, string): path to file to be converted to text. Note, if the filetype and mimetype of the document submitted does not match one of those supported by file2txt (and set for `mode`, an error will be returned.
-* `--output` (optional, string): name of output path/file. Default is `output/{input_filename}.file2txt-{mode}.md`.
+* `--output` (optional, string): name of output directory name. Default is `{input_filename}/`.
 * `--ai_prettify` (optional, boolean): default is `false`. file2txt will convert your file to markdown locally. Often the output of such conversions are messy (leave lots of whitespace, new lines, etc.). If you want to make the output more readable to a human, setting this argument to true will ask an AI model to clean it up for you. Recommended to use when output will be read by a human.
 * `--defang` (optional, boolean): if output should be defanged. Default is `true`.
 * `--extract_text_from_image` (optional, boolean): if images should be converted to text using OCR. Default is `true`. You need a valid `key/key.json` key for this to work. This flag MUST be `false` with `csv` mode and MUST be `true` with `image` mode.
+
+The script will output all files to the `output/` directory in the following structure;
+
+```txt
+output
+├── {input_filename}
+│   ├── {input_filename}.md
+│   ├── IMAGE_1
+│   └── IMAGE_2
+```
+
+To ensure images are not lost (in modes that support images), the script also extracts and stores a copy of all identified images in the directory created for the input file.
 
 ### Examples
 
@@ -204,15 +216,13 @@ The input file type determines how the files should be handled.
 ### CSV (mode: `csv`)
 
 * Filetypes supported (mime-type): `csv` (`text/csv`)
-* Embedded images processed using `image` mode: n/a
-  * Output position matched input: n/a
+* Embedded images processed using `image` mode: FALSE
 * Supports paging: FALSE
 
 ### HTML (mode: `html`)
 
 * Filetypes supported (mime-type): `html` (`text/html`)
 * Embedded images processed using `image` mode: TRUE
-  * Output position matched input: TRUE
 * Supports paging: FALSE
 * HTML encoded content supported: TRUE
 
@@ -224,7 +234,6 @@ Such HTML outputs can get very messy (stylesheets, javascript, etc). As such for
 
 * Filetypes supported (mime-type): `html` (`text/html`)
 * Embedded images processed using `image` mode: TRUE
-  * Output position matched input: TRUE
 * Supports paging: FALSE
 * HTML encoded content supported: TRUE
 
@@ -234,7 +243,6 @@ Many of our use-cases call for the actual article in the HTML of a website to be
 
 * Filetypes supported (mime-type): `pdf` (`application/pdf`)
 * Embedded images processed using `image` mode: TRUE
-  * Output position matched input: FALSE
 * Supports paging: TRUE
 * HTML encoded content supported: FALSE
 
@@ -242,7 +250,6 @@ Many of our use-cases call for the actual article in the HTML of a website to be
 
 * Filetypes supported (mime-type): `docx` (`application/vnd.openxmlformats-officedocument.wordprocessingml.document`), `doc` (`application/msword`)
 * Embedded images processed using `image` mode: TRUE
-  * Output position matched input: FALSE
 * Supports paging: TRUE
 * HTML encoded content supported: FALSE
 
@@ -250,7 +257,6 @@ Many of our use-cases call for the actual article in the HTML of a website to be
 
 * Filetypes supported (mime-type): `xlsx` (`application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`), `xls` (`vnd.ms-excel`)
 * Embedded images processed using `image` mode: FALSE
-  * Output position matched input: n/a
 * Supports paging: TRUE (one page = one tab)
 * HTML encoded content supported: FALSE
 
@@ -260,7 +266,6 @@ Any formulas and scripts are ignored.
 
 * Filetypes supported (mime-type): `ppt` (`application/vnd.ms-powerpoint`), `.jpeg` (`application/vnd.openxmlformats-officedocument.presentationml.presentation`),
 * Embedded images processed using `image` mode: TRUE
-  * Output position matched input: TRUE
 * Supports paging: TRUE (one page = one slide)
 
 ## A note on HTML encoding (for `html` and `html_article` modes)
@@ -315,12 +320,13 @@ The end
 
 Due to the way text extraction from images is performed, it means the text identified in an image is outputted into the final markdown with no structure (e.g. if a table can be seen in an image found in a doc, it will not be a markdown table in text output).
 
-
 If extract text from images is set to false, a user will only see the pure markdown image ref in the output, e.g. for the above
 
 ```txt
 ![](image_url.png)
 ```
+
+The image URL points to the locally stored copy of the image.
 
 ## A note on handling paging
 

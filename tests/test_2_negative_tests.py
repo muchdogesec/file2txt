@@ -59,12 +59,10 @@ class TestFile2TxtNegative(unittest.TestCase):
         # Create invalid combinations by using files with unexpected MIME types for each mode
         invalid_combinations = {
             "csv": TEST_FILES["word"],  # Word files in csv mode
-            "word": TEST_FILES["html"],  # HTML files in word mode
             "html": TEST_FILES["pdf"],  # PDF files in html mode
+            "html_article": TEST_FILES["pdf"],  # PDF files in html mode
             "pdf": TEST_FILES["image"],  # Image files in pdf mode
             "image": TEST_FILES["excel"],  # Excel files in image mode
-            "excel": TEST_FILES["csv"],  # CSV files in excel mode
-            "powerpoint": TEST_FILES["word"],  # Word files in powerpoint mode
         }
 
         for mode, files in invalid_combinations.items():

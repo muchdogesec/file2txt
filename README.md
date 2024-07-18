@@ -8,9 +8,9 @@ However, in many cases the file a user wants to process is not usually in struct
 
 These files also commonly contain images with text that are useful to extract too.
 
-file2txt is a Python library takes common file formats and turns them into plain text (a `txt` file) with Markdown styling.
+file2txt is a Python library takes common file formats and turns them into plain text (a `.md` file) with Markdown styling to make it as nice as possible to read.
 
-In addition to the printed text, file2txt can also extract text from images.
+In addition to the printed text, file2txt can also extract text from images found in the input file.
 
 Essentially file2txt is used by us to produce a text output that can be scanned for IoCs and TTPs (by [txt2stix](https://github.com/muchdogesec/txt2stix/)), but could be used for a variety of other use-cases as you see fit.
 
@@ -31,13 +31,9 @@ source file2txt-venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-## Configure
+### Optional: Configure Google's Cloud Vision (to extract text from images)
 
-file2txt uses a few external services for its features. If you want to use these features, you must correctly setup a connection to these services as follows;
-
-### Google's Cloud Vision (to extract text from images)
-
-We use Cloud Vision to extract text from any images found in a document. To setup a connection between file2txt and Cloud Vision...
+file2txt uses Cloud Vision to text from images. If you want to use this feature you must set your Cloud Vision credentials...
 
 #### 1. Create project and enable API
 
@@ -69,30 +65,6 @@ Now copy your `<KEY>.json` file generated earlier, into the `keys` directory you
 
 Finally, rename your `<KEY>.json` to `key.json`.
 
-### OpenAI (for cleaning up markdown)
-
-We use a lot of local Python libraries to convert a file format to markdown (e.g. [Poppler's pdftohtml function](https://manpages.debian.org/testing/poppler-utils/pdftohtml.1.en.html)).
-
-The output of this text can be visually very messy. If you only need a machine readable output from the script, this is fine.
-
-However, if you want a human readable version you will often need to clean up the output of these local libraries. To do this in an automated way, file2txt offers the option to get an AI to do this for you. Currently we use OpenAI.
-
-To setup;
-
-#### 1. Create an API key
-
-In your OpenAI account create an API key
-
-#### 2. Add you API key to the `.env` file
-
-Now copy the `.env` file example:
-
-```shell
-cp .env.example .env
-```
-
-And put your OpenAI key as the value to the variable `OPENAI_API_KEY`.
-
 ## Run
 
 ```shell
@@ -102,7 +74,6 @@ python3 file2txt.py \
 	--output my_document \
 	--defang boolean \
 	--extract_text_from_image boolean \
-  --ai_prettify boolean
 ```
 
 To upload a new file to be processed to text the following flags are used;
@@ -113,12 +84,8 @@ To upload a new file to be processed to text the following flags are used;
 	* `html`
 	* `html_article`
 	* `pdf`
-	* `word`
-	* `excel`
-  * `powerpoint`
 * `--file` (required, string): path to file to be converted to text. Note, if the filetype and mimetype of the document submitted does not match one of those supported by file2txt (and set for `mode`, an error will be returned.
 * `--output` (optional, string): name of output directory name. Default is `{input_filename}/`.
-* `--ai_prettify` (optional, boolean): default is `false`. file2txt will convert your file to markdown locally. Often the output of such conversions are messy (leave lots of whitespace, new lines, etc.). If you want to make the output more readable to a human, setting this argument to true will ask an AI model to clean it up for you. Recommended to use when output will be read by a human.
 * `--defang` (optional, boolean): if output should be defanged. Default is `true`.
 * `--extract_text_from_image` (optional, boolean): if images should be converted to text using OCR. Default is `true`. You need a valid `key/key.json` key for this to work. This flag MUST be `false` with `csv` mode and MUST be `true` with `image` mode.
 
@@ -128,8 +95,8 @@ The script will output all files to the `output/` directory in the following str
 output
 ├── {input_filename}
 │   ├── {input_filename}.md
-│   ├── IMAGE_1
-│   └── IMAGE_2
+│   ├── EXTRACTED_IMAGE_1.FORMAT
+│   └── EXTRACTED_IMAGE_2.FORMAT
 ```
 
 To ensure images are not lost (in modes that support images), the script also extracts and stores a copy of all identified images in the directory created for the input file.
@@ -147,31 +114,6 @@ python3 file2txt.py \
   --output examples/aipretty-defang-extracttext/Bitdefender-Labs-Report-X-creat6958-en-EN.md \
   --defang true \
   --extract_text_from_image true \
-  --ai_prettify true
-```
-
-To compare, lets remove the AI prettify command;
-
-```shell
-python3 file2txt.py \
-  --mode pdf \
-  --file tests/files/pdf-real/bitdefender-rdstealer.pdf \
-  --output examples/defang-extracttext/Bitdefender-Labs-Report-X-creat6958-en-EN.md \
-  --defang true \
-  --extract_text_from_image true \
-  --ai_prettify false
-```
-
-And this time with AI pretty, but not extracting text from the detected images;
-
-```shell
-python3 file2txt.py \
-  --mode pdf \
-  --file tests/files/pdf-real/bitdefender-rdstealer.pdf \
-  --output examples/aipretty-defang/Bitdefender-Labs-Report-X-creat6958-en-EN.md \
-  --defang true \
-  --extract_text_from_image false \
-  --ai_prettify true
 ```
 
 ### Tests
@@ -209,22 +151,25 @@ The input file type determines how the files should be handled.
 ### Image (mode: `image`)
 
 * Filetypes supported (mime-type): `jpg` (`image/jpg`), `.jpeg` (`image/jpeg`), `.png` (`image/png`), `.webp` (`image/webp`)
-* Embedded images processed using `image` mode: TRUE
+* Embedded images processed using `image` mode and stored locally: TRUE
   * Output position matched input: n/a
 * Supports paging: FALSE
+* Python library used for conversion to markdown: n/a
 
 ### CSV (mode: `csv`)
 
 * Filetypes supported (mime-type): `csv` (`text/csv`)
-* Embedded images processed using `image` mode: FALSE
+* Embedded images processed using `image` mode and stored locally: FALSE
 * Supports paging: FALSE
+* Python library used for conversion to markdown: `pandas`
 
 ### HTML (mode: `html`)
 
 * Filetypes supported (mime-type): `html` (`text/html`)
-* Embedded images processed using `image` mode: TRUE
+* Embedded images processed using `image` mode and stored locally: TRUE
 * Supports paging: FALSE
 * HTML encoded content supported: TRUE
+* Python library used for conversion to markdown: `python-markdownify`
 
 This will consider the entire HTML of the page (e.g. nav bars, footers, etc.). Generally you do not want this extra data (mainly problematic when exporting webpages as HTML from a browser).
 
@@ -233,40 +178,30 @@ Such HTML outputs can get very messy (stylesheets, javascript, etc). As such for
 ### HTML Articles (mode: `html_article`)
 
 * Filetypes supported (mime-type): `html` (`text/html`)
-* Embedded images processed using `image` mode: TRUE
+* Embedded images processed using `image` mode and stored locally: TRUE
 * Supports paging: FALSE
 * HTML encoded content supported: TRUE
+* Python library used for conversion to markdown: see `html` mode
 
 Many of our use-cases call for the actual article in the HTML of a website to be considered (versus the entirety of a page, e.g. the nav bar, the footer, advertisements, etc.). This mode will attempt to remove anything not considered the core content of the page.
 
 ### PDF (mode: `pdf`)
 
 * Filetypes supported (mime-type): `pdf` (`application/pdf`)
-* Embedded images processed using `image` mode: TRUE
+* Embedded images processed using `image` mode and stored locally: TRUE
 * Supports paging: TRUE
 * HTML encoded content supported: FALSE
+* Python library used for conversion to markdown: `marker-pdf`
 
-### Microsoft Word (mode: `word`)
+### Unsupported Microsoft propriety filetypes and workarounds
 
-* Filetypes supported (mime-type): `docx` (`application/vnd.openxmlformats-officedocument.wordprocessingml.document`), `doc` (`application/msword`)
-* Embedded images processed using `image` mode: TRUE
-* Supports paging: TRUE
-* HTML encoded content supported: FALSE
+Many of you will have file Microsoft files (`doc`, `.docx`, `xls`, `xlsx`, `ppt`, `pptx` etc.). file2txt does not currently support these formats.
 
-### Microsoft Excel (mode: `excel`)
+However, a workaround to this problem is fairly simple...
 
-* Filetypes supported (mime-type): `xlsx` (`application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`), `xls` (`vnd.ms-excel`)
-* Embedded images processed using `image` mode: FALSE
-* Supports paging: TRUE (one page = one tab)
-* HTML encoded content supported: FALSE
+You can save all of these filetypes as `.pdf`s (or `.csv`'s in the case of Excel based files) using Microsoft's respective software and then upload to file2txt.
 
-Any formulas and scripts are ignored.
-
-### Powerpoint (mode: `powerpoint`)
-
-* Filetypes supported (mime-type): `ppt` (`application/vnd.ms-powerpoint`), `.jpeg` (`application/vnd.openxmlformats-officedocument.presentationml.presentation`),
-* Embedded images processed using `image` mode: TRUE
-* Supports paging: TRUE (one page = one slide)
+Similarly, for other word processing formats, there is usually the option to save to pdf, which can then be uploaded to file2txt.
 
 ## A note on HTML encoding (for `html` and `html_article` modes)
 
@@ -300,15 +235,17 @@ Which as decoded CDATA looks like
 
 In some filetype inputs, file2txt will convert text found in embedded images to text, if enabled by the user.
 
-Embedded images are defined images that exist inline with the text. That is; when you read the document, you can see the actual image. 
+Embedded images are defined images that exist inline with the text. That is; when you read the document, you can see the actual image.
 
-To make it clear where the text shown is from an embedded image (i.e. where the original image was found in doc), when file2txt detects an image in a document it will insert the following tags; `[comment]: <> (===START EMBEDDED IMAGE EXTRACTION===)` and `[comment]: <> (===END EMBEDDED IMAGE EXTRACTION===)`. Between the tags will be any text identified in an embedded image, e.g.
+Images are identified using image tags in the supported modes (HTML and PDF). file2txt will always store a copy of identified images locally, even if you do not enable image text extraction.
+
+To make it clear where the text shown is from an embedded image (i.e. where the original image was found in doc) in the output, when file2txt detects an image in a document it will insert the following tags; `[comment]: <> (===START EMBEDDED IMAGE EXTRACTION===)` and `[comment]: <> (===END EMBEDDED IMAGE EXTRACTION===)`. Between the tags will be any text identified in an embedded image, e.g.
 
 ```txt
 Once upon a time
 [comment]: <> (===START IMAGE DETECTED===)
 
-![](image_url.png)
+![](local/path/to/image_url.png)
 
 [comment]: <> (===START EMBEDDED IMAGE EXTRACTION===)
 <TEXT IN IMAGE>
@@ -323,16 +260,18 @@ Due to the way text extraction from images is performed, it means the text ident
 If extract text from images is set to false, a user will only see the pure markdown image ref in the output, e.g. for the above
 
 ```txt
-![](image_url.png)
+![](local/path/to/image_url.png)
 ```
 
-The image URL points to the locally stored copy of the image.
+The image URL always points to the locally stored copy of the image.
 
 ## A note on handling paging
 
-Some input types support paging.
+PDF input types support paging. This is done by splitting a pdf of many pages, into individual pdf files per page.
 
-file2txt will output a single text file, however, where pages are detected the output document will contain breaks to show where a page starts. For example;
+file2txt will output a single text file with all the pdf page text extractions merged. Pages (i.e. each txt file for each pdf page produced) is shown in the output document with breaks to show where a page starts and ends. 
+
+For example;
 
 ```txt
 [comment]: <> (===START PAGE 1===)
@@ -470,6 +409,8 @@ The output of the script is always markdown.
 It will generally markdown title tags (e.g. `#`, `##`, `###`), table, image tags, link tags, etc as the output is designed to closely match the styling of the input document.
 
 However, it is not always perfect. As a general rule, the cleaner the styling for input (i.e, report type structure is best -> interactive webpages worst) the better file2txt will handle the output.
+
+This does not apply to images (see embedded images).
 
 ## Support
 

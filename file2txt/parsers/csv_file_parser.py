@@ -1,9 +1,11 @@
 from typing import Iterable
-from .core import BaseParser, CustomParser
+from .core import BaseParser, custom_parser
 import csv, io
 from itertools import chain
+import pandas as pd
 
-@CustomParser("csv", ["csv"])
+
+@custom_parser("csv", ["csv"])
 class CsvFileParser(BaseParser):
     """
     Subclass of FileParser specifically for parsing CSV files.
@@ -14,23 +16,7 @@ class CsvFileParser(BaseParser):
         """
         Extracts and returns the text content from the file.
         """
-        # return [self.file_content]
-        c = csv.reader(io.StringIO(self.file_content))        
-        return [self.process_sheet(list(c), f"csv-sheet")]
-    
-    def process_sheet(self, sheet: list[list[str]], sheet_name: str):
-        output = []
-        for row in sheet:
-            if not any(row):
-                continue
-            processed_row = "| {} |".format(" | ".join(row))
-            output.append(processed_row)
-
-        if output:
-            row = ["-"*(len(column_name) or 1) for column_name in sheet[0]]
-            tabble_separator = "| {} |".format(" | ".join(row))
-            first_row = output[0]
-            other_rows = output[1:]
-            sheet_header = f"#### ======= {sheet_name} ======="
-            output = chain([sheet_header, "\n", first_row, tabble_separator], other_rows)
-        return "\n".join(output)
+        
+        with open(self.temp_dir/"output.md", 'w') as f:
+            pd.read_csv(self.file_path).to_markdown(f)
+        return [(self.temp_dir/"output.md").read_text()]

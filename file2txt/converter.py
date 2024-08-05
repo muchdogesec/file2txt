@@ -1,4 +1,3 @@
-from file2txt.openai_processor import BaseCleaner
 from .parsers.core import BaseParser
 from .fanger import Fanger
 from pathlib import Path
@@ -17,17 +16,17 @@ def get_parser_class(input_type: str, filename: str) -> Type[BaseParser]:
 
     return parser_class
 
-def convert_file(filetype: str, file, image_processor_key, process_raw_image_urls=True, defang=True, md_cleaner: Type[BaseCleaner] = None):
+def convert_file(filetype: str, file, image_processor_key, process_raw_image_urls=True, defang=True, save_to=None, **kwargs):
     file = Path(file)
     parser_class = get_parser_class(filetype, file.name)
-    parser = parser_class(file, filetype, process_raw_image_urls, image_processor_key)
-    texts = parser.extract_text()
-    texts, images = parser.separate_images_from_texts(texts)
-    if md_cleaner:
-        texts = parser.cleanup_with_ai(md_cleaner, texts)
+    converter = parser_class(file, filetype, process_raw_image_urls, image_processor_key)
+    output = converter.convert()
     if defang:
-        texts = Fanger(texts).defang()
-    if process_raw_image_urls:
-        for i, image_str in enumerate(images):
-            images[i] = parser.proccess_images_to_text(image_str)
-    return parser.combine_text_and_images(texts, images)
+        output = Fanger(output).defang()
+    if save_to:
+        save_to = Path(save_to)
+        save_to.mkdir(exist_ok=True, parents=True)
+        (save_to/"markdown.md").write_text(output)
+        for name, img in converter.images.items():
+            img.save(save_to/name, format='png')
+    return output

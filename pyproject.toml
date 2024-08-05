@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "file2txt"
-version = "0.0.1"
+version = "0.0.1b1"
 authors = [{ name = "DOGESEC", email = "support@dogesec.com" }]
 description = "file2txt is a Python library takes common file formats and turns them into plain text (a txt file) with Markdown styling."
 readme = "README.md"
@@ -20,19 +20,15 @@ dependencies = [
     'bs4>=0.0.2',
     'google-cloud-vision>=3.4.5',
     'grpcio-status>=1.62.2',
-    'llama-index>=0.10.50',
-    'llamaindex-py-client>=0.1.19',
     'markdownify>=0.12.1',
-    'openpyxl>=3.1.4',
-    'openpyxl-image-loader>=1.0.5',
-    'pymupdf4llm>=0.0.6',
-    'pypandoc>=1.13',
-    'pypandoc_binary>=1.13',
-    'PyPDF2>=3.0.1',
     'python-dotenv>=1.0.1',
     'readability-lxml>=0.8.1',
-    'xlrd>=2.0.1',
     'lxml_html_clean>=0.1.1',
+    'tabulate>=2.2.2',
+    'pandas>=0.9.0',
+    'rapidfuzz==3.9.4',  #3.9.5+ marker-pdf fails to import
+    'marker-pdf>=0.2.16',
+    'filetype>=1.2.0',
 ]
 
 [tool.hatch.metadata]

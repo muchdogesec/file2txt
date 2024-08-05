@@ -4,13 +4,13 @@ import re
 class Fanger:
     """Load a list of texts and provide functionality for defanging."""
 
-    def __init__(self, text_list: list):
+    def __init__(self, input_text: str):
         """Initialize Fanger with a list of texts."""
-        self.text_list = text_list
+        self.input_text = input_text
 
     def defang(self) -> list:
         """Defang each text in the list and return the list."""
-        return [self._apply_replacements_to_text(text) for text in self.text_list]
+        return self._apply_replacements_to_text(self.input_text)
 
     @staticmethod
     def _apply_replacements_to_text(text: str) -> str:

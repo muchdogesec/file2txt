@@ -1,14 +1,14 @@
 from abc import ABC
 from bs4 import BeautifulSoup
-from .core import BaseParser, CustomParser
-from PIL import Image
-from io import BytesIO
+from .core import BaseParser, custom_parser
 import logging
-import os
 from markdownify import markdownify
+from bs4 import BeautifulSoup
+from readability.readability import Document
 
+from .core import custom_parser
 
-@CustomParser("html", ["html"])
+@custom_parser("html", ["html"])
 class HtmlFileParser(BaseParser, ABC):
     """
     Subclass of FileParser specifically for parsing HTML documents.
@@ -24,23 +24,48 @@ class HtmlFileParser(BaseParser, ABC):
         storing the HTML content in the file_content attribute,
         and parsing it into a BeautifulSoup object stored in the soup attribute.
         """
-        super().load_file()
-        self.soup = BeautifulSoup(self.file_content, 'html.parser')
+        self.soup = BeautifulSoup(self.file_path.read_text(), 'html.parser')
 
     def extract_text(self) -> list[str]:
         """
         Extracts and returns text from the HTML document,
         including replacing link tags and inserting image text into HTML.
         """
+        self.load_file()
         text = self.extract_text_from_html(self.soup)
         return [text]
 
-    def extract_text_from_html(self, soup) -> str:
-        self._replace_img_tags(soup)
+    def extract_text_from_html(self, soup: BeautifulSoup) -> str:
+        self.find_images(soup)
         return markdownify(soup.prettify())
 
-
-    def _replace_img_tags(self, soup) -> list[str]:
-        img_tags = soup.find_all('img')        
+    def find_images(self, soup: BeautifulSoup):
+        img_tags = soup.find_all('img')
         for img in img_tags:
-            img['src'] = img.get("src") or img.get('data-src')
+            img['src'] = self.add_image(img.get("src") or img.get('data-src'))
+        
+    def add_image(self, src):
+        try:
+            new_src = f"0_image_{len(self.images)}.png"
+            self.images[new_src] = self.image_processor.image_from_uri(src, self.file_path.parent)
+            return new_src
+        except BaseException as e:
+            logging.debug(e)
+            return src
+
+
+
+@custom_parser("html_article", ["html"])
+class HtmlArticleFileParser(HtmlFileParser):
+    """
+    A subclass of HtmlFileParser, specifically for parsing HTML files representing articles.
+    Utilizes the readability library to extract the main content of the article from the HTML file.
+    """
+
+    def load_file(self):
+        super().load_file()
+        doc = Document(self.file_content)
+        self.file_content = doc.summary()
+        
+        self.soup = BeautifulSoup(self.file_content, 'html.parser')
+    

@@ -1,69 +1,29 @@
+import json
 import logging
 import os
 from pathlib import Path
 import subprocess
+import time
 
-from file2txt.parsers.html_file_parser import HtmlFileParser
+import pypdfium2 as pdfium # Needs to be at the top to avoid warnings
 
-from .core import CustomParser
-from bs4 import BeautifulSoup
-import fitz, pymupdf4llm, shutil
+from marker.convert import convert_single_pdf
+from marker.models import load_all_models
+from marker.settings import settings as marker_settings
+from .marker_file_parser import split_marker_pages
+from .core import BaseParser, custom_parser
 
-class PopplerException(Exception):
-    pass
 
-@CustomParser("pdf-poppler", ["pdf"])
-class PdfFileParser(HtmlFileParser):
+@custom_parser("pdf", ["pdf"])
+class PdfFileParser(BaseParser):
     """
     Subclass of FileParser specifically for parsing PDF files.
     Overrides load_file to load the PDF data and extract_text to extract text and images from the PDF's pages.
     """
-
-    def load_file(self):
-        """
-        Opens and reads the PDF file specified in the file_path attribute,
-        storing the PDF data in the file_content attribute.
-        """
-        try:
-            self.executable_path = os.getenv("POPPLER_PDFTOHTML_PATH", "pdftohtml")
-            outdir = self.mkdtemp(prefix=__name__.split(".")[0]+"_")
-            logging.info(f"writing temporary files to {outdir}")
-            subprocess.check_call([
-                self.executable_path,
-                "-c", # output complex document
-                self.file_path,
-                "-s",        # generate single document that includes all pages
-                outdir/"output",
-            ])
-            self.file_content = (outdir/"output-html.html").read_bytes()
-            self.prepare_soup(outdir)
-        except BaseException as e:
-            raise PopplerException(f"failed to run pdftohtml on {self.file_path}") from e
     
     def extract_text(self) -> list[str]:
-        output = []
-        for soup in self.soup.find_all("html"):
-            text = self.extract_text_from_html(soup)
-            output.append(text)
-        return output
-        
-    def prepare_soup(self, parent_dir: Path):
-        self.soup = BeautifulSoup(self.file_content, "html.parser")
-        for title in self.soup.find_all("title"):
-            title.extract()
-
-@CustomParser("pdf", ["pdf"])
-class PymupdfFileParser(HtmlFileParser):
-    def load_file(self):
-        outdir = self.mkdtemp(prefix=__name__.split(".")[0]+"_")
-        shutil.copy(self.file_path, outdir/"images")
-        self.file_path = outdir/"images"
-        
-    def extract_text(self) -> list[str]:
-        doc = fitz.open(self.file_path)
-        md_text = [self.remove_html_elements(pymupdf4llm.to_markdown(doc, write_images=True, pages=[page])) for page in range(doc.page_count)]
-        return md_text
-    
-    @staticmethod
-    def remove_html_elements(string: str):
-        return string #.replace("<", "&lt;").replace(">", "&gt;")
+        marker_settings.PAGINATE_OUTPUT = True
+        models = load_all_models()
+        text, page_images, stats = convert_single_pdf(str(self.file_path), model_lst=models, max_pages=1)
+        self.images.update(page_images)
+        return split_marker_pages(text)

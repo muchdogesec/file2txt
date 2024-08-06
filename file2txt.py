@@ -79,6 +79,7 @@ if __name__ == "__main__":
         output_file = input_file.with_name("{}.file2txt-{}".format(input_file.stem, args.mode))
     if output_file.exists():
         logging.error("output dir `%s` already exists, try passing a different path to --output", str(output_file))
+        sys.exit(100)
     keyfile = os.path.abspath(os.path.join(os.curdir, 'keys/key.json'))
     try:
         logging.debug("got args: %s", " ".join(map(repr, sys.argv)))

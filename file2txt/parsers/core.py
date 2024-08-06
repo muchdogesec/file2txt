@@ -1,5 +1,6 @@
 import base64
 import codecs
+import io
 import logging
 from pathlib import Path
 import re
@@ -58,8 +59,16 @@ class BaseParser(ABC):
         """
         raise NotImplementedError("please implement in subclass")
     
+    @staticmethod
+    def join_pages(pages: list[str]):
+        strbuf = io.StringIO()
+        for i, page in enumerate(pages, start=1):
+            strbuf.write(f"[comment]: <> (===START PAGE {i}===)\n")
+            strbuf.write(page)
+            strbuf.write(f"\n\n[comment]: <> (===END PAGE {i}===)\n")
+        return strbuf.getvalue()
     def convert(self) -> str:
-        texts = "\n".join(self.extract_text())
+        texts = self.join_pages(self.extract_text())
         if not self.process_raw_image_urls:
             return texts
         image_texts = {}
@@ -69,8 +78,7 @@ class BaseParser(ABC):
             except Exception as e:
                 logging.debug(e)
 
-        for whole, title, link, extra in self.find_md_images(texts):
-            print(title, link)
+        for whole, _, link, _ in self.find_md_images(texts):
             if img_text := image_texts.get(link):
                 texts = texts.replace(whole, dedent(f"""
 

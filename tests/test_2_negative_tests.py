@@ -63,6 +63,8 @@ class TestFile2TxtNegative(unittest.TestCase):
             "html_article": TEST_FILES["pdf"],  # PDF files in html mode
             "pdf": TEST_FILES["image"],  # Image files in pdf mode
             "image": TEST_FILES["excel"],  # Excel files in image mode
+            "word": TEST_FILES["powerpoint"],  # Powerpoint files in word mode
+            "powerpoint": TEST_FILES["word"],  # Word files in powerpoint mode
         }
 
         for mode, files in invalid_combinations.items():

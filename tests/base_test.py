@@ -4,22 +4,28 @@ TEST_FILES_DIRECTORY = "tests/files/"
 
 # Mapping file extensions to their expected MIME types
 EXTENSION_TO_MIMETYPE = {
-    ".csv": "text/csv",
-    ".html": "text/html",
     ".jpeg": "image/jpeg",
     ".jpg": "image/jpeg",
     ".png": "image/png",
     ".webp": "image/webp",
-    ".pdf": "application/pdf"
+    ".csv": "text/csv",
+    ".html": "text/html",
+    ".pdf": "application/pdf",
+    ".ppt": "application/vnd.ms-powerpoint",
+    ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    ".doc": "application/msword",
+    ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 }
 
 # Modes and their corresponding file groups
 MODES = {
-    "csv": "csv",
     "image": "image",
+    "csv": "csv",
     "html": "html",
     "html_article": "html",
-    "pdf": "pdf"
+    "pdf": "pdf",
+    "word": "word",
+    "powerpoint": "powerpoint"
 }
 
 # Grouping files by their types
@@ -62,6 +68,14 @@ TEST_FILES = {
         "pdf/rpt-apt30.pdf",
         "pdf/sophoslabs-mykings.pdf",
         "pdf/thai-cert-threat-actors.pdf"
+    ],
+    "word": [
+        "doc/fanged_data.doc",
+        "doc/fanged_data.docx"
+    ],
+    "powerpoint": [
+        "ppt/fanged_data.ppt",
+        "ppt/fanged_data.pptx"
     ]
 }
 

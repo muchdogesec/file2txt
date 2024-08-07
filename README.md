@@ -14,9 +14,9 @@ In addition to the printed text, file2txt can also extract text from images foun
 
 Essentially file2txt is used by us to produce a text output that can be scanned for IoCs and TTPs (by [txt2stix](https://github.com/muchdogesec/txt2stix/)), but could be used for a variety of other use-cases as you see fit.
 
-The general flow of the file2txt is as follows
+The general flow of the file2txt is as follows:
 
-<iframe width="768" height="432" src="https://miro.com/app/live-embed/uXjVKZXyIxA=/?moveToViewport=-609,-447,3339,1546&embedId=271586839462" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
+https://miro.com/app/board/uXjVKZXyIxA=/
 
 ## Install
 
@@ -31,9 +31,38 @@ source file2txt-venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-### Optional: Configure Google's Cloud Vision (to extract text from images)
+### Optional: Add Marker API Key
 
-file2txt uses Cloud Vision to text from images. If you want to use this feature you must set your Cloud Vision credentials...
+file2txt uses the [Marker API](https://www.datalab.to/marker) to process the following filetypes;
+
+* PDF `.pdf` (`application/pdf`)
+* Word `.doc` (`application/msword`), `.docx` `(application/vnd.openxmlformats-officedocument.wordprocessingml.document`)
+* Powerpoint `.ppt` (`application/vnd.ms-powerpoint`), `.pptx` (`application/vnd.openxmlformats-officedocument.presentationml.presentation`)
+
+You only need a Marker API key if you intend to use one of the above modes.
+
+[Get your Marker API key here](https://www.datalab.to/app/keys).
+
+Once it's generated, copy the `.env` file:
+
+```shell
+cp .env.sample .env
+```
+
+And add your API key using the `MARKER_API_KEY` variable.
+
+You do not need a Marker API key if you only intend to convert the following file types;
+
+* HTML `html` (`text/html`)
+* HTML Article `html_article` (`text/html`)
+* CSV `csv` (`text/csv`)
+* Image `jpg` (`image/jpg`), `.jpeg` (`image/jpeg`), `.png` (`image/png`), `.webp` (`image/webp`)
+
+### Optional: Add Google's Cloud Vision Key
+
+file2txt uses Cloud Vision to text from images found in the input documents. This feature is optional. If you do not set a Cloud Vision key, you will not be able to use the `extract_text_from_image` feature.
+
+If you want to use this feature you must set your Cloud Vision credentials as follows...
 
 #### 1. Create project and enable API
 
@@ -83,11 +112,13 @@ To upload a new file to be processed to text the following flags are used;
 	* `csv`
 	* `html`
 	* `html_article`
-	* `pdf`
+	* `pdf` (requires marker api key)
+  * `doc` (requires marker api key)
+  * `ppt` (requires marker api key)
 * `--file` (required, string): path to file to be converted to text. Note, if the filetype and mimetype of the document submitted does not match one of those supported by file2txt (and set for `mode`, an error will be returned.
 * `--output` (optional, string): name of output directory name. Default is `{input_filename}/`.
 * `--defang` (optional, boolean): if output should be defanged. Default is `true`.
-* `--extract_text_from_image` (optional, boolean): if images should be converted to text using OCR. Default is `true`. You need a valid `key/key.json` key for this to work. This flag MUST be `false` with `csv` mode and MUST be `true` with `image` mode.
+* `--extract_text_from_image` (optional, boolean, required Google Vision Key): if images should be converted to text using OCR. Default is `true`. You need a valid `key/key.json` key for this to work. This flag MUST be `false` with `csv` mode and MUST be `true` with `image` mode.
 
 The script will output all files to the `output/` directory in the following structure;
 
@@ -152,7 +183,6 @@ The input file type determines how the files should be handled.
 
 * Filetypes supported (mime-type): `jpg` (`image/jpg`), `.jpeg` (`image/jpeg`), `.png` (`image/png`), `.webp` (`image/webp`)
 * Embedded images processed using `image` mode and stored locally: TRUE
-  * Output position matched input: n/a
 * Supports paging: FALSE
 * Python library used for conversion to markdown: n/a
 
@@ -168,7 +198,6 @@ The input file type determines how the files should be handled.
 * Filetypes supported (mime-type): `html` (`text/html`)
 * Embedded images processed using `image` mode and stored locally: TRUE
 * Supports paging: FALSE
-* HTML encoded content supported: TRUE
 * Python library used for conversion to markdown: `python-markdownify`
 
 This will consider the entire HTML of the page (e.g. nav bars, footers, etc.). Generally you do not want this extra data (mainly problematic when exporting webpages as HTML from a browser).
@@ -180,7 +209,6 @@ Such HTML outputs can get very messy (stylesheets, javascript, etc). As such for
 * Filetypes supported (mime-type): `html` (`text/html`)
 * Embedded images processed using `image` mode and stored locally: TRUE
 * Supports paging: FALSE
-* HTML encoded content supported: TRUE
 * Python library used for conversion to markdown: see `html` mode
 
 Many of our use-cases call for the actual article in the HTML of a website to be considered (versus the entirety of a page, e.g. the nav bar, the footer, advertisements, etc.). This mode will attempt to remove anything not considered the core content of the page.
@@ -190,16 +218,25 @@ Many of our use-cases call for the actual article in the HTML of a website to be
 * Filetypes supported (mime-type): `pdf` (`application/pdf`)
 * Embedded images processed using `image` mode and stored locally: TRUE
 * Supports paging: TRUE
-* HTML encoded content supported: FALSE
-* Python library used for conversion to markdown: `marker-pdf`
+* Marker API
+
+### Microsoft Word (mode: `word`)
+
+* Filetypes supported (mime-type): `docx` (`application/vnd.openxmlformats-officedocument.wordprocessingml.document`), `doc` (`application/msword`)
+* Embedded images processed using `image` mode and stored locally: TRUE
+* Supports paging: TRUE
+* Marker API
+
+### Powerpoint (mode: `powerpoint`)
+
+* Filetypes supported (mime-type): `ppt` (`application/vnd.ms-powerpoint`), `.jpeg` (`application/vnd.openxmlformats-officedocument.presentationml.presentation`),
+* Embedded images processed using `image` mode and stored locally: TRUE
+* Supports paging: TRUE (one page = one slide)
+* Marker API
 
 ### Unsupported Microsoft propriety filetypes and workarounds
 
-Many of you will have file Microsoft files (`doc`, `.docx`, `xls`, `xlsx`, `ppt`, `pptx` etc.). file2txt does not currently support these formats.
-
-However, a workaround to this problem is fairly simple...
-
-You can save all of these filetypes as `.pdf`s (or `.csv`'s in the case of Excel based files) using Microsoft's respective software and then upload to file2txt.
+Generally, where a filetype is not supportedt
 
 Similarly, for other word processing formats, there is usually the option to save to pdf, which can then be uploaded to file2txt.
 

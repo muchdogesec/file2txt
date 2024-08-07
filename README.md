@@ -46,7 +46,7 @@ You only need a Marker API key if you intend to use one of the above modes.
 Once it's generated, copy the `.env` file:
 
 ```shell
-cp .env.sample .env
+cp .env.example .env
 ```
 
 And add your API key using the `MARKER_API_KEY` variable.
@@ -144,7 +144,7 @@ python3 file2txt.py \
   --file tests/files/pdf-real/bitdefender-rdstealer.pdf \
   --output examples/aipretty-defang-extracttext/Bitdefender-Labs-Report-X-creat6958-en-EN.md \
   --defang true \
-  --extract_text_from_image true \
+  --extract_text_from_image true
 ```
 
 ### Tests

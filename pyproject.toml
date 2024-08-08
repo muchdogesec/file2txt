@@ -17,6 +17,7 @@ classifiers = [
 
 
 dependencies = [
+    'pillow>=10.0.1',
     'bs4>=0.0.2',
     'google-cloud-vision>=3.4.5',
     'grpcio-status>=1.62.2',

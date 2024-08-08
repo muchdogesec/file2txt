@@ -27,13 +27,14 @@ class BaseParser(ABC):
     """
     IMAGE_SEP_FINDER  = "[image-break]"
     PAGE_SEP_FINDER   = "[page-break]"
-    IMAGE_SEPARATOR   = "\n---\n[image-break]:# (This is a break between text and images)\n\n"
     _temp_dir: Path|NoneType = None
-    PAGE_SEPARATOR    = "\n---\n[page-break]:# (This is a page break)\n---\n"
-    # MARKDOWN_IMAGE_RE = re.compile(r"(!\[([^\]]*)\]\(([^\^)]+)\))")
     MARKDOWN_IMAGE_RE = re.compile(r"(!\[([^\]]*)\]\(([^\^)]+\.png)( .*?){0,1}\))")
-
     PARSERS = {}
+
+
+
+    image_processor: ImageProcessor = None
+    mimetype = None
 
     def __init__(self, file_path: str, input_type: str, process_raw_image_urls: bool, keyfile: str):
         """
@@ -42,15 +43,21 @@ class BaseParser(ABC):
         self.file_path = Path(file_path)
         self.input_type = input_type
         self.process_raw_image_urls = process_raw_image_urls
-        self.image_processor = ImageProcessor(process_raw_image_urls, keyfile)
         self.images: dict[str, Image.Image] = {}
-        self.load_file()
+        self.vision_keyfile = keyfile
+        self.prepare_extractor()
 
-    def load_file(self):
+    def prepare_extractor(self):
         """
         Extracts and returns the text content from the file.
         """
-        self.mimetype: str = filetype.guess(self.file_path).mime
+        if self.process_raw_image_urls:
+            self.image_processor = ImageProcessor(self.process_raw_image_urls, self.vision_keyfile)
+        print(self.file_path)
+        try:
+            self.mimetype: str = filetype.guess(self.file_path).mime
+        except:
+            pass
 
 
     def extract_text(self) -> list[str]:
@@ -67,6 +74,7 @@ class BaseParser(ABC):
             strbuf.write(page)
             strbuf.write(f"\n\n[comment]: <> (===END PAGE {i}===)\n")
         return strbuf.getvalue()
+
     def convert(self) -> str:
         texts = self.join_pages(self.extract_text())
         if not self.process_raw_image_urls:
@@ -95,14 +103,8 @@ class BaseParser(ABC):
         return texts
 
 
-    def process_images(self, text):
-        if not self.image_processor.process_raw_image_urls:
-            return text
-        return text
-
     def __del__(self):
         try:
-            return
             if self._temp_dir:
                 logging.info("removing temp dir at %s", self._temp_dir)
                 shutil.rmtree(self._temp_dir)

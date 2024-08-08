@@ -3,6 +3,8 @@ import time
 
 import requests
 
+from file2txt.image_processor import ImageProcessor
+
 from .core import BaseParser, custom_parser
 
 MARKER_URL = "https://www.datalab.to/api/v1/marker"
@@ -10,12 +12,12 @@ class MarkerAPIError(Exception):
     pass
 
 class MarkerFileParser(BaseParser):
-    def load_file(self):
+    def prepare_extractor(self):
         try:
             self.api_key = os.environ['MARKER_API_KEY']
         except KeyError as e:
             raise MarkerAPIError('MARKER_API_KEY not in env')
-        return super().load_file()
+        return super().prepare_extractor()
     def extract_text(self) -> list[str]:
         payload = {
             'file': (self.file_path.name, self.file_path.open('rb'), self.mimetype),
@@ -38,7 +40,7 @@ class MarkerFileParser(BaseParser):
     
     def parse_images(self, marker_images: dict[str, str]):
         for link, img in marker_images.items():
-            self.images[link] = self.image_processor.image_from_uri('data:image/png;base64,' + img, self.file_path.parent)
+            self.images[link] = ImageProcessor._image_from_uri('data:image/png;base64,' + img, self.file_path.parent)
 
 def split_marker_pages(text: str):
     return text.split('\n\n' + 16*'-' + '\n\n')

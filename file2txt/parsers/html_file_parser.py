@@ -1,5 +1,7 @@
 from abc import ABC
 from bs4 import BeautifulSoup
+
+from file2txt.image_processor import ImageProcessor
 from .core import BaseParser, custom_parser
 import logging
 from markdownify import markdownify
@@ -18,20 +20,21 @@ class HtmlFileParser(BaseParser, ABC):
 
     soup = None
 
-    def load_file(self):
+    def prepare_extractor(self):
         """
         Opens and reads the HTML file specified in the file_path attribute,
         storing the HTML content in the file_content attribute,
         and parsing it into a BeautifulSoup object stored in the soup attribute.
         """
         self.soup = BeautifulSoup(self.file_path.read_text(), 'html.parser')
+        return super().prepare_extractor()
 
     def extract_text(self) -> list[str]:
         """
         Extracts and returns text from the HTML document,
         including replacing link tags and inserting image text into HTML.
         """
-        self.load_file()
+        self.prepare_extractor()
         text = self.extract_text_from_html(self.soup)
         return [text]
 
@@ -47,7 +50,7 @@ class HtmlFileParser(BaseParser, ABC):
     def add_image(self, src):
         try:
             new_src = f"0_image_{len(self.images)}.png"
-            self.images[new_src] = self.image_processor.image_from_uri(src, self.file_path.parent)
+            self.images[new_src] = ImageProcessor._image_from_uri(src, self.file_path.parent)
             return new_src
         except BaseException as e:
             logging.debug(e)
@@ -62,10 +65,8 @@ class HtmlArticleFileParser(HtmlFileParser):
     Utilizes the readability library to extract the main content of the article from the HTML file.
     """
 
-    def load_file(self):
-        super().load_file()
-        doc = Document(self.file_content)
-        self.file_content = doc.summary()
-        
-        self.soup = BeautifulSoup(self.file_content, 'html.parser')
+    def prepare_extractor(self):
+        super().prepare_extractor()
+        doc = Document(self.soup.prettify())
+        self.soup = BeautifulSoup(doc.summary(), 'html.parser')
     

@@ -12,6 +12,10 @@ class ImageFileParser(BaseParser):
     and finding image links within it.
     """
 
+    def prepare_extractor(self):
+        self.process_raw_image_urls = True
+        return super().prepare_extractor()
+
     def extract_text(self) -> list[str]:
         """
         Extracts and returns the text content from the file.

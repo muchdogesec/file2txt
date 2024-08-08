@@ -72,18 +72,19 @@ class ImageProcessor:
             raise ValueError(f"Expected an image, but got {response.headers['Content-Type']}")
         return response.content
     
-    def image_from_uri(self, url: str, base_dir: Path) -> str:
+    @classmethod
+    def _image_from_uri(cls, url: str, base_dir: Path) -> str:
         """
         Download an image from the given URL and convert it to text using OCR.
         """
         try:
-            if self._is_base64_string(url):
-                imgdata = base64.b64decode(self._base64_to_data_url(url))
+            if cls._is_base64_string(url):
+                imgdata = base64.b64decode(cls._base64_to_data_url(url))
                 return Image.open(BytesIO(imgdata))
             elif url.split("://")[0] not in ["http", "https"]:
                 return Image.open(BytesIO((base_dir/url).read_bytes()))
             else:
-                img_data = self._download_image_from_http(url)
+                img_data = cls._download_image_from_http(url)
                 return Image.open(BytesIO(img_data))
         except Exception as e:
             raise LoadImageException(f"Failed to download image: {e}")

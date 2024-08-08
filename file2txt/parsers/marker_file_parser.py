@@ -8,7 +8,7 @@ from .core import BaseParser, custom_parser
 MARKER_URL = "https://www.datalab.to/api/v1/marker"
 class MarkerAPIError(Exception):
     pass
-@custom_parser("marker", ["pdf", "doc", "docx", "ppt", "pptx"])
+
 class MarkerFileParser(BaseParser):
     def load_file(self):
         try:
@@ -43,3 +43,15 @@ class MarkerFileParser(BaseParser):
 def split_marker_pages(text: str):
     return text.split('\n\n' + 16*'-' + '\n\n')
      
+
+@custom_parser("word", ["doc", "docx"])
+class MarkerWordFileParser(MarkerFileParser):
+    pass
+
+@custom_parser("pdf", ["pdf"])
+class MarkerPdfFileParser(MarkerFileParser):
+    pass
+
+@custom_parser("powerpoint", ["ppt", "pptx"])
+class MarkerPowerpointFileParser(MarkerFileParser):
+    pass

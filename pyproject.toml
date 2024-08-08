@@ -26,9 +26,8 @@ dependencies = [
     'lxml_html_clean>=0.1.1',
     'tabulate>=2.2.2',
     'pandas>=0.9.0',
-    'rapidfuzz==3.9.4',  #3.9.5+ marker-pdf fails to import
-    'marker-pdf>=0.2.16',
     'filetype>=1.2.0',
+    'requests>=2.31.0',
 ]
 
 [tool.hatch.metadata]

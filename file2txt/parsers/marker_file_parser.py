@@ -13,10 +13,9 @@ class MarkerAPIError(Exception):
 
 class MarkerFileParser(BaseParser):
     def prepare_extractor(self):
-        try:
-            self.api_key = os.environ['MARKER_API_KEY']
-        except KeyError as e:
-            raise MarkerAPIError('MARKER_API_KEY not in env')
+        self.api_key = os.environ.get('MARKER_API_KEY')
+        if not self.api_key:
+            raise MarkerAPIError('MARKER_API_KEY not set in env')
         return super().prepare_extractor()
     def extract_text(self) -> list[str]:
         payload = {
@@ -25,18 +24,21 @@ class MarkerFileParser(BaseParser):
             'paginate': (None, True),
             'force_ocr': (None, False),
         }
-        headers = {"X-Api-Key": self.api_key}
-        resp = requests.post(MARKER_URL, files=payload, headers=headers)
-        data = resp.json()
+        data = self.make_api_request("POST", MARKER_URL, files=payload)
         check_url = data['request_check_url']
         while data.get('status') != 'complete':
             time.sleep(2)
-            resp = requests.get(check_url, headers=headers)
-            data = resp.json()
-        if data.get('error'):
-            raise MarkerAPIError(data['error'])
+            data = self.make_api_request("GET", check_url)
         self.parse_images(data.get('images', {}))
         return split_marker_pages(data.get('markdown', ''))
+    
+    def make_api_request(self, method, url, files=None):
+        headers = {"X-Api-Key": self.api_key}
+        resp = requests.request(method, url, files=files, headers=headers)
+        data = resp.json()
+        if resp.status_code != 200:
+            raise MarkerAPIError(f"HTTP {resp.status_code}: {data.get("error", data.get('detail')) or "Unknown"}")
+        return data
     
     def parse_images(self, marker_images: dict[str, str]):
         for link, img in marker_images.items():

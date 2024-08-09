@@ -37,7 +37,8 @@ class MarkerFileParser(BaseParser):
         resp = requests.request(method, url, files=files, headers=headers)
         data = resp.json()
         if resp.status_code != 200:
-            raise MarkerAPIError(f"HTTP {resp.status_code}: {data.get("error", data.get('detail')) or "Unknown"}")
+            error = data.get("error") or data.get("detail") or "Unknown"
+            raise MarkerAPIError(f'HTTP {resp.status_code}: {error}')
         return data
     
     def parse_images(self, marker_images: dict[str, str]):

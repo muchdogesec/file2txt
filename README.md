@@ -102,7 +102,7 @@ python3 file2txt.py \
 	--file path/to/file.extension \
 	--output my_document \
 	--defang boolean \
-	--extract_text_from_image boolean \
+	--extract_text_from_image boolean
 ```
 
 To upload a new file to be processed to text the following flags are used;
@@ -142,10 +142,24 @@ Convert document to human friendly markdown, extract text from images, and defan
 python3 file2txt.py \
   --mode pdf \
   --file tests/files/pdf-real/bitdefender-rdstealer.pdf \
-  --output examples/aipretty-defang-extracttext/Bitdefender-Labs-Report-X-creat6958-en-EN.md \
+  --output examples/Bitdefender-Labs-Report-X-creat6958-en-EN.md \
   --defang true \
   --extract_text_from_image true
 ```
+
+Only convert the text in the main article on the webpage into markdown, also extract text from images, and defang the text;
+
+```shell
+python3 file2txt.py \
+  --mode html_article \
+  --file tests/files/html-real/unit42-Fighting-Ursa-Luring-Targets-With-Car-for-Sale.html \
+  --output examples/unit42-Fighting-Ursa-Luring-Targets-With-Car-for-Sale.md \
+  --defang true \
+  --extract_text_from_image true
+```
+
+
+
 
 ### Tests
 

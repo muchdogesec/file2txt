@@ -34,7 +34,10 @@ TEST_FILES = {
         "csv/csv-test.csv"
     ],
     "html": [
-        "html/fanged_data.html"
+        "html/fanged_data_decoded.html",
+        "html/fanged_data_decoded_cdata.html",
+        "html/fanged_data_encoded.html"
+
     ],
     "html-real": [
         "html/bitdefender-fragments-of-cross-platform-backdoor-hint-at-larger-mac-os-attack.html",

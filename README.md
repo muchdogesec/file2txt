@@ -146,7 +146,7 @@ Convert document to human friendly markdown, extract text from images, and defan
 python3 file2txt.py \
   --mode pdf \
   --file tests/files/pdf-real/bitdefender-rdstealer.pdf \
-  --output examples/Bitdefender-Labs-Report-X-creat6958-en-EN.md \
+  --output examples/Bitdefender-Labs-Report-X-creat6958-en-EN \
   --defang true \
   --extract_text_from_image true
 ```
@@ -157,13 +157,43 @@ Only convert the text in the main article on the webpage into markdown, also ext
 python3 file2txt.py \
   --mode html_article \
   --file tests/files/html-real/unit42-Fighting-Ursa-Luring-Targets-With-Car-for-Sale.html \
-  --output examples/unit42-Fighting-Ursa-Luring-Targets-With-Car-for-Sale.md \
+  --output examples/unit42-Fighting-Ursa-Luring-Targets-With-Car-for-Sale \
   --defang true \
   --extract_text_from_image true
 ```
 
+Do not defang;
 
+```shell
+python3 file2txt.py \
+  --mode word \
+  --file tests/files/doc/fanged_data.docx \
+  --output examples/fanged_data_defang_f \
+  --defang false \
+  --extract_text_from_image true
+```
 
+Defang;
+
+```shell
+python3 file2txt.py \
+  --mode word \
+  --file tests/files/doc/fanged_data.docx \
+  --output examples/fanged_data_defang_t \
+  --defang true \
+  --extract_text_from_image true
+```
+
+Extract data from an image;
+
+```shell
+python3 file2txt.py \
+  --mode image \
+  --file tests/files/doc/fanged_data.docx \
+  --output examples/fanged_data_defang_t \
+  --defang true \
+  --extract_text_from_image true
+```
 
 ### Tests
 

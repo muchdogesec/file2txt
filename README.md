@@ -189,8 +189,8 @@ Extract data from an image;
 ```shell
 python3 file2txt.py \
   --mode image \
-  --file tests/files/doc/fanged_data.docx \
-  --output examples/fanged_data_defang_t \
+  --file tests/files/image/example-1.png \
+  --output examples/image-example1 \
   --defang true \
   --extract_text_from_image true
 ```
@@ -203,7 +203,7 @@ For more examples, you can also run our automated scripts to generate files.
 python3 -m unittest tests/test_1_output_file_generation.py
 ```
 
-You will need Open AI and Google Vision in your `.env` file when running this test.
+You will need a Google Vision in your `.env` file when running this test.
 
 This script generates output files using a combination of file2txt settings.
 

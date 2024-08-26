@@ -22,6 +22,8 @@ https://miro.com/app/board/uXjVKZXyIxA=/
 
 [![file2txt](https://img.youtube.com/vi/u9Pnhs3_Qv4/0.jpg)](https://www.youtube.com/watch?v=u9Pnhs3_Qv4)
 
+[Watch the demo](https://www.youtube.com/watch?v=u9Pnhs3_Qv4).
+
 ## Install
 
 ```shell
@@ -503,4 +505,4 @@ This does not apply to images (see embedded images).
 
 ## License
 
-[AGPLv3](/LICENSE).
+[Apache 2.0](/LICENSE).

@@ -292,13 +292,11 @@ Similarly, for other word processing formats, there is usually the option to sav
 
 ## A note on HTML encoding (for `html` and `html_article` modes)
 
-HTML can come in a variety of flavours, file2stix can handle the following:
+HTML can be printed in a variety of ways
 
 * Encoded: e.g. contains `&gt` vs `>`
 * Decoded Raw: standard HTML tags
-* Decoded CDATA: the actual Decoded Raw HTML is inside `<![CDATA[Decoded Raw HTML]]>` tags
-
-In any mode that considers HTML, all these formats are automatically detected by the script and processed accordingly.
+* Decoded CDATA: the actual Decoded Raw HTML is inside `<![CDATA[Decoded Raw HTML]]>` tags (most common in XML/JSON docs containing HTML, most commonly RSS/ATOM feeds)
 
 As an example, endcoded
 
@@ -317,6 +315,10 @@ Which as decoded CDATA looks like
 ```html
 <![CDATA[<img src="https://cms.therecord.media/uploads/2023_0706_Ransomware_Tracker_Most_Prolific_Groups_6a567c11da.jpg">]]>
 ```
+
+**IMPORTANT:** file2txt only supports decoded HTML.
+
+If your HTML data is encoded, or wrapped in CDATA tags, you must first convert it to decoded HTML before processing with file2txt otherwise you the output will not be converted correctly.
 
 ## A note on handling embedded images
 

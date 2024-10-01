@@ -1,4 +1,5 @@
 from abc import ABC
+from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
 from file2txt.image_processor import ImageProcessor
@@ -49,6 +50,8 @@ class HtmlFileParser(BaseParser, ABC):
         
     def add_image(self, src):
         try:
+            if self.base_url:
+                src = urljoin(self.base_url, src)
             new_src = f"0_image_{len(self.images)}.png"
             self.images[new_src] = ImageProcessor._image_from_uri(src, self.file_path.parent)
             return new_src

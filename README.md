@@ -120,6 +120,17 @@ To ensure images are not lost (in modes that support images), the script also ex
 
 You can see the output from the commands below in the `output/` directory of this repository.
 
+Turn a CSV into markdown table;
+
+```shell
+python3 file2txt.py \
+  --mode csv \
+  --file tests/files/csv/csv-test.csv \
+  --output examples/csv-test \
+  --defang true \
+  --extract_text_from_image false
+```
+
 Convert document to human friendly markdown, extract text from images, and defang the text (the most common use-case for cyber-security);
 
 ```shell

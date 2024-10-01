@@ -1,5 +1,3 @@
-import base64
-import codecs
 import io
 import logging
 from pathlib import Path
@@ -9,12 +7,9 @@ import shutil
 import tempfile
 from textwrap import dedent
 from types import NoneType
-from typing import Any
-from urllib.parse import quote
 from PIL import Image
 import filetype
 
-import PIL
 
 from ..image_processor import ImageProcessor
 

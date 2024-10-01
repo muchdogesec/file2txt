@@ -1,18 +1,10 @@
-import codecs
-import io
 import logging
 from io import BytesIO
-from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from typing import Callable, List
 import requests
 from PIL import Image
-from google.oauth2 import service_account
 from google.auth import api_key
-from google.cloud import api_keys_v2
-# from google.oauth2 import 
 from google.cloud import vision
-import os 
 import base64
 
 

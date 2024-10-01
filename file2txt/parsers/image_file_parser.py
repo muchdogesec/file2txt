@@ -1,7 +1,4 @@
-from abc import ABC
 from PIL import Image
-from io import BytesIO
-import logging
 
 from .core import BaseParser, custom_parser
 

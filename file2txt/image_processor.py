@@ -8,6 +8,9 @@ from typing import Callable, List
 import requests
 from PIL import Image
 from google.oauth2 import service_account
+from google.auth import api_key
+from google.cloud import api_keys_v2
+# from google.oauth2 import 
 from google.cloud import vision
 import os 
 import base64
@@ -16,22 +19,18 @@ import base64
 class LoadImageException(Exception):
     pass
 
+class EmptyApiKeyException(Exception):
+    pass
+
 class ImageProcessor:
-    def __init__(self, process_raw_image_urls: bool, key: str|dict):
+    def __init__(self, process_raw_image_urls: bool, key: str):
+        if not key:
+            raise EmptyApiKeyException("must provide a google vision key")
         self.process_raw_image_urls = process_raw_image_urls
         self.img_counter = 0
         self.characters_counter = 0
         scopes = ["https://www.googleapis.com/auth/cloud-platform"]
-        if isinstance(key, str):
-            credentials = service_account.Credentials.from_service_account_file(
-                filename=key,
-                scopes=scopes)
-        else:
-            credentials = service_account.Credentials.from_service_account_info(
-                key,
-                scopes=scopes)
-        
-        self.client = vision.ImageAnnotatorClient(credentials=credentials)  
+        self.client = vision.ImageAnnotatorClient(credentials=api_key.Credentials(key))  
 
     def image_to_text(self, img: Image) -> str:
         """

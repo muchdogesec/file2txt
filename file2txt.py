@@ -80,11 +80,11 @@ if __name__ == "__main__":
     if output_file.exists():
         logging.error("output dir `%s` already exists, try passing a different path to --output", str(output_file))
         sys.exit(100)
-    keyfile = os.path.abspath(os.path.join(os.curdir, 'keys/key.json'))
+    vision_key = os.getenv('GOOGLE_VISION_API_KEY')
     try:
         logging.debug("got args: %s", " ".join(map(repr, sys.argv)))
         logging.debug("got args: %s", json.dumps(sys.argv[1:]))
-        output = convert_file(args.mode, input_file, keyfile, process_raw_image_urls=args.extract_text_from_image, defang=args.defang, md_cleaner=md_cleaner, save_to=output_file)
+        output = convert_file(args.mode, input_file, vision_key, process_raw_image_urls=args.extract_text_from_image, defang=args.defang, md_cleaner=md_cleaner, save_to=output_file)
         logging.info("conversion successful")
         logging.info(f"wrote output to dir: {output_file}")
     except Exception as e:

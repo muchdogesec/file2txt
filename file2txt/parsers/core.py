@@ -1,5 +1,3 @@
-import base64
-import codecs
 import io
 import logging
 from pathlib import Path
@@ -9,12 +7,9 @@ import shutil
 import tempfile
 from textwrap import dedent
 from types import NoneType
-from typing import Any
-from urllib.parse import quote
 from PIL import Image
 import filetype
 
-import PIL
 
 from ..image_processor import ImageProcessor
 
@@ -36,7 +31,7 @@ class BaseParser(ABC):
     image_processor: ImageProcessor = None
     mimetype = None
 
-    def __init__(self, file_path: str, input_type: str, process_raw_image_urls: bool, keyfile: str):
+    def __init__(self, file_path: str, input_type: str, process_raw_image_urls: bool, vision_apikey: str):
         """
         Initialize FileParser with the path to the file and the type of the input.
         """
@@ -44,7 +39,7 @@ class BaseParser(ABC):
         self.input_type = input_type
         self.process_raw_image_urls = process_raw_image_urls
         self.images: dict[str, Image.Image] = {}
-        self.vision_keyfile = keyfile
+        self.vision_apikey = vision_apikey
         self.prepare_extractor()
 
     def prepare_extractor(self):
@@ -52,7 +47,7 @@ class BaseParser(ABC):
         Extracts and returns the text content from the file.
         """
         if self.process_raw_image_urls:
-            self.image_processor = ImageProcessor(self.process_raw_image_urls, self.vision_keyfile)
+            self.image_processor = ImageProcessor(self.process_raw_image_urls, self.vision_apikey)
         print(self.file_path)
         try:
             self.mimetype: str = filetype.guess(self.file_path).mime

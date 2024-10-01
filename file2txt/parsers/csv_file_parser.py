@@ -1,7 +1,4 @@
-from typing import Iterable
 from .core import BaseParser, custom_parser
-import csv, io
-from itertools import chain
 import pandas as pd
 
 

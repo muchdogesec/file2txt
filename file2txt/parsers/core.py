@@ -70,7 +70,7 @@ class BaseParser(ABC):
             strbuf.write(f"\n\n[comment]: <> (===END PAGE {i}===)\n")
         return strbuf.getvalue()
 
-    def convert(self) -> str:
+    def convert(self, **kwargs) -> str:
         texts = self.join_pages(self.extract_text())
         if not self.process_raw_image_urls:
             return texts

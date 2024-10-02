@@ -71,9 +71,9 @@ class HtmlFileParser(BaseParser, ABC):
             logging.debug(e)
             return src
         
-    def convert(self, processed_image_base_url=None) -> str:
+    def convert(self, processed_image_base_url=None, **kwargs) -> str:
         self.processed_image_base_url = processed_image_base_url
-        return super().convert()
+        return super().convert(**kwargs)
 
 
 

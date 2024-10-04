@@ -41,14 +41,11 @@ class HtmlFileParser(BaseParser, ABC):
     
     def make_links_absolute(self):
         for anchor in self.soup.find_all('a'):
-            anchor['href'] = urljoin(self.base_url, anchor['href'])
+            anchor['href'] = urljoin(self.base_url, anchor.get('href', "#no-link"))
 
         for img in self.soup.find_all('img'):
-            orig_src = img.get("src") or img.get('data-src')
-            logging.info(f"{orig_src=}")
-
+            orig_src = img.get("src") or img.get('data-src') or '#no-image'
             img['src'] = urljoin(self.base_url, orig_src)
-            logging.info(f"{orig_src}, {img['src']=}")
 
     def extract_text_from_html(self, soup: BeautifulSoup) -> str:
         self.make_links_absolute()
@@ -58,7 +55,7 @@ class HtmlFileParser(BaseParser, ABC):
     def find_images(self, soup: BeautifulSoup):
         img_tags = soup.find_all('img')
         for img in img_tags:
-            img['src'] = self.add_image(img.get("src") or img.get('data-src'))
+            img['src'] = self.add_image(img['src'])
         
     def add_image(self, src):
         try:

@@ -128,3 +128,12 @@ def custom_parser(mode, extensions, mimetypes=[]):
         BaseParser.register_parser(klass, mode, mimetypes, extensions)
         return klass
     return wrapper
+
+
+@custom_parser(
+    'txt',
+    extensions=["txt", "md", "markdown"]
+)
+class PlaintextParser(BaseParser):
+    def extract_text(self) -> list[str]:
+        return [Path(self.file_path).read_text()]

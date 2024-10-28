@@ -49,13 +49,7 @@ You only need a Marker API key if you intend to use one of the above modes.
 
 [Get your Marker API key here](https://www.datalab.to/app/keys).
 
-Once it's generated, copy the `.env` file:
-
-```shell
-cp .env.example .env
-```
-
-And add your API key using the `MARKER_API_KEY` variable.
+Once it's generated add your API key using the `MARKER_API_KEY` variable in the `.env` file.
 
 You do not need a Marker API key if you only intend to convert the following file types;
 
@@ -64,13 +58,11 @@ You do not need a Marker API key if you only intend to convert the following fil
 * CSV `csv` (`text/csv`)
 * Image `jpg` (`image/jpg`), `.jpeg` (`image/jpeg`), `.png` (`image/png`), `.webp` (`image/webp`)
 
-### Optional: Add Google's Cloud Vision Key
+### Optional: Add Google's Cloud Vision API Key
 
 file2txt uses Cloud Vision to text from images found in the input documents. This feature is optional. If you do not set a Cloud Vision key, you will not be able to use the `extract_text_from_image` feature.
 
 If you want to use this feature you must set your Cloud Vision credentials as follows...
-
-#### 1. Create project and enable API
 
 Login to the [GCP Console](https://console.developers.google.com/).
 
@@ -80,25 +72,11 @@ This app requires the following Google API's to work:
 
 * [Cloud Vision API](https://console.cloud.google.com/marketplace/product/google/vision.googleapis.com)
 
-#### 2. Authenticating to the Cloud Vision API
+Go to APIs and Services and create a new API Key. It's a good idea to limit the keys scope to the Cloud Vision API.
 
-Using a service account to authenticate is the preferred method. To use a service account to authenticate to the Vision API:
+Once it's generated add your API key using the `GOOGLE_VISION_API_KEY` variable in the `.env` file.
 
-[Follow the instructions to create a service account](https://cloud.google.com/iam/docs/service-accounts-create#creating_a_service_account). Select JSON as your key type.
-
-Once complete, your service account key will be automatically downloaded.
-
-#### 3. Add your key
-
-You now need to create a directory for your Google key;
-
-```shell
-mkdir keys
-```
-
-Now copy your `<KEY>.json` file generated earlier, into the `keys` directory you just created.
-
-Finally, rename your `<KEY>.json` to `key.json`.
+You do not need a Google API key if you don't want to convert images to text.
 
 ## Run
 
@@ -126,7 +104,7 @@ To upload a new file to be processed to text the following flags are used;
 * `--file` (required, string): path to file to be converted to text. Note, if the filetype and mimetype of the document submitted does not match one of those supported by file2txt (and set for `mode`, an error will be returned.
 * `--output` (optional, string): name of output directory name. Default is `{input_filename}/`.
 * `--defang` (optional, boolean): if output should be defanged. Default is `true`.
-* `--extract_text_from_image` (optional, boolean, required Google Vision Key): if images should be converted to text using OCR. Default is `true`. You need a valid `key/key.json` key for this to work. This flag MUST be `false` with `csv` mode and MUST be `true` with `image` mode.
+* `--extract_text_from_image` (optional, boolean, required Google Vision api key): if images should be converted to text using OCR. Default is `true`. This flag MUST be `false` with `csv` mode and MUST be `true` with `image` mode.
 
 The script will output all files to the `output/` directory in the following structure;
 
@@ -143,6 +121,17 @@ To ensure images are not lost (in modes that support images), the script also ex
 ### Examples
 
 You can see the output from the commands below in the `output/` directory of this repository.
+
+Turn a CSV into markdown table;
+
+```shell
+python3 file2txt.py \
+  --mode csv \
+  --file tests/files/csv/csv-test.csv \
+  --output examples/csv-test \
+  --defang true \
+  --extract_text_from_image false
+```
 
 Convert document to human friendly markdown, extract text from images, and defang the text (the most common use-case for cyber-security);
 

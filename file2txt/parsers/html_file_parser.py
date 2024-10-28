@@ -1,4 +1,5 @@
 from abc import ABC
+from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 
 from file2txt.image_processor import ImageProcessor
@@ -37,24 +38,39 @@ class HtmlFileParser(BaseParser, ABC):
         self.prepare_extractor()
         text = self.extract_text_from_html(self.soup)
         return [text]
+    
+    def make_links_absolute(self):
+        for anchor in self.soup.find_all('a'):
+            anchor['href'] = urljoin(self.base_url, anchor.get('href', "#no-link"))
+
+        for img in self.soup.find_all('img'):
+            orig_src = img.get("src") or img.get('data-src') or '#no-image'
+            img['src'] = urljoin(self.base_url, orig_src)
 
     def extract_text_from_html(self, soup: BeautifulSoup) -> str:
+        self.make_links_absolute()
         self.find_images(soup)
         return markdownify(soup.prettify())
 
     def find_images(self, soup: BeautifulSoup):
         img_tags = soup.find_all('img')
         for img in img_tags:
-            img['src'] = self.add_image(img.get("src") or img.get('data-src'))
+            img['src'] = self.add_image(img['src'])
         
     def add_image(self, src):
         try:
             new_src = f"0_image_{len(self.images)}.png"
+            if self.processed_image_base_url:
+                new_src = urljoin(self.processed_image_base_url, new_src)
             self.images[new_src] = ImageProcessor._image_from_uri(src, self.file_path.parent)
             return new_src
         except BaseException as e:
             logging.debug(e)
             return src
+        
+    def convert(self, processed_image_base_url=None, **kwargs) -> str:
+        self.processed_image_base_url = processed_image_base_url
+        return super().convert(**kwargs)
 
 
 

@@ -4,6 +4,9 @@ TEST_FILES_DIRECTORY = "tests/files/"
 
 # Mapping file extensions to their expected MIME types
 EXTENSION_TO_MIMETYPE = {
+    ".txt": "text/plain",
+    ".md": "text/markdown",
+    ".markdown": "text/markdown",
     ".jpeg": "image/jpeg",
     ".jpg": "image/jpeg",
     ".png": "image/png",
@@ -19,6 +22,8 @@ EXTENSION_TO_MIMETYPE = {
 
 # Modes and their corresponding file groups
 MODES = {
+    "txt": "txt",
+    "md": "md",
     "image": "image",
     "csv": "csv",
     "html": "html",
@@ -30,12 +35,17 @@ MODES = {
 
 # Grouping files by their types
 TEST_FILES = {
+    "txt": [
+        "txt/threat-report.txt"
+    ],
+    "md": [
+        "markdown/threat-report.md"
+    ],
     "csv": [
         "csv/csv-test.csv"
     ],
     "html": [
         "html/fanged_data.html"
-
     ],
     "html-real": [
         "html/bitdefender-fragments-of-cross-platform-backdoor-hint-at-larger-mac-os-attack.html",

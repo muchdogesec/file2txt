@@ -92,6 +92,8 @@ python3 file2txt.py \
 To upload a new file to be processed to text the following flags are used;
 
 * `--mode` (required, dictionary): must be supported mode. Mode must support the filetype being used, else an error will be returned.
+  * `txt`
+  * `md`
 	* `image`
 	* `csv`
 	* `html`
@@ -217,6 +219,21 @@ You can upload a range of filetypes to file2txt.
 File extensions and mimetypes are validated on input for security, if they are not supported an error is returned.
 
 The input file type determines how the files should be handled.
+
+### Text (mode: `txt`)
+
+* Filetypes supported (mime-type): `txt` (`text/plain`)
+* Embedded images processed using `image` mode and stored locally: FALSE
+* Supports paging: FALSE
+* Python library used for conversion to markdown: n/a
+
+### Text (mode: `md`)
+
+* Filetypes supported (mime-type): `.md` (`text/markdown`), `.markdown` (`text/markdown`)
+* Embedded images processed using `image` mode and stored locally: TRUE
+* Supports paging: FALSE
+* Python library used for conversion to markdown: n/a
+
 
 ### Image (mode: `image`)
 

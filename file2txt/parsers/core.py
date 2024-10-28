@@ -31,7 +31,7 @@ class BaseParser(ABC):
     image_processor: ImageProcessor = None
     mimetype = None
 
-    def __init__(self, file_path: str, input_type: str, process_raw_image_urls: bool, vision_apikey: str):
+    def __init__(self, file_path: str, input_type: str, process_raw_image_urls: bool, vision_apikey: str, base_url=None):
         """
         Initialize FileParser with the path to the file and the type of the input.
         """
@@ -41,6 +41,7 @@ class BaseParser(ABC):
         self.images: dict[str, Image.Image] = {}
         self.vision_apikey = vision_apikey
         self.prepare_extractor()
+        self.base_url = base_url
 
     def prepare_extractor(self):
         """
@@ -48,7 +49,6 @@ class BaseParser(ABC):
         """
         if self.process_raw_image_urls:
             self.image_processor = ImageProcessor(self.process_raw_image_urls, self.vision_apikey)
-        print(self.file_path)
         try:
             self.mimetype: str = filetype.guess(self.file_path).mime
         except:
@@ -70,7 +70,7 @@ class BaseParser(ABC):
             strbuf.write(f"\n\n[comment]: <> (===END PAGE {i}===)\n")
         return strbuf.getvalue()
 
-    def convert(self) -> str:
+    def convert(self, **kwargs) -> str:
         texts = self.join_pages(self.extract_text())
         if not self.process_raw_image_urls:
             return texts
@@ -128,3 +128,12 @@ def custom_parser(mode, extensions, mimetypes=[]):
         BaseParser.register_parser(klass, mode, mimetypes, extensions)
         return klass
     return wrapper
+
+
+@custom_parser(
+    'txt',
+    extensions=["txt", "md", "markdown"]
+)
+class PlaintextParser(BaseParser):
+    def extract_text(self) -> list[str]:
+        return [Path(self.file_path).read_text()]

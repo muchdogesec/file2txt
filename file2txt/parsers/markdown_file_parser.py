@@ -9,4 +9,4 @@ import mistune
 class MarkdownParser(HtmlFileParser):
     def prepare_extractor(self):
         self.raw_html = mistune.html(self.file_path.read_text())
-        self.soup = BeautifulSoup(self.raw_html)
+        self.soup = BeautifulSoup(self.raw_html, 'html.parser')

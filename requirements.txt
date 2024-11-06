@@ -10,3 +10,4 @@ pandas==2.2.2
 filetype==1.2.0
 requests==2.31.0
 pillow==10.0.1
+mistune==3.0.2

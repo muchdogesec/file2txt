@@ -24,7 +24,7 @@ https://miro.com/app/board/uXjVKZXyIxA=/
 
 [Watch the demo](https://www.youtube.com/watch?v=u9Pnhs3_Qv4).
 
-## Install
+## Download and Install
 
 ```shell
 # clone the latest code
@@ -37,7 +37,17 @@ source file2txt-venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-### Optional: Add Marker API Key
+### Set Configuration options
+
+file2txt has various settings that are defined in an `.env` file.
+
+To create a template for the file:
+
+```shell
+cp .env.example .env
+```
+
+### Optional: Add Marker API Key (`MARKER_API_KEY`)
 
 file2txt uses the [Marker API](https://www.datalab.to/marker) to process the following filetypes;
 
@@ -58,7 +68,7 @@ You do not need a Marker API key if you only intend to convert the following fil
 * CSV `csv` (`text/csv`)
 * Image `jpg` (`image/jpg`), `.jpeg` (`image/jpeg`), `.png` (`image/png`), `.webp` (`image/webp`)
 
-### Optional: Add Google's Cloud Vision API Key
+### Optional: Add Google's Cloud Vision API Key (`GOOGLE_VISION_API_KEY`)
 
 file2txt uses Cloud Vision to text from images found in the input documents. This feature is optional. If you do not set a Cloud Vision key, you will not be able to use the `extract_text_from_image` feature.
 
@@ -120,7 +130,9 @@ To ensure images are not lost (in modes that support images), the script also ex
 
 ### Examples
 
-You can see the output from the commands below in the `output/` directory of this repository.
+You can see the output from the commands below in the `examples/` directory of this repository.
+
+If you want to try with the same files I used, read how to download them in `tests/README.md`
 
 Turn a CSV into markdown table;
 
@@ -128,18 +140,29 @@ Turn a CSV into markdown table;
 python3 file2txt.py \
   --mode csv \
   --file tests/files/csv/csv-test.csv \
-  --output examples/csv-test \
+  --output examples/csv_input \
   --defang true \
   --extract_text_from_image false
 ```
 
-Convert document to human friendly markdown, extract text from images, and defang the text (the most common use-case for cyber-security);
+And a spreadsheet;
+
+```shell
+python3 file2txt.py \
+  --mode excel \
+  --file tests/files/xls/fanged_data.xlsx \
+  --output examples/xls_input \
+  --defang true \
+  --extract_text_from_image false
+```
+
+Convert a PDF document to human friendly markdown, extract text from images, and defang the text (the most common use-case for cyber-security);
 
 ```shell
 python3 file2txt.py \
   --mode pdf \
   --file tests/files/pdf-real/bitdefender-rdstealer.pdf \
-  --output examples/Bitdefender-Labs-Report-X-creat6958-en-EN \
+  --output examples/pdf_input \
   --defang true \
   --extract_text_from_image true
 ```
@@ -150,40 +173,73 @@ Only convert the text in the main article on the webpage into markdown, also ext
 python3 file2txt.py \
   --mode html_article \
   --file tests/files/html-real/unit42-Fighting-Ursa-Luring-Targets-With-Car-for-Sale.html \
-  --output examples/unit42-Fighting-Ursa-Luring-Targets-With-Car-for-Sale \
+  --output examples/html_article_input \
   --defang true \
   --extract_text_from_image true
 ```
 
-Do not defang;
+Now convert the entire HTML content, not just the article
+
+```shell
+python3 file2txt.py \
+  --mode html \
+  --file tests/files/html-real/unit42-Fighting-Ursa-Luring-Targets-With-Car-for-Sale.html \
+  --output examples/html_input \
+  --defang true \
+  --extract_text_from_image true
+```
+
+Do not defang this Word file;
 
 ```shell
 python3 file2txt.py \
   --mode word \
   --file tests/files/doc/fanged_data.docx \
-  --output examples/fanged_data_defang_f \
+  --output examples/word_input_defang_f \
   --defang false \
   --extract_text_from_image true
 ```
 
-Defang;
+Defang this word file;
 
 ```shell
 python3 file2txt.py \
   --mode word \
   --file tests/files/doc/fanged_data.docx \
-  --output examples/fanged_data_defang_t \
+  --output examples/word_input_defang_t \
   --defang true \
   --extract_text_from_image true
 ```
 
-Extract data from an image;
+Now try a Powerpoint
+
+```shell
+python3 file2txt.py \
+  --mode powerpoint \
+  --file tests/files/ppt/fanged_data.pptx \
+  --output examples/ppt_input \
+  --defang true \
+  --extract_text_from_image true
+```
+
+Extract data from an png image;
 
 ```shell
 python3 file2txt.py \
   --mode image \
   --file tests/files/image/example-1.png \
-  --output examples/image-example1 \
+  --output examples/image_input \
+  --defang true \
+  --extract_text_from_image true
+```
+
+See how file2txt deals with markdown inputs;
+
+```shell
+python3 file2txt.py \
+  --mode md \
+  --file tests/files/markdown/threat-report.md \
+  --output examples/markdown_input \
   --defang true \
   --extract_text_from_image true
 ```
@@ -234,7 +290,6 @@ The input file type determines how the files should be handled.
 * Supports paging: FALSE
 * Python library used for conversion to markdown: n/a
 
-
 ### Image (mode: `image`)
 
 * Filetypes supported (mime-type): `jpg` (`image/jpg`), `.jpeg` (`image/jpeg`), `.png` (`image/png`), `.webp` (`image/webp`)
@@ -247,6 +302,13 @@ The input file type determines how the files should be handled.
 * Filetypes supported (mime-type): `csv` (`text/csv`)
 * Embedded images processed using `image` mode and stored locally: FALSE
 * Supports paging: FALSE
+* Python library used for conversion to markdown: `pandas`
+
+### Microsoft Excel (mode: `excel`)
+
+* Filetypes supported (mime-type): `xls` (`application/vnd.ms-excel`), `xlsx` (`application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`)
+* Embedded images processed using `image` mode and stored locally: FALSE
+* Supports paging: FALSE (only considers first tab)
 * Python library used for conversion to markdown: `pandas`
 
 ### HTML (mode: `html`)

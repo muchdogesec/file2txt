@@ -10,3 +10,4 @@ output
 # tmp msft files
 *~$*
 # output files in docs
+tests/files

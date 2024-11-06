@@ -24,7 +24,7 @@ https://miro.com/app/board/uXjVKZXyIxA=/
 
 [Watch the demo](https://www.youtube.com/watch?v=u9Pnhs3_Qv4).
 
-## Install
+## Download and Install
 
 ```shell
 # clone the latest code
@@ -37,7 +37,17 @@ source file2txt-venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-### Optional: Add Marker API Key
+### Set Configuration options
+
+file2txt has various settings that are defined in an `.env` file.
+
+To create a template for the file:
+
+```shell
+cp .env.example .env
+```
+
+### Optional: Add Marker API Key (`MARKER_API_KEY`)
 
 file2txt uses the [Marker API](https://www.datalab.to/marker) to process the following filetypes;
 
@@ -58,7 +68,7 @@ You do not need a Marker API key if you only intend to convert the following fil
 * CSV `csv` (`text/csv`)
 * Image `jpg` (`image/jpg`), `.jpeg` (`image/jpeg`), `.png` (`image/png`), `.webp` (`image/webp`)
 
-### Optional: Add Google's Cloud Vision API Key
+### Optional: Add Google's Cloud Vision API Key (`GOOGLE_VISION_API_KEY`)
 
 file2txt uses Cloud Vision to text from images found in the input documents. This feature is optional. If you do not set a Cloud Vision key, you will not be able to use the `extract_text_from_image` feature.
 
@@ -120,7 +130,7 @@ To ensure images are not lost (in modes that support images), the script also ex
 
 ### Examples
 
-You can see the output from the commands below in the `output/` directory of this repository.
+You can see the output from the commands below in the `examples/` directory of this repository.
 
 Turn a CSV into markdown table;
 
@@ -133,7 +143,7 @@ python3 file2txt.py \
   --extract_text_from_image false
 ```
 
-Convert document to human friendly markdown, extract text from images, and defang the text (the most common use-case for cyber-security);
+Convert a PDG document to human friendly markdown, extract text from images, and defang the text (the most common use-case for cyber-security);
 
 ```shell
 python3 file2txt.py \
@@ -155,7 +165,7 @@ python3 file2txt.py \
   --extract_text_from_image true
 ```
 
-Do not defang;
+Do not defang this Word file;
 
 ```shell
 python3 file2txt.py \
@@ -166,7 +176,7 @@ python3 file2txt.py \
   --extract_text_from_image true
 ```
 
-Defang;
+Defang this word file;
 
 ```shell
 python3 file2txt.py \
@@ -177,11 +187,22 @@ python3 file2txt.py \
   --extract_text_from_image true
 ```
 
-Extract data from an image;
+Extract data from an png image;
 
 ```shell
 python3 file2txt.py \
   --mode image \
+  --file tests/files/image/example-1.png \
+  --output examples/image-example1 \
+  --defang true \
+  --extract_text_from_image true
+```
+
+See how file2txt deals with markdown inputs;
+
+```shell
+python3 file2txt.py \
+  --mode md \
   --file tests/files/image/example-1.png \
   --output examples/image-example1 \
   --defang true \
@@ -233,7 +254,6 @@ The input file type determines how the files should be handled.
 * Embedded images processed using `image` mode and stored locally: TRUE
 * Supports paging: FALSE
 * Python library used for conversion to markdown: n/a
-
 
 ### Image (mode: `image`)
 

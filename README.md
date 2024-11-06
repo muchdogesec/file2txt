@@ -132,24 +132,37 @@ To ensure images are not lost (in modes that support images), the script also ex
 
 You can see the output from the commands below in the `examples/` directory of this repository.
 
+If you want to try with the same files I used, read how to download them in `tests/README.md`
+
 Turn a CSV into markdown table;
 
 ```shell
 python3 file2txt.py \
   --mode csv \
   --file tests/files/csv/csv-test.csv \
-  --output examples/csv-test \
+  --output examples/csv_input \
   --defang true \
   --extract_text_from_image false
 ```
 
-Convert a PDG document to human friendly markdown, extract text from images, and defang the text (the most common use-case for cyber-security);
+And a spreadsheet;
+
+```shell
+python3 file2txt.py \
+  --mode excel \
+  --file tests/files/xls/fanged_data.xlsx \
+  --output examples/xls_input \
+  --defang true \
+  --extract_text_from_image false
+```
+
+Convert a PDF document to human friendly markdown, extract text from images, and defang the text (the most common use-case for cyber-security);
 
 ```shell
 python3 file2txt.py \
   --mode pdf \
   --file tests/files/pdf-real/bitdefender-rdstealer.pdf \
-  --output examples/Bitdefender-Labs-Report-X-creat6958-en-EN \
+  --output examples/pdf_input \
   --defang true \
   --extract_text_from_image true
 ```
@@ -160,7 +173,18 @@ Only convert the text in the main article on the webpage into markdown, also ext
 python3 file2txt.py \
   --mode html_article \
   --file tests/files/html-real/unit42-Fighting-Ursa-Luring-Targets-With-Car-for-Sale.html \
-  --output examples/unit42-Fighting-Ursa-Luring-Targets-With-Car-for-Sale \
+  --output examples/html_article_input \
+  --defang true \
+  --extract_text_from_image true
+```
+
+Now convert the entire HTML content, not just the article
+
+```shell
+python3 file2txt.py \
+  --mode html \
+  --file tests/files/html-real/unit42-Fighting-Ursa-Luring-Targets-With-Car-for-Sale.html \
+  --output examples/html_input \
   --defang true \
   --extract_text_from_image true
 ```
@@ -171,7 +195,7 @@ Do not defang this Word file;
 python3 file2txt.py \
   --mode word \
   --file tests/files/doc/fanged_data.docx \
-  --output examples/fanged_data_defang_f \
+  --output examples/word_input_defang_f \
   --defang false \
   --extract_text_from_image true
 ```
@@ -182,7 +206,18 @@ Defang this word file;
 python3 file2txt.py \
   --mode word \
   --file tests/files/doc/fanged_data.docx \
-  --output examples/fanged_data_defang_t \
+  --output examples/word_input_defang_t \
+  --defang true \
+  --extract_text_from_image true
+```
+
+Now try a Powerpoint
+
+```shell
+python3 file2txt.py \
+  --mode powerpoint \
+  --file tests/files/ppt/fanged_data.pptx \
+  --output examples/ppt_input \
   --defang true \
   --extract_text_from_image true
 ```
@@ -193,7 +228,7 @@ Extract data from an png image;
 python3 file2txt.py \
   --mode image \
   --file tests/files/image/example-1.png \
-  --output examples/image-example1 \
+  --output examples/image_input \
   --defang true \
   --extract_text_from_image true
 ```
@@ -203,8 +238,8 @@ See how file2txt deals with markdown inputs;
 ```shell
 python3 file2txt.py \
   --mode md \
-  --file tests/files/image/example-1.png \
-  --output examples/image-example1 \
+  --file tests/files/markdown/threat-report.md \
+  --output examples/markdown_input \
   --defang true \
   --extract_text_from_image true
 ```
@@ -267,6 +302,13 @@ The input file type determines how the files should be handled.
 * Filetypes supported (mime-type): `csv` (`text/csv`)
 * Embedded images processed using `image` mode and stored locally: FALSE
 * Supports paging: FALSE
+* Python library used for conversion to markdown: `pandas`
+
+### Microsoft Excel (mode: `excel`)
+
+* Filetypes supported (mime-type): `xls` (`application/vnd.ms-excel`), `xlsx` (`application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`)
+* Embedded images processed using `image` mode and stored locally: FALSE
+* Supports paging: FALSE (only considers first tab)
 * Python library used for conversion to markdown: `pandas`
 
 ### HTML (mode: `html`)

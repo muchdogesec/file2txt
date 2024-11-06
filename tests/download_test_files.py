@@ -39,7 +39,9 @@ file_paths = [
     "pdf/txt2stix-remote-lookups.pdf",
     "ppt/fanged_data.ppt",
     "ppt/fanged_data.pptx",
-    "txt/threat-report.txt"
+    "txt/threat-report.txt",
+    "xls/fanged_data.xls",
+    "xls/fanged_data.xlsx"
 ]
 
 # Base URL for Cloudflare R2 bucket

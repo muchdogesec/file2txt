@@ -109,8 +109,8 @@ To upload a new file to be processed to text the following flags are used;
 	* `html`
 	* `html_article`
 	* `pdf` (requires marker api key)
-  * `doc` (requires marker api key)
-  * `ppt` (requires marker api key)
+  * `word` (requires marker api key)
+  * `powerpoint` (requires marker api key)
 * `--file` (required, string): path to file to be converted to text. Note, if the filetype and mimetype of the document submitted does not match one of those supported by file2txt (and set for `mode`, an error will be returned.
 * `--output` (optional, string): name of output directory name. Default is `{input_filename}/`.
 * `--defang` (optional, boolean): if output should be defanged. Default is `true`.

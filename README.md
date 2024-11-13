@@ -37,7 +37,7 @@ source file2txt-venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-### Set Configuration options
+### Configuration options
 
 file2txt has various settings that are defined in an `.env` file.
 
@@ -46,6 +46,9 @@ To create a template for the file:
 ```shell
 cp .env.example .env
 ```
+
+To see more information about how to set the variables, and what they do, read the `.env.markdown` file.
+
 
 ### Optional: Add Marker API Key (`MARKER_API_KEY`)
 

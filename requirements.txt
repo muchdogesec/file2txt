@@ -1,7 +1,7 @@
 bs4==0.0.2
 google-cloud-vision==3.4.5
 grpcio-status==1.62.2
-markdownify==0.12.1
+markdownify==0.14.1
 python-dotenv==1.0.1
 readability-lxml==0.8.1
 lxml-html-clean==0.4.1

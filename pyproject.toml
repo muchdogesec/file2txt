@@ -4,8 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "file2txt"
-version = "0.0.2"
-authors = [{ name = "DOGESEC", email = "support@dogesec.com" }]
+version = "1.0.0"
+authors = [
+  { name = "dogesec" }
+]
+maintainers = [
+  { name = "dogesec" }
+]
 description = "file2txt is a Python library takes common file formats and turns them into plain text (a txt file) with Markdown styling."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -38,3 +43,4 @@ allow-direct-references = true
 [project.urls]
 Homepage = "https://github.com/muchdogesec/file2txt"
 Issues = "https://github.com/muchdogesec/file2txt/issues"
+"dogesec HQ" = "https://dogesec.com"

@@ -58,7 +58,7 @@ numpy==2.3.0
     # via pandas
 pandas==2.3.0
     # via file2txt (pyproject.toml)
-pillow==11.2.1
+pillow==11.3.0
     # via file2txt (pyproject.toml)
 proto-plus==1.26.1
     # via

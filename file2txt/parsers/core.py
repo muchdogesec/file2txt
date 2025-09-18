@@ -26,8 +26,6 @@ class BaseParser(ABC):
     MARKDOWN_IMAGE_RE = re.compile(r"(!\[([^\]]*)\]\(([^\^)]+\.png)( .*?){0,1}\))")
     PARSERS = {}
 
-
-
     image_processor: ImageProcessor = None
     mimetype = None
 
@@ -54,20 +52,20 @@ class BaseParser(ABC):
         except:
             pass
 
-
     def extract_text(self) -> list[str]:
         """
         Extracts and returns the text content from the file.
         """
         raise NotImplementedError("please implement in subclass")
-    
+
     @staticmethod
     def join_pages(pages: list[str]):
         strbuf = io.StringIO()
         for i, page in enumerate(pages, start=1):
-            strbuf.write(f"[comment]: <> (===START PAGE {i}===)\n")
+            strbuf.write(f"[comment]: <> (===START_PAGE {i}===)\n")
             strbuf.write(page)
-            strbuf.write(f"\n\n[comment]: <> (===END PAGE {i}===)\n")
+            strbuf.write(f"\n\n[comment]: <> (===END_PAGE {i}===)\n")
+            strbuf.write("-" * 16)
         return strbuf.getvalue()
 
     def convert(self, **kwargs) -> str:
@@ -85,18 +83,17 @@ class BaseParser(ABC):
             if img_text := image_texts.get(link):
                 texts = texts.replace(whole, dedent(f"""
 
-[comment]: <> (===START IMAGE DETECTED===)
+[comment]: <> (===START_IMAGE_DETECTED===)
         
 {whole}
 
-[comment]: <> (===START EMBEDDED IMAGE EXTRACTION===)
+[comment]: <> (===START_EMBEDDED_IMAGE_EXTRACTION===)
 {img_text}
-[comment]: <> (===END EMBEDDED IMAGE EXTRACTION===)
+[comment]: <> (===END_EMBEDDED_IMAGE_EXTRACTION===)
 
-[comment]: <> (===END IMAGE DETECTED===)
+[comment]: <> (===END_IMAGE_DETECTED===)
 """))
         return texts
-
 
     def __del__(self):
         try:
@@ -112,7 +109,7 @@ class BaseParser(ABC):
             return self._temp_dir
         self._temp_dir = Path(tempfile.mkdtemp(prefix="file2txt_"))
         return self._temp_dir
-    
+
     @classmethod
     def register_parser(cls, klass, mode, mimetypes, extensions):
         cls.PARSERS[mode] = [klass, mimetypes, extensions]
@@ -121,7 +118,7 @@ class BaseParser(ABC):
     def find_md_images(cls, text):
         matches = cls.MARKDOWN_IMAGE_RE.findall(text)
         return matches
-    
+
 
 def custom_parser(mode, extensions, mimetypes=[]):
     def wrapper(klass):

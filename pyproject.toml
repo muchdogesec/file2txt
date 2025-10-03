@@ -46,3 +46,7 @@ allow-direct-references = true
 Homepage = "https://github.com/muchdogesec/file2txt"
 Issues = "https://github.com/muchdogesec/file2txt/issues"
 "dogesec HQ" = "https://dogesec.com"
+
+
+[project.optional-dependencies]
+tests = ["pytest", "requests", "pytest-cov"]

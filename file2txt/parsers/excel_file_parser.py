@@ -13,7 +13,7 @@ class ExcelFileParser(BaseParser):
         """
         Extracts and returns the text content from the file.
         """
-        
-        with open(self.temp_dir/"output.md", 'w') as f:
+
+        with open(self.temp_dir / "output.md", "w") as f:
             pd.read_excel(self.file_path).to_markdown(f)
-        return [(self.temp_dir/"output.md").read_text()]
+        return [(self.temp_dir / "output.md").read_text()]

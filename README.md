@@ -18,12 +18,6 @@ The general flow of the file2txt is as follows:
 
 https://miro.com/app/board/uXjVKZXyIxA=/
 
-## tl;dr
-
-[![file2txt](https://img.youtube.com/vi/u9Pnhs3_Qv4/0.jpg)](https://www.youtube.com/watch?v=u9Pnhs3_Qv4)
-
-[Watch the demo](https://www.youtube.com/watch?v=u9Pnhs3_Qv4).
-
 ## Download and Install
 
 ```shell

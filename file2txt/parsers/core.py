@@ -20,16 +20,24 @@ class BaseParser(ABC):
     and finding image links within it.
     do not remove the comments.
     """
-    IMAGE_SEP_FINDER  = "[image-break]"
-    PAGE_SEP_FINDER   = "[page-break]"
-    _temp_dir: Path|NoneType = None
+
+    IMAGE_SEP_FINDER = "[image-break]"
+    PAGE_SEP_FINDER = "[page-break]"
+    _temp_dir: Path | NoneType = None
     MARKDOWN_IMAGE_RE = re.compile(r"(!\[([^\]]*)\]\(([^\^)]+\.png)( .*?){0,1}\))")
     PARSERS = {}
 
     image_processor: ImageProcessor = None
     mimetype = None
 
-    def __init__(self, file_path: str, input_type: str, process_raw_image_urls: bool, vision_apikey: str, base_url=None):
+    def __init__(
+        self,
+        file_path: str,
+        input_type: str,
+        process_raw_image_urls: bool,
+        vision_apikey: str,
+        base_url=None,
+    ):
         """
         Initialize FileParser with the path to the file and the type of the input.
         """
@@ -46,7 +54,9 @@ class BaseParser(ABC):
         Extracts and returns the text content from the file.
         """
         if self.process_raw_image_urls:
-            self.image_processor = ImageProcessor(self.process_raw_image_urls, self.vision_apikey)
+            self.image_processor = ImageProcessor(
+                self.process_raw_image_urls, self.vision_apikey
+            )
         try:
             self.mimetype: str = filetype.guess(self.file_path).mime
         except:
@@ -81,7 +91,10 @@ class BaseParser(ABC):
 
         for whole, _, link, _ in self.find_md_images(texts):
             if img_text := image_texts.get(link):
-                texts = texts.replace(whole, dedent(f"""
+                texts = texts.replace(
+                    whole,
+                    dedent(
+                        f"""
 
 [comment]: <> (===START_IMAGE_DETECTED===)
         
@@ -92,7 +105,9 @@ class BaseParser(ABC):
 [comment]: <> (===END_EMBEDDED_IMAGE_EXTRACTION===)
 
 [comment]: <> (===END_IMAGE_DETECTED===)
-"""))
+"""
+                    ),
+                )
         return texts
 
     def __del__(self):
@@ -124,13 +139,11 @@ def custom_parser(mode, extensions, mimetypes=[]):
     def wrapper(klass):
         BaseParser.register_parser(klass, mode, mimetypes, extensions)
         return klass
+
     return wrapper
 
 
-@custom_parser(
-    'txt',
-    extensions=["txt", "md", "markdown"]
-)
+@custom_parser("txt", extensions=["txt", "md", "markdown"])
 class PlaintextParser(BaseParser):
     def extract_text(self) -> list[str]:
         return [Path(self.file_path).read_text()]

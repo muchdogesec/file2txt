@@ -18,22 +18,22 @@ class Fanger:
 
         # Define the replacements
         replacements = [
-            (r'hxxp', 'http'),
-            (r'\{dot\}', '.'),
-            (r'\[dot\]', '.'),
-            (r'\(dot\)', '.'),
-            (r'\{at\}', '@'),
-            (r'\[at\]', '@'),
-            (r'\(at\)', '@'),
-            (r'\{:\}', ':'),
-            (r'\[:\]', ':'),
-            (r'\(:\)', ':'),
+            (r"hxxp", "http"),
+            (r"\{dot\}", "."),
+            (r"\[dot\]", "."),
+            (r"\(dot\)", "."),
+            (r"\{at\}", "@"),
+            (r"\[at\]", "@"),
+            (r"\(at\)", "@"),
+            (r"\{:\}", ":"),
+            (r"\[:\]", ":"),
+            (r"\(:\)", ":"),
             # Remove bracketing characters
-            (r'\[(\.|@|/|\\|://|:)\]', r'\1'),  # square brackets
-            (r'\{(\.|@|/|\\|://|:)\}', r'\1'),  # curly brackets
-            (r'\((\.|@|/|\\|://|:)\)', r'\1'),  # parentheses
+            (r"\[(\.|@|/|\\|://|:)\]", r"\1"),  # square brackets
+            (r"\{(\.|@|/|\\|://|:)\}", r"\1"),  # curly brackets
+            (r"\((\.|@|/|\\|://|:)\)", r"\1"),  # parentheses
             # Remove spaces around specific characters
-            (r'\s?(\.|@|/|\\|://|:)\s?', r'\1')
+            (r"\s?(\.|@|/|\\|://|:)\s?", r"\1"),
         ]
 
         for pattern, replacement in replacements:

@@ -24,7 +24,7 @@ https://miro.com/app/board/uXjVKZXyIxA=/
 
 ```shell
 # clone the latest code
-git clone https://github.com/signalscorps/file2txt
+git clone https://github.com/dogesec/file2txt
 # create a venv
 cd file2txt
 python3 -m venv file2txt-venv

@@ -32,7 +32,7 @@ jobs:
         id: setup_environment
         run: |
           echo > .env
-
+# following keys used to check if the api still works, these tests are skipped if not api key provided in env
           echo "MARKER_API_KEY=${{ secrets.MARKER_API_KEY}}" >> .env
           echo "GOOGLE_VISION_API_KEY=${{ secrets.GOOGLE_VISION_API_KEY}}" >> .env
 

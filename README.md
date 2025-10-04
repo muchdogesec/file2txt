@@ -1,5 +1,7 @@
 # file2txt
 
+[![codecov](https://codecov.io/gh/muchdogesec/file2txt/graph/badge.svg?token=IKOI993DOW)](https://codecov.io/gh/muchdogesec/file2txt)
+
 ## Overview
 
 Another tool of ours, txt2stix, takes a .txt file input and then extracts IoCs (indicators of compromise) and TTPs (tactics, techniques and procedures).

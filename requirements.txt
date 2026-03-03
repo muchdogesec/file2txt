@@ -48,7 +48,7 @@ lxml[html-clean]==5.4.0
     # via
     #   lxml-html-clean
     #   readability-lxml
-lxml-html-clean==0.4.2
+lxml-html-clean==0.4.4
     # via
     #   file2txt (pyproject.toml)
     #   lxml

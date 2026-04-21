@@ -44,7 +44,7 @@ grpcio-status==1.73.0
     #   google-api-core
 idna==3.10
     # via requests
-lxml[html-clean]==5.4.0
+lxml[html-clean]==6.1.0
     # via
     #   lxml-html-clean
     #   readability-lxml

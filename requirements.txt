@@ -42,9 +42,9 @@ grpcio-status==1.73.0
     # via
     #   file2txt (pyproject.toml)
     #   google-api-core
-idna==3.10
+idna==3.15
     # via requests
-lxml[html-clean]==5.4.0
+lxml[html-clean]==6.1.0
     # via
     #   lxml-html-clean
     #   readability-lxml
@@ -64,14 +64,14 @@ proto-plus==1.26.1
     # via
     #   google-api-core
     #   google-cloud-vision
-protobuf==6.31.1
+protobuf==6.33.5
     # via
     #   google-api-core
     #   google-cloud-vision
     #   googleapis-common-protos
     #   grpcio-status
     #   proto-plus
-pyasn1==0.6.2
+pyasn1==0.6.3
     # via
     #   pyasn1-modules
     #   rsa

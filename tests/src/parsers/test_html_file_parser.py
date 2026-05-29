@@ -9,11 +9,11 @@ html_text = """
 
     <h1>Image 1</h1>
     <p>Public Domain icon from Wikimedia Commons (should display correctly):</p>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/PD-icon.svg/120px-PD-icon.svg.png" alt="PD icon">
+    <img src="https://pub-99019d5e65d44129a12bd0448a6b6e64.r2.dev/image/example-1.png" alt="PD icon">
 
     <h1>Image 2</h1>
     <p>Pixel red stop sign (should display correctly):</p>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Pixel_Red_Stop_Sign_16x16.png" alt="Pixel Stop Sign">
+    <img src="https://pub-99019d5e65d44129a12bd0448a6b6e64.r2.dev/image/example-3.jpeg" alt="Pixel Stop Sign">
 
     <h1>Image 3</h1>
     <p>Broken image (connection will likely be refused):</p>
@@ -21,7 +21,7 @@ html_text = """
 
     <h1>Image 4</h1>
     <p>Link to a Wikimedia Commons page that likely returns 404 (not an image URL):</p>
-    <img src="https://commons.wikimedia.org/wiki/File:thisdoesnotexistso-404-possibly.png" alt="Broken image (404)">
+    <img src="https://pub-99019d5e65d44129a12bd0448a6b6e64.r2.dev/image/example-4.jpg" alt="Broken image (404)">
 
 </body>
 </html>
@@ -57,7 +57,7 @@ Image 4
 
 Link to a Wikimedia Commons page that likely returns 404 (not an image URL):
 
-![Broken image (404)](https://commons.wikimedia.org/wiki/File:thisdoesnotexistso-404-possibly.png)
+![Broken image (404)](0_image_2.png)
 '''
 md_output_article = '''
 Image 1
@@ -86,7 +86,7 @@ Image 4
 
 Link to a Wikimedia Commons page that likely returns 404 (not an image URL):
 
-![Broken image (404)](https://commons.wikimedia.org/wiki/File:thisdoesnotexistso-404-possibly.png)
+![Broken image (404)](0_image_2.png)
 '''
 
 
@@ -108,6 +108,6 @@ def test_extract_text(tmp_path, parser_cls: Type[HtmlArticleFileParser], expecte
     path = tmp_path/"html-sample.html"
     path.write_text(html_text)
     parser = parser_cls(path, "html", False, True)
-    parser.processed_image_base_url = "https://upload.wikimedia.org/wikipedia/commons/"
+    parser.processed_image_base_url = "https://pub-99019d5e65d44129a12bd0448a6b6e64.r2.dev/image/"
     out = parser.extract_text()
     assert out == [expected_output.strip()]

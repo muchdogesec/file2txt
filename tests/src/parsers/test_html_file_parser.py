@@ -21,7 +21,7 @@ html_text = """
 
     <h1>Image 4</h1>
     <p>Link to a Wikimedia Commons page that likely returns 404 (not an image URL):</p>
-    <img src="https://pub-99019d5e65d44129a12bd0448a6b6e64.r2.dev/image/example-4.jpg" alt="Broken image (404)">
+    <img src="relative/path/file-that-definitely-does-not-exist.jpg" alt="Broken image (404)">
 
 </body>
 </html>
@@ -57,7 +57,7 @@ Image 4
 
 Link to a Wikimedia Commons page that likely returns 404 (not an image URL):
 
-![Broken image (404)](0_image_2.png)
+![Broken image (404)](https://pub-99019d5e65d44129a12bd0448a6b6e64.r2.dev/image/relative/path/file-that-definitely-does-not-exist.jpg)
 '''
 md_output_article = '''
 Image 1
@@ -86,7 +86,7 @@ Image 4
 
 Link to a Wikimedia Commons page that likely returns 404 (not an image URL):
 
-![Broken image (404)](0_image_2.png)
+![Broken image (404)](https://pub-99019d5e65d44129a12bd0448a6b6e64.r2.dev/image/relative/path/file-that-definitely-does-not-exist.jpg)
 '''
 
 

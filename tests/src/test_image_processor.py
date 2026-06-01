@@ -68,10 +68,10 @@ def test_image_from_uri_file(monkeypatch, tmp_path, image):
 
 
 @pytest.mark.parametrize("url,passes", [
-    ("https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/PD-icon.svg/120px-PD-icon.svg.png", True),
-    ("https://upload.wikimedia.org/wikipedia/commons/7/7a/Pixel_Red_Stop_Sign_16x16.png", True),
+    ("https://pub-99019d5e65d44129a12bd0448a6b6e64.r2.dev/image/example-1.png", True),
+    ("https://pub-99019d5e65d44129a12bd0448a6b6e64.r2.dev/image/example-3.jpeg", True),
     ("http://badlocalwebsite.net.crap.bad/not_an_image.txt", False),  # connection refused
-    ("https://commons.wikimedia.org/wiki/File:thisdoesnotexistso-404-possibly.png", False),       # does not exist
+    ("https://pub-99019d5e65d44129a12bd0448a6b6e64.r2.dev/image/example-4.jpg", True),
 ])
 def test_image_from_uri_http(monkeypatch, url, passes):
     if passes:

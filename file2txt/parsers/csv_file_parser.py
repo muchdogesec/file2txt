@@ -15,5 +15,22 @@ class CsvFileParser(BaseParser):
         """
 
         with open(self.temp_dir / "output.md", "w") as f:
-            pd.read_csv(self.file_path).to_markdown(f)
+            self.read_file().to_markdown(f)
         return [(self.temp_dir / "output.md").read_text()]
+
+    def read_file(self) -> pd.DataFrame:
+        """
+        Reads the CSV file and returns its content as a pandas DataFrame.
+        """
+        encodings = ["utf-8", "utf-8-sig", "cp1252", "latin1"]
+        errors: list[UnicodeDecodeError] = []
+
+        for encoding in encodings:
+            try:
+                return pd.read_csv(self.file_path, encoding=encoding)
+            except UnicodeError as exc:
+                errors.append(exc)
+        raise ExceptionGroup(
+            f"Unable to decode {self.file_path!s} using any supported encoding",
+            errors,
+        )

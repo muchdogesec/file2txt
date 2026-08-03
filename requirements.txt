@@ -85,7 +85,7 @@ pytz==2025.2
     # via pandas
 readability-lxml==0.8.4.1
     # via file2txt (pyproject.toml)
-requests==2.32.4
+requests==2.33.0
     # via
     #   file2txt (pyproject.toml)
     #   google-api-core

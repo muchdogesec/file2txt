@@ -79,7 +79,7 @@ pyasn1-modules==0.4.2
     # via google-auth
 python-dateutil==2.9.0.post0
     # via pandas
-python-dotenv==1.1.0
+python-dotenv==1.2.2
     # via file2txt (pyproject.toml)
 pytz==2025.2
     # via pandas

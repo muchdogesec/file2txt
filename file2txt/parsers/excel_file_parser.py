@@ -1,4 +1,3 @@
-import pandas as pd
 from .core import BaseParser, custom_parser
 
 
@@ -13,6 +12,8 @@ class ExcelFileParser(BaseParser):
         """
         Extracts and returns the text content from the file.
         """
+
+        import pandas as pd
 
         with open(self.temp_dir / "output.md", "w") as f:
             pd.read_excel(self.file_path).to_markdown(f)

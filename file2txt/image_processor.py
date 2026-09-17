@@ -3,8 +3,6 @@ from io import BytesIO
 from pathlib import Path
 import requests
 from PIL import Image
-from google.auth import api_key
-from google.cloud import vision
 import base64
 
 
@@ -38,6 +36,8 @@ REQUEST_HEADERS = {
 
 class ImageProcessor:
     def __init__(self, process_raw_image_urls: bool, key: str):
+        from google.auth import api_key
+        from google.cloud import vision
         if not key:
             raise EmptyApiKeyException("must provide a google vision key")
         self.process_raw_image_urls = process_raw_image_urls
@@ -48,6 +48,8 @@ class ImageProcessor:
         """
         Convert the given PIL Image object to text using OCR.
         """
+        from google.cloud import vision
+
         buffer = BytesIO()
         img.save(buffer, format="PNG")
         image = vision.Image(content=buffer.getvalue())

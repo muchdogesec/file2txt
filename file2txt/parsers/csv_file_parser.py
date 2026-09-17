@@ -1,5 +1,8 @@
 from .core import BaseParser, custom_parser
-import pandas as pd
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import pandas as pd
 
 
 @custom_parser("csv", ["csv"])
@@ -18,10 +21,12 @@ class CsvFileParser(BaseParser):
             self.read_file().to_markdown(f)
         return [(self.temp_dir / "output.md").read_text()]
 
-    def read_file(self) -> pd.DataFrame:
+    def read_file(self) -> "pd.DataFrame":
         """
         Reads the CSV file and returns its content as a pandas DataFrame.
         """
+        import pandas as pd
+
         encodings = ["utf-8", "utf-8-sig", "cp1252", "latin1"]
         errors: list[UnicodeDecodeError] = []
 
